@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 720" role="img" aria-labelledby="title desc">
+  <title id="title">Tactile LeRobot pipeline diagram</title>
+  <desc id="desc">Camera and tactile sensor streams feed tactile encoders and multiple policy families before robot execution and qualitative evaluation.</desc>
+  <defs>
+    <linearGradient id="card" x1="0%" x2="100%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#fff8ef"/>
+      <stop offset="100%" stop-color="#f3e9dc"/>
+    </linearGradient>
+    <linearGradient id="warm" x1="0%" x2="100%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#cf7b2a"/>
+      <stop offset="100%" stop-color="#a94a17"/>
+    </linearGradient>
+    <linearGradient id="cool" x1="0%" x2="100%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#2a7186"/>
+      <stop offset="100%" stop-color="#164655"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="20" stdDeviation="24" flood-color="#8a5d2e" flood-opacity="0.16"/>
+    </filter>
+  </defs>
+
+  <rect width="960" height="720" rx="42" fill="#fbf5ed"/>
+  <rect x="24" y="24" width="912" height="672" rx="30" fill="none" stroke="#e5d8c7"/>
+
+  <g filter="url(#shadow)">
+    <rect x="54" y="72" width="210" height="136" rx="28" fill="url(#card)"/>
+    <rect x="54" y="252" width="210" height="136" rx="28" fill="url(#card)"/>
+    <rect x="54" y="432" width="210" height="136" rx="28" fill="url(#card)"/>
+
+    <rect x="356" y="114" width="254" height="412" rx="34" fill="url(#card)"/>
+
+    <rect x="698" y="88" width="208" height="108" rx="26" fill="url(#card)"/>
+    <rect x="698" y="224" width="208" height="108" rx="26" fill="url(#card)"/>
+    <rect x="698" y="360" width="208" height="108" rx="26" fill="url(#card)"/>
+    <rect x="698" y="496" width="208" height="108" rx="26" fill="url(#card)"/>
+  </g>
+
+  <g font-family="Space Grotesk, sans-serif" fill="#241c17">
+    <text x="76" y="110" font-size="18" letter-spacing="3" fill="#8c5c31">INPUTS</text>
+    <text x="76" y="156" font-size="30" font-weight="700">Top camera</text>
+    <text x="76" y="188" font-size="18" fill="#655a50">RealSense stream</text>
+
+    <text x="76" y="336" font-size="30" font-weight="700">Tactile map</text>
+    <text x="76" y="368" font-size="18" fill="#655a50">Serial stream at 2,000,000 baud</text>
+
+    <text x="76" y="516" font-size="30" font-weight="700">Robot state</text>
+    <text x="76" y="548" font-size="18" fill="#655a50">SO100 follower + custom gripper</text>
+
+    <text x="390" y="154" font-size="18" letter-spacing="3" fill="#8c5c31">TACTILE LEROBOT STACK</text>
+    <text x="390" y="208" font-size="38" font-weight="700">Shared observation path</text>
+    <text x="390" y="248" font-size="20" fill="#655a50">FeatureType.TACTILE</text>
+    <text x="390" y="282" font-size="20" fill="#655a50">observation.tactile.primary</text>
+
+    <rect x="392" y="330" width="182" height="60" rx="18" fill="url(#warm)"/>
+    <text x="426" y="368" font-size="22" font-weight="700" fill="#fffaf4">Tactile encoder</text>
+
+    <rect x="392" y="412" width="182" height="60" rx="18" fill="url(#cool)"/>
+    <text x="440" y="450" font-size="22" font-weight="700" fill="#fffaf4">Dataset path</text>
+
+    <text x="728" y="128" font-size="26" font-weight="700">ACT</text>
+    <text x="728" y="158" font-size="17" fill="#655a50">Tactile prefix tokens</text>
+
+    <text x="728" y="264" font-size="26" font-weight="700">Diffusion Policy</text>
+    <text x="728" y="294" font-size="17" fill="#655a50">Global conditioning chunks</text>
+
+    <text x="728" y="400" font-size="26" font-weight="700">Pi0.5</text>
+    <text x="728" y="430" font-size="17" fill="#655a50">Projected tactile VLM tokens</text>
+
+    <text x="728" y="536" font-size="26" font-weight="700">SmolVLA</text>
+    <text x="728" y="566" font-size="17" fill="#655a50">Language-conditioned tactile tokens</text>
+  </g>
+
+  <g fill="none" stroke-linecap="round" stroke-width="8">
+    <path d="M272 140 H330 C348 140 356 148 356 166 V210" stroke="#cf7b2a"/>
+    <path d="M272 320 H326 C344 320 356 332 356 350" stroke="#cf7b2a"/>
+    <path d="M272 500 H326 C344 500 356 488 356 470" stroke="#cf7b2a"/>
+
+    <path d="M610 176 H666 C684 176 698 162 698 142" stroke="#1f6175"/>
+    <path d="M610 242 H666 C684 242 698 256 698 278" stroke="#1f6175"/>
+    <path d="M610 308 H666 C684 308 698 350 698 414" stroke="#1f6175"/>
+    <path d="M610 374 H666 C684 374 698 446 698 550" stroke="#1f6175"/>
+  </g>
+</svg>

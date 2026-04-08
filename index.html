@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tactile LeRobot</title>
+    <meta
+      name="description"
+      content="Project page for Tactile LeRobot with selectable featured validation, a separate media gallery, and a dedicated docs surface."
+    >
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    >
+    <link rel="stylesheet" href="assets/styles.css">
+  </head>
+  <body class="landing-page">
+    <header class="site-header">
+      <a class="site-brand" href="index.html">
+        <span class="brand-mark">TL</span>
+        <span class="brand-text">
+          <strong>Tactile LeRobot</strong>
+          <span>project page</span>
+        </span>
+      </a>
+      <nav class="site-nav" aria-label="Primary">
+        <a href="#results">Results</a>
+        <a href="media.html">Media</a>
+        <a href="docs.html">Docs</a>
+      </nav>
+    </header>
+
+    <main class="page">
+      <section class="masthead">
+        <div class="masthead-copy">
+          <p class="eyebrow">Columbia x tactile LeRobot</p>
+          <h1>Tactile LeRobot.</h1>
+          <p class="masthead-summary">
+            We extend LeRobot with tactile sensing and evaluate tactile-conditioned policies across contact-rich
+            manipulation tasks.
+          </p>
+          <div class="masthead-actions">
+            <a class="button button-primary" href="media.html">Experimental media</a>
+            <a class="button button-secondary" href="docs.html">Documentation</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="landing-section" id="results">
+        <div class="section-heading">
+          <div class="section-label">Policy results</div>
+          <h2>Select a policy.</h2>
+          <p>
+            Compare tactile and no-tactile accuracy for the selected policy, then inspect a short real-time clip and a
+            longer sped-up rollout.
+          </p>
+        </div>
+
+        <div class="policy-tabs" id="featured-policy-tabs" role="tablist" aria-label="Featured policies"></div>
+
+        <article class="featured-panel">
+          <div class="featured-copy">
+            <p class="featured-label" id="featured-policy-label"></p>
+            <h3 id="featured-policy-name"></h3>
+            <p class="featured-summary" id="featured-policy-summary"></p>
+            <div class="metric-grid" id="featured-metrics"></div>
+            <p class="featured-note" id="featured-policy-note"></p>
+            <div class="tag-row" id="featured-policy-tasks"></div>
+            <div class="inline-actions">
+              <a class="inline-link" id="featured-media-link" href="media.html">Open full validation media</a>
+            </div>
+          </div>
+
+          <div class="video-pair">
+            <div class="video-card" id="featured-short-video"></div>
+            <div class="video-card" id="featured-long-video"></div>
+          </div>
+        </article>
+      </section>
+
+      <section class="landing-section" id="tasks">
+        <div class="section-heading">
+          <div class="section-label">Task coverage</div>
+          <h2>Three evaluation tasks.</h2>
+        </div>
+        <div class="task-strip" id="task-strip"></div>
+      </section>
+
+      <section class="landing-section">
+        <div class="section-heading">
+          <div class="section-label">More</div>
+          <h2>Validation media and implementation details.</h2>
+        </div>
+        <div class="route-grid">
+          <a class="route-card" href="media.html">
+            <span class="route-label">Experimental validation</span>
+            <strong>Full media page</strong>
+            <p>Browse all policy-specific clips, task by task, with short episodes and long-rollout views.</p>
+          </a>
+          <a class="route-card" href="docs.html">
+            <span class="route-label">Documentation</span>
+            <strong>Hardware and software docs</strong>
+            <p>Open hardware setup, software architecture, commands, repo map, and reproduction notes.</p>
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>Tactile LeRobot.</p>
+    </footer>
+
+    <script type="module" src="assets/app.js"></script>
+  </body>
+</html>

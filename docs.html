@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tactile LeRobot Docs</title>
+    <meta
+      name="description"
+      content="Documentation for the Tactile LeRobot project: hardware, software, commands, and reproduction notes."
+    >
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    >
+    <link rel="stylesheet" href="assets/styles.css">
+  </head>
+  <body class="docs-page">
+    <header class="site-header">
+      <a class="site-brand" href="index.html">
+        <span class="brand-mark">TL</span>
+        <span class="brand-text">
+          <strong>Tactile LeRobot</strong>
+          <span>documentation</span>
+        </span>
+      </a>
+      <nav class="site-nav" aria-label="Primary">
+        <a href="index.html">Project</a>
+        <a href="media.html">Media</a>
+        <a href="#hardware">Hardware</a>
+        <a href="#software">Software</a>
+        <a href="#reproduction">Reproduction</a>
+      </nav>
+    </header>
+
+    <main class="docs-shell">
+      <aside class="docs-nav">
+        <p class="docs-nav-title">Docs</p>
+        <a href="#overview">Overview</a>
+        <a href="#hardware">Hardware</a>
+        <a href="#software">Software</a>
+        <a href="#commands">Commands</a>
+        <a href="#reproduction">Reproduction</a>
+        <a href="#assets">Assets</a>
+        <a href="#references">References</a>
+      </aside>
+
+      <div class="docs-content">
+        <section class="docs-section" id="overview">
+          <div class="section-label">Overview</div>
+          <h1>Implementation details.</h1>
+          <p class="docs-intro">
+            Tactile hardware assumptions, robot-side integration, policy hooks, command examples, and the practical
+            steps needed to reproduce the stack.
+          </p>
+        </section>
+
+        <section class="docs-section" id="hardware">
+          <div class="section-label">Hardware</div>
+          <h2>Bring-up notes for the robot, sensor, and camera stack.</h2>
+          <div class="docs-grid" id="hardware-facts"></div>
+          <div class="docs-note">
+            <strong>Custom gripper details.</strong>
+            <span>
+              Add the final gripper name, photos, mount notes, and any BOM or CAD links here.
+            </span>
+          </div>
+        </section>
+
+        <section class="docs-section" id="software">
+          <div class="section-label">Software</div>
+          <h2>Where tactile enters the stack.</h2>
+          <div class="docs-grid" id="software-highlights"></div>
+          <div class="repo-map" id="repo-map"></div>
+          <div class="model-grid docs-model-grid" id="model-grid"></div>
+        </section>
+
+        <section class="docs-section" id="commands">
+          <div class="section-label">Commands</div>
+          <h2>Representative presets from the source repo.</h2>
+          <div class="command-grid">
+            <article class="docs-card">
+              <div class="card-header">
+                <h3>Bring-up</h3>
+                <button class="copy-button" type="button" data-copy-target="bringup-command">Copy</button>
+              </div>
+              <pre class="code-block"><code id="bringup-command"></code></pre>
+            </article>
+            <article class="docs-card">
+              <div class="card-header">
+                <h3>Recording</h3>
+                <button class="copy-button" type="button" data-copy-target="record-command">Copy</button>
+              </div>
+              <pre class="code-block"><code id="record-command"></code></pre>
+            </article>
+            <article class="docs-card">
+              <div class="card-header">
+                <h3>Training</h3>
+                <button class="copy-button" type="button" data-copy-target="train-command">Copy</button>
+              </div>
+              <pre class="code-block"><code id="train-command"></code></pre>
+            </article>
+            <article class="docs-card">
+              <div class="card-header">
+                <h3>Evaluation</h3>
+                <button class="copy-button" type="button" data-copy-target="eval-command">Copy</button>
+              </div>
+              <pre class="code-block"><code id="eval-command"></code></pre>
+            </article>
+          </div>
+        </section>
+
+        <section class="docs-section" id="reproduction">
+          <div class="section-label">Reproduction</div>
+          <h2>From hardware bring-up to final page update.</h2>
+          <div class="steps" id="repro-steps"></div>
+        </section>
+
+        <section class="docs-section" id="assets">
+          <div class="section-label">Assets</div>
+          <h2>What still needs to be dropped in.</h2>
+          <ul class="checklist" id="asset-checklist"></ul>
+        </section>
+
+        <section class="docs-section" id="references">
+          <div class="section-label">References</div>
+          <h2>External links and project anchors.</h2>
+          <ul class="link-list" id="docs-reference-list"></ul>
+        </section>
+      </div>
+    </main>
+
+    <script type="module" src="assets/app.js"></script>
+  </body>
+</html>

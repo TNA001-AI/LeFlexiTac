@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tactile LeRobot Media</title>
+    <meta
+      name="description"
+      content="Experimental validation media page for Tactile LeRobot."
+    >
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    >
+    <link rel="stylesheet" href="assets/styles.css">
+  </head>
+  <body class="media-page">
+    <header class="site-header">
+      <a class="site-brand" href="index.html">
+        <span class="brand-mark">TL</span>
+        <span class="brand-text">
+          <strong>Tactile LeRobot</strong>
+          <span>experimental media</span>
+        </span>
+      </a>
+      <nav class="site-nav" aria-label="Primary">
+        <a href="index.html">Project</a>
+        <a href="#validation">Validation</a>
+        <a href="docs.html">Docs</a>
+      </nav>
+    </header>
+
+    <main class="page">
+      <section class="media-intro">
+        <div class="section-label">Experimental validation</div>
+        <h1>Experimental validation media.</h1>
+        <p class="media-summary">
+          Short clips and long rollouts for tactile and no-tactile variants, organized by policy and task.
+        </p>
+      </section>
+
+      <section class="landing-section" id="validation">
+        <div class="policy-tabs" id="media-policy-tabs" role="tablist" aria-label="Media policies"></div>
+
+        <article class="media-overview">
+          <div>
+            <p class="featured-label" id="media-policy-label"></p>
+            <h2 id="media-policy-name"></h2>
+            <p class="featured-summary" id="media-policy-summary"></p>
+          </div>
+          <div class="metric-grid" id="media-policy-metrics"></div>
+        </article>
+
+        <div class="media-task-list" id="media-task-list"></div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>Experimental validation gallery for Tactile LeRobot.</p>
+    </footer>
+
+    <script type="module" src="assets/app.js"></script>
+  </body>
+</html>
