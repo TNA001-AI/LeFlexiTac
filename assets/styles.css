@@ -135,7 +135,7 @@ video {
 }
 
 .masthead {
-  max-width: 760px;
+  max-width: none;
   padding: 1rem 0 3rem;
 }
 
@@ -159,10 +159,32 @@ video {
 .masthead-summary,
 .media-summary,
 .docs-intro {
-  max-width: 58ch;
-  margin: 1rem 0 0;
+  max-width: none;
+  margin: 0.7rem 0 0;
   line-height: 1.7;
   font-size: 1.02rem;
+}
+
+.masthead-summary a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid var(--accent);
+}
+
+.masthead-authors {
+  margin: 1.2rem 0 0;
+  font-size: 1.05rem;
+  font-weight: 500;
+}
+
+.masthead-authors sup {
+  color: var(--muted);
+}
+
+.masthead-affiliation {
+  margin: 0.25rem 0 0;
+  font-size: 0.92rem;
+  color: var(--muted);
 }
 
 .masthead-actions,
@@ -224,6 +246,26 @@ video {
   border-top: 1px solid var(--line);
 }
 
+.docs-section .section-label {
+  margin-bottom: 0.5rem;
+}
+
+.docs-section h2 {
+  margin-bottom: 1.4rem;
+}
+
+.docs-section > .docs-grid,
+.docs-section > .docs-note,
+.docs-section > .repo-map,
+.docs-section > .model-grid,
+.docs-section > .model-viewer-grid,
+.docs-section > .command-grid,
+.docs-section > .steps,
+.docs-section > .checklist,
+.docs-section > .link-list {
+  margin-top: 1.25rem;
+}
+
 .section-heading {
   display: flex;
   flex-direction: column;
@@ -233,7 +275,6 @@ video {
 
 .section-heading p {
   margin: 0;
-  max-width: 66ch;
 }
 
 .policy-tabs {
@@ -261,8 +302,8 @@ video {
 
 .featured-panel {
   display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-  gap: 1rem;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.25rem;
   padding: 1rem;
 }
 
@@ -309,6 +350,113 @@ video {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
+}
+
+.video-triple {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.task-list {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.results-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0 0;
+  font-family: var(--mono);
+  font-size: 0.95rem;
+}
+
+.results-table th,
+.results-table td {
+  padding: 0.55rem 0.75rem;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+}
+
+.results-table thead th {
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-bottom: 1px solid var(--line-strong);
+}
+
+.results-table tbody .results-policy {
+  font-family: var(--sans);
+  font-weight: 600;
+}
+
+.results-table tbody tr:last-child th,
+.results-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.hardware-item {
+  margin-top: 1.25rem;
+}
+
+.hardware-item h3 {
+  margin: 0 0 0.4rem;
+  font-size: 1.1rem;
+}
+
+.hardware-item p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.hardware-item .inline-link {
+  display: inline-block;
+  margin-top: 0.4rem;
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+  font-weight: 500;
+}
+
+.subsection-title {
+  margin: 2rem 0 1rem;
+  font-size: 1.2rem;
+}
+
+.model-viewer-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.model-viewer-card {
+  background: var(--panel-strong);
+  border: 1px solid var(--line);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.model-viewer-card h4 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.stl-viewer {
+  width: 100%;
+  height: 300px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--bg);
+  cursor: grab;
+}
+
+.stl-viewer:active {
+  cursor: grabbing;
 }
 
 .video-card,
@@ -566,6 +714,7 @@ video {
   .media-overview,
   .docs-shell,
   .video-pair,
+  .video-triple,
   .media-comparison {
     grid-template-columns: 1fr;
   }
@@ -574,6 +723,7 @@ video {
   .route-grid,
   .docs-grid,
   .model-grid,
+  .model-viewer-grid,
   .steps,
   .command-grid {
     grid-template-columns: 1fr;

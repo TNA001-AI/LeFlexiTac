@@ -2,8 +2,7 @@
 
 Static repo for a split site:
 
-- `index.html` is the minimal project landing page
-- `media.html` is the full experimental validation page
+- `index.html` is the project landing page with per-task tactile/no-tactile videos
 - `docs.html` is the traditional documentation page
 
 ## Local preview
@@ -28,7 +27,7 @@ Most updates should only touch:
 
 - `assets/site-data.js` for task copy, references, status notes, command examples, and coverage cells
 - `assets/media/` for experiment videos
-- `index.html`, `media.html`, or `docs.html` if the structure itself needs to change
+- `index.html` or `docs.html` if the structure itself needs to change
 
 ## Known placeholders
 

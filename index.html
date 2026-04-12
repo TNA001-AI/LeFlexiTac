@@ -6,7 +6,7 @@
     <title>Tactile LeRobot</title>
     <meta
       name="description"
-      content="Project page for Tactile LeRobot with selectable featured validation, a separate media gallery, and a dedicated docs surface."
+      content="Project page for Tactile LeRobot with selectable featured task videos and a dedicated docs surface."
     >
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,7 +27,6 @@
       </a>
       <nav class="site-nav" aria-label="Primary">
         <a href="#results">Results</a>
-        <a href="media.html">Media</a>
         <a href="docs.html">Docs</a>
       </nav>
     </header>
@@ -35,14 +34,19 @@
     <main class="page">
       <section class="masthead">
         <div class="masthead-copy">
-          <p class="eyebrow">Columbia x tactile LeRobot</p>
+          <p class="eyebrow">Columbia University x tactile LeRobot</p>
           <h1>Tactile LeRobot.</h1>
           <p class="masthead-summary">
-            We extend LeRobot with tactile sensing and evaluate tactile-conditioned policies across contact-rich
-            manipulation tasks.
+            We extend <a href="https://github.com/huggingface/lerobot" target="_blank" rel="noreferrer">LeRobot</a> with
+            <a href="https://flexitac.github.io/" target="_blank" rel="noreferrer">FlexiTac</a> tactile sensing and
+            evaluate tactile-conditioned policies across contact-rich manipulation tasks.
           </p>
+          <p class="masthead-authors">
+            A AAAA<sup>*</sup>, BBBB<sup>*</sup>, CCCCCC<sup>*</sup>
+          </p>
+          <p class="masthead-affiliation">Columbia University</p>
           <div class="masthead-actions">
-            <a class="button button-primary" href="media.html">Experimental media</a>
+            <a class="button button-primary" href="#results">Task results</a>
             <a class="button button-secondary" href="docs.html">Documentation</a>
           </div>
         </div>
@@ -50,55 +54,23 @@
 
       <section class="landing-section" id="results">
         <div class="section-heading">
-          <div class="section-label">Policy results</div>
-          <h2>Select a policy.</h2>
+          <div class="section-label">Task results</div>
+          <h2>Task results.</h2>
           <p>
-            Compare tactile and no-tactile accuracy for the selected policy, then inspect a short real-time clip and a
-            longer sped-up rollout.
+            For each task, compare tactile and no-tactile accuracy, then inspect a sped-up long rollout, a
+            short 1x clip, and a typical no-tactile failure.
           </p>
         </div>
 
-        <div class="policy-tabs" id="featured-policy-tabs" role="tablist" aria-label="Featured policies"></div>
-
-        <article class="featured-panel">
-          <div class="featured-copy">
-            <p class="featured-label" id="featured-policy-label"></p>
-            <h3 id="featured-policy-name"></h3>
-            <p class="featured-summary" id="featured-policy-summary"></p>
-            <div class="metric-grid" id="featured-metrics"></div>
-            <p class="featured-note" id="featured-policy-note"></p>
-            <div class="tag-row" id="featured-policy-tasks"></div>
-            <div class="inline-actions">
-              <a class="inline-link" id="featured-media-link" href="media.html">Open full validation media</a>
-            </div>
-          </div>
-
-          <div class="video-pair">
-            <div class="video-card" id="featured-short-video"></div>
-            <div class="video-card" id="featured-long-video"></div>
-          </div>
-        </article>
-      </section>
-
-      <section class="landing-section" id="tasks">
-        <div class="section-heading">
-          <div class="section-label">Task coverage</div>
-          <h2>Three evaluation tasks.</h2>
-        </div>
-        <div class="task-strip" id="task-strip"></div>
+        <div class="task-list" id="task-list"></div>
       </section>
 
       <section class="landing-section">
         <div class="section-heading">
           <div class="section-label">More</div>
-          <h2>Validation media and implementation details.</h2>
+          <h2>Implementation details.</h2>
         </div>
         <div class="route-grid">
-          <a class="route-card" href="media.html">
-            <span class="route-label">Experimental validation</span>
-            <strong>Full media page</strong>
-            <p>Browse all policy-specific clips, task by task, with short episodes and long-rollout views.</p>
-          </a>
           <a class="route-card" href="docs.html">
             <span class="route-label">Documentation</span>
             <strong>Hardware and software docs</strong>

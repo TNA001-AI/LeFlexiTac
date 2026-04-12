@@ -42,180 +42,73 @@ function renderMediaSlot(slot, label) {
   return wrapper;
 }
 
-function renderMetricCards(target, policy) {
-  clear(target);
-  const metrics = [
-    { label: "With tactile", value: policy.tactileAccuracy },
-    { label: "Without tactile", value: policy.baselineAccuracy },
-    { label: "Gain", value: policy.delta },
-  ];
+function renderResultsTable(results) {
+  const table = create("table", "results-table");
+  const thead = create("thead");
+  const headRow = create("tr");
+  headRow.append(create("th", "", "Policy"));
+  headRow.append(create("th", "", "With tactile"));
+  headRow.append(create("th", "", "Without tactile"));
+  thead.append(headRow);
+  table.append(thead);
 
-  metrics.forEach((metric) => {
-    const card = create("article", "metric-card");
-    card.append(create("span", "metric-label", metric.label));
-    card.append(create("strong", "metric-value", metric.value));
-    target.append(card);
+  const tbody = create("tbody");
+  results.forEach((row) => {
+    const tr = create("tr");
+    tr.append(create("th", "results-policy", row.policy));
+    tr.append(create("td", "results-tactile", row.tactile || "—"));
+    tr.append(create("td", "results-baseline", row.baseline || "—"));
+    tbody.append(tr);
   });
-}
-
-function renderTags(target, items) {
-  clear(target);
-  items.forEach((item) => {
-    target.append(create("span", "tag", item));
-  });
-}
-
-function makeTabs(target, items, activeId, onSelect) {
-  clear(target);
-  items.forEach((item) => {
-    const button = create("button", "policy-tab");
-    button.type = "button";
-    button.setAttribute("role", "tab");
-    button.setAttribute("aria-selected", String(item.id === activeId));
-    button.textContent = item.name;
-    if (item.id === activeId) button.classList.add("is-active");
-    button.addEventListener("click", () => onSelect(item.id));
-    target.append(button);
-  });
+  table.append(tbody);
+  return table;
 }
 
 function renderLanding() {
-  const featuredTabs = document.getElementById("featured-policy-tabs");
-  if (!featuredTabs) return;
+  const taskList = document.getElementById("task-list");
+  if (!taskList) return;
 
-  const featuredLabel = document.getElementById("featured-policy-label");
-  const featuredName = document.getElementById("featured-policy-name");
-  const featuredSummary = document.getElementById("featured-policy-summary");
-  const featuredMetrics = document.getElementById("featured-metrics");
-  const featuredNote = document.getElementById("featured-policy-note");
-  const featuredTasks = document.getElementById("featured-policy-tasks");
-  const featuredMediaLink = document.getElementById("featured-media-link");
-  const featuredShort = document.getElementById("featured-short-video");
-  const featuredLong = document.getElementById("featured-long-video");
-  const taskStrip = document.getElementById("task-strip");
+  clear(taskList);
 
-  let activePolicyId = siteData.featured.defaultPolicyId;
+  siteData.featured.tasks.forEach((task) => {
+    const panel = create("article", "featured-panel task-panel");
 
-  function renderFeaturedPolicy(policyId) {
-    const policy = siteData.featured.policies.find((item) => item.id === policyId);
-    if (!policy) return;
-    activePolicyId = policyId;
+    const copy = create("div", "featured-copy");
+    copy.append(create("p", "featured-label", task.label));
+    copy.append(create("h3", "", task.name));
+    copy.append(create("p", "featured-summary", task.summary));
 
-    makeTabs(featuredTabs, siteData.featured.policies, activePolicyId, renderFeaturedPolicy);
-
-    featuredLabel.textContent = policy.label;
-    featuredName.textContent = policy.name;
-    featuredSummary.textContent = policy.summary;
-    featuredNote.textContent = policy.note;
-    featuredNote.hidden = !policy.note;
-    featuredMediaLink.href = policy.mediaLink;
-    renderMetricCards(featuredMetrics, policy);
-    renderTags(featuredTasks, policy.tasks);
-
-    clear(featuredShort);
-    clear(featuredLong);
-    featuredShort.append(renderMediaSlot(policy.shortVideo, policy.shortVideo.title || "1x clip"));
-    featuredLong.append(renderMediaSlot(policy.longVideo, policy.longVideo.title || "Long rollout"));
-  }
-
-  renderFeaturedPolicy(activePolicyId);
-
-  siteData.tasks.forEach((task) => {
-    const card = create("article", "task-card compact");
-    card.innerHTML = `
-      <strong>${task.name}</strong>
-      <p class="task-card-subtitle">${task.subtitle}</p>
-      <p class="task-card-summary">${task.summary}</p>
-    `;
-    taskStrip.append(card);
-  });
-}
-
-function renderMediaPage() {
-  const mediaTabs = document.getElementById("media-policy-tabs");
-  if (!mediaTabs) return;
-
-  const mediaLabel = document.getElementById("media-policy-label");
-  const mediaName = document.getElementById("media-policy-name");
-  const mediaSummary = document.getElementById("media-policy-summary");
-  const mediaMetrics = document.getElementById("media-policy-metrics");
-  const mediaTaskList = document.getElementById("media-task-list");
-
-  const hashId = window.location.hash ? window.location.hash.slice(1) : "";
-  let activePolicyId =
-    siteData.media.policies.find((item) => item.id === hashId)?.id ?? siteData.media.defaultPolicyId;
-
-  function renderMediaPolicy(policyId) {
-    const policy = siteData.media.policies.find((item) => item.id === policyId);
-    if (!policy) return;
-    activePolicyId = policyId;
-    if (window.location.hash.slice(1) !== policy.id) {
-      history.replaceState(null, "", `#${policy.id}`);
+    if (task.results && task.results.length) {
+      copy.append(renderResultsTable(task.results));
     }
 
-    makeTabs(mediaTabs, siteData.media.policies, activePolicyId, renderMediaPolicy);
-    mediaLabel.textContent = policy.label;
-    mediaName.textContent = policy.name;
-    mediaSummary.textContent = policy.summary;
-    renderMetricCards(mediaMetrics, policy);
-    clear(mediaTaskList);
-
-    policy.tasks.forEach((task) => {
-      const article = create("article", "media-task-card");
-      article.innerHTML = `
-        <div class="media-task-head">
-          <div>
-            <p class="featured-label">${task.name}</p>
-            <h3>${task.name}</h3>
-          </div>
-        </div>
-      `;
-
-      const comparison = create("div", "media-comparison");
-
-      const tactileColumn = create("div", "comparison-column");
-      tactileColumn.append(create("h4", "", "With tactile"));
-      tactileColumn.append(renderMediaSlot(task.tactileDemo, task.tactileDemo.title));
-      tactileColumn.append(renderMediaSlot(task.tactileLong, task.tactileLong.title));
-
-      const baselineColumn = create("div", "comparison-column");
-      baselineColumn.append(create("h4", "", "Without tactile"));
-      baselineColumn.append(renderMediaSlot(task.baselineDemo, task.baselineDemo.title));
-      baselineColumn.append(renderMediaSlot(task.baselineLong, task.baselineLong.title));
-
-      comparison.append(tactileColumn);
-      comparison.append(baselineColumn);
-      article.append(comparison);
-      mediaTaskList.append(article);
-    });
-  }
-
-  renderMediaPolicy(activePolicyId);
-  window.addEventListener("hashchange", () => {
-    const id = window.location.hash.slice(1);
-    if (siteData.media.policies.some((item) => item.id === id)) {
-      renderMediaPolicy(id);
+    if (task.note) {
+      copy.append(create("p", "featured-note", task.note));
     }
+
+    const triple = create("div", "video-triple");
+    const longCard = create("div", "video-card");
+    const shortCard = create("div", "video-card");
+    const failureCard = create("div", "video-card");
+    longCard.append(renderMediaSlot(task.tactileLong, task.tactileLong.title));
+    shortCard.append(renderMediaSlot(task.tactileShort, task.tactileShort.title));
+    failureCard.append(renderMediaSlot(task.baselineFailure, task.baselineFailure.title));
+    triple.append(longCard, shortCard, failureCard);
+
+    panel.append(copy, triple);
+    taskList.append(panel);
   });
 }
 
 function renderDocs() {
-  const hardwareFacts = document.getElementById("hardware-facts");
-  if (!hardwareFacts) return;
-
   const softwareHighlights = document.getElementById("software-highlights");
+  if (!softwareHighlights) return;
+
   const repoMap = document.getElementById("repo-map");
   const modelGrid = document.getElementById("model-grid");
   const reproSteps = document.getElementById("repro-steps");
   const assetChecklist = document.getElementById("asset-checklist");
   const referenceList = document.getElementById("docs-reference-list");
-
-  siteData.hardwareFacts.forEach((item) => {
-    const card = create("article", "docs-card");
-    card.append(create("h3", "", item.title));
-    card.append(create("p", "", item.body));
-    hardwareFacts.append(card);
-  });
 
   siteData.softwareHighlights.forEach((item) => {
     const card = create("article", "docs-card");
@@ -278,6 +171,5 @@ function wireCopyButtons() {
 }
 
 renderLanding();
-renderMediaPage();
 renderDocs();
 wireCopyButtons();

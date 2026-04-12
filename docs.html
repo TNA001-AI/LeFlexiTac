@@ -27,7 +27,6 @@
       </a>
       <nav class="site-nav" aria-label="Primary">
         <a href="index.html">Project</a>
-        <a href="media.html">Media</a>
         <a href="#hardware">Hardware</a>
         <a href="#software">Software</a>
         <a href="#reproduction">Reproduction</a>
@@ -58,13 +57,42 @@
 
         <section class="docs-section" id="hardware">
           <div class="section-label">Hardware</div>
-          <h2>Bring-up notes for the robot, sensor, and camera stack.</h2>
-          <div class="docs-grid" id="hardware-facts"></div>
-          <div class="docs-note">
-            <strong>Custom gripper details.</strong>
-            <span>
-              Add the final gripper name, photos, mount notes, and any BOM or CAD links here.
-            </span>
+          <h2>Hardware stack.</h2>
+          <div class="hardware-item">
+            <h3>Robot arm</h3>
+            <p>
+              SO-ARM100/101 low-cost robotic arm. The follower arm is extended with
+              tactile sensor streams; the leader arm is used for teleoperation and demo collection.
+            </p>
+            <a class="inline-link" href="https://github.com/TheRobotStudio/SO-ARM100" target="_blank" rel="noreferrer">SO-ARM100 on GitHub</a>
+          </div>
+
+          <div class="hardware-item">
+            <h3>Tactile sensor</h3>
+            <p>
+              FlexiTac sensor mounted on a custom gripper. The driver reads tactile frames at 2,000,000 baud and exposes a 12 x 32 tactile map.
+            </p>
+            <a class="inline-link" href="https://flexitac.github.io/" target="_blank" rel="noreferrer">FlexiTac usage guide</a>
+          </div>
+
+          <div class="hardware-item">
+            <h3>Custom gripper CAD</h3>
+            <p>
+              Modified gripper designed for integrated tactile sensor mounting. The Moving Jaw holds the FlexiTac sensor
+              pad, and the Wrist Roll replaces the stock SO-ARM100 wrist to accommodate the new jaw geometry and wiring.
+            </p>
+          </div>
+          <div class="model-viewer-grid">
+            <div class="model-viewer-card">
+              <h4>Moving Jaw</h4>
+              <canvas class="stl-viewer" data-stl="assets/models/Moving_Jaw_08d.stl"></canvas>
+              <a class="button button-secondary" href="assets/models/Moving_Jaw_08d.stl" download>Download STL</a>
+            </div>
+            <div class="model-viewer-card">
+              <h4>Wrist Roll</h4>
+              <canvas class="stl-viewer" data-stl="assets/models/Wrist_Roll_08c.stl"></canvas>
+              <a class="button button-secondary" href="assets/models/Wrist_Roll_08c.stl" download>Download STL</a>
+            </div>
           </div>
         </section>
 
@@ -132,5 +160,12 @@
     </main>
 
     <script type="module" src="assets/app.js"></script>
+    <script type="importmap">
+      { "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+      }}
+    </script>
+    <script type="module" src="assets/stl-viewer.js"></script>
   </body>
 </html>
