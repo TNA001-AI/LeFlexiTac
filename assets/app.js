@@ -26,6 +26,7 @@ function renderMediaSlot(slot, label) {
     video.muted = true;
     video.playsInline = true;
     video.loop = true;
+    video.autoplay = true;
     const source = document.createElement("source");
     source.src = slot.src;
     video.append(source);
@@ -70,11 +71,11 @@ function renderLanding() {
 
   clear(taskList);
 
-  siteData.featured.tasks.forEach((task) => {
+  siteData.featured.tasks.forEach((task, index) => {
     const panel = create("article", "featured-panel task-panel");
 
     const copy = create("div", "featured-copy");
-    copy.append(create("p", "featured-label", task.label));
+    copy.append(create("p", "featured-label", `Task ${index + 1}`));
     copy.append(create("h3", "", task.name));
     copy.append(create("p", "featured-summary", task.summary));
 
@@ -88,12 +89,16 @@ function renderLanding() {
 
     const triple = create("div", "video-triple");
     const longCard = create("div", "video-card");
+    longCard.append(renderMediaSlot(task.tactileLong, task.tactileLong.title));
+    triple.append(longCard);
+
+    const pairRow = create("div", "video-pair-row");
     const shortCard = create("div", "video-card");
     const failureCard = create("div", "video-card");
-    longCard.append(renderMediaSlot(task.tactileLong, task.tactileLong.title));
     shortCard.append(renderMediaSlot(task.tactileShort, task.tactileShort.title));
     failureCard.append(renderMediaSlot(task.baselineFailure, task.baselineFailure.title));
-    triple.append(longCard, shortCard, failureCard);
+    pairRow.append(shortCard, failureCard);
+    triple.append(pairRow);
 
     panel.append(copy, triple);
     taskList.append(panel);

@@ -27,6 +27,8 @@ body {
   background: var(--bg);
   color: var(--ink);
   font-family: var(--sans);
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 a {
@@ -354,7 +356,13 @@ video {
 
 .video-triple {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1rem;
+}
+
+.video-triple .video-pair-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
 }
 
@@ -509,6 +517,8 @@ video {
 .repo-item,
 .step-card {
   padding: 1rem;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .task-card strong {
@@ -613,9 +623,15 @@ video {
 
 .docs-shell {
   display: grid;
-  grid-template-columns: 220px minmax(0, 1fr);
+  grid-template-columns: 160px minmax(0, 1fr);
   gap: 2rem;
   padding: 2.5rem 0 5rem;
+  overflow: hidden;
+}
+
+.docs-content {
+  min-width: 0;
+  overflow: hidden;
 }
 
 .docs-nav {
@@ -644,9 +660,12 @@ video {
 
 .docs-grid,
 .model-grid,
-.steps,
-.command-grid {
+.steps {
   grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.command-grid {
+  grid-template-columns: 1fr;
 }
 
 .docs-note {
@@ -691,12 +710,18 @@ video {
 .code-block {
   margin: 0;
   padding: 1rem;
-  background: #111111;
-  color: #f3efe8;
+  background: var(--panel-strong);
+  color: var(--ink);
+  border: 1px solid var(--line);
   overflow-x: auto;
   font-family: var(--mono);
   font-size: 0.84rem;
   line-height: 1.7;
+  max-width: 100%;
+}
+
+.docs-card {
+  max-width: 100%;
 }
 
 .checklist {
@@ -738,6 +763,11 @@ video {
     padding-bottom: 1rem;
     border-bottom: 1px solid var(--line);
   }
+
+  .docs-content {
+    min-width: 0;
+  }
+
 }
 
 @media (max-width: 720px) {

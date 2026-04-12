@@ -47,9 +47,9 @@ document.querySelectorAll(".stl-viewer").forEach((canvas) => {
     geometry.center();
 
     const material = new THREE.MeshPhongMaterial({
-      color: 0xa24a2d,
-      specular: 0x444444,
-      shininess: 60,
+      color: 0x6a9fb5,
+      specular: 0x555555,
+      shininess: 80,
     });
     const mesh = new THREE.Mesh(geometry, material);
     scene.add(mesh);
