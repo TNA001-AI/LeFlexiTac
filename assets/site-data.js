@@ -20,19 +20,19 @@ export const siteData = {
         ],
         note: "",
         tactileLong: {
-          src: "assets/media/tube/tube_demox8.mp4",
+          src: "assets/media/tube/tube_demox8_compressed.mp4",
           hint: "assets/media/tube/tactile_long_spedup.mp4",
           title: "Tactile, long rollout (sped up)",
           note: "",
         },
         tactileShort: {
-          src: "assets/media/tube/tube_demox8.mp4",
+          src: "assets/media/tube/tube_demox8_compressed.mp4",
           hint: "assets/media/tube/tactile_short_1x.mp4",
           title: "Tactile, 1x clip",
           note: "",
         },
         baselineFailure: {
-          src: "assets/media/tube/tube_demox8.mp4",
+          src: "assets/media/tube/tube_demox8_compressed.mp4",
           hint: "assets/media/tube/baseline_failure.mp4",
           title: "No tactile, typical failure",
           note: "",
