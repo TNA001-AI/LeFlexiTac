@@ -106,31 +106,20 @@ function renderLanding() {
 }
 
 function renderDocs() {
-  const softwareHighlights = document.getElementById("software-highlights");
-  if (!softwareHighlights) return;
-
-  const repoMap = document.getElementById("repo-map");
   const modelGrid = document.getElementById("model-grid");
+  if (!modelGrid) return;
+
   const reproSteps = document.getElementById("repro-steps");
   const assetChecklist = document.getElementById("asset-checklist");
   const referenceList = document.getElementById("docs-reference-list");
 
-  siteData.softwareHighlights.forEach((item) => {
-    const card = create("article", "docs-card");
-    card.append(create("h3", "", item.title));
-    card.append(create("p", "", item.body));
-    softwareHighlights.append(card);
-  });
-
-  siteData.repoMap.forEach((entry) => {
-    const item = create("article", "repo-item");
-    item.innerHTML = `<code>${entry.path}</code><p>${entry.note}</p>`;
-    repoMap.append(item);
-  });
-
   siteData.modelHooks.forEach((entry) => {
-    const card = create("article", "docs-card");
-    card.innerHTML = `<span class="model-hook">${entry.hook}</span><h3>${entry.model}</h3><p>${entry.summary}</p>`;
+    const card = create("article", "model-detail-card");
+    const info = create("div", "model-detail-info");
+    info.innerHTML = `<span class="model-hook">${entry.hook}</span><h3>${entry.model}</h3><p>${entry.summary}</p>`;
+    const imgSlot = create("div", "model-arch-placeholder");
+    imgSlot.innerHTML = `<img src="${entry.archImage || ''}" alt="${entry.model} architecture" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span class="arch-placeholder-text" style="display:${entry.archImage ? 'none' : 'block'}">Architecture diagram</span>`;
+    card.append(info, imgSlot);
     modelGrid.append(card);
   });
 

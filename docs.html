@@ -14,7 +14,7 @@
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     >
-    <link rel="stylesheet" href="assets/styles.css?v=2">
+    <link rel="stylesheet" href="assets/styles.css">
   </head>
   <body class="docs-page">
     <header class="site-header">
@@ -28,7 +28,7 @@
       <nav class="site-nav" aria-label="Primary">
         <a href="index.html">Project</a>
         <a href="#hardware">Hardware</a>
-        <a href="#software">Software</a>
+        <a href="#models">Models</a>
         <a href="#reproduction">Reproduction</a>
       </nav>
     </header>
@@ -38,7 +38,7 @@
         <p class="docs-nav-title">Docs</p>
         <a href="#overview">Overview</a>
         <a href="#hardware">Hardware</a>
-        <a href="#software">Software</a>
+        <a href="#models">Models</a>
         <a href="#commands">Commands</a>
         <a href="#reproduction">Reproduction</a>
         <a href="#assets">Assets</a>
@@ -96,12 +96,10 @@
           </div>
         </section>
 
-        <section class="docs-section" id="software">
-          <div class="section-label">Software</div>
-          <h2>Where tactile enters the stack.</h2>
-          <div class="docs-grid" id="software-highlights"></div>
-          <div class="repo-map" id="repo-map"></div>
-          <div class="model-grid docs-model-grid" id="model-grid"></div>
+        <section class="docs-section" id="models">
+          <div class="section-label">Models</div>
+          <h2>Tactile-conditioned policies.</h2>
+          <div class="model-list" id="model-grid"></div>
         </section>
 
         <section class="docs-section" id="commands">
@@ -159,13 +157,21 @@
       </div>
     </main>
 
-    <script type="module" src="assets/app.js"></script>
     <script type="importmap">
       { "imports": {
           "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
           "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
       }}
     </script>
-    <script type="module" src="assets/stl-viewer.js?v=2"></script>
+    <script>
+      const s1 = document.createElement('script');
+      s1.type = 'module';
+      s1.src = 'assets/app.js?' + Date.now();
+      document.body.appendChild(s1);
+      const s2 = document.createElement('script');
+      s2.type = 'module';
+      s2.src = 'assets/stl-viewer.js?' + Date.now();
+      document.body.appendChild(s2);
+    </script>
   </body>
 </html>

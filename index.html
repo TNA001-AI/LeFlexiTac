@@ -14,7 +14,7 @@
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     >
-    <link rel="stylesheet" href="assets/styles.css?v=2">
+    <link rel="stylesheet" href="assets/styles.css">
   </head>
   <body class="landing-page">
     <header class="site-header">
@@ -85,6 +85,11 @@
       <p>Tactile LeRobot.</p>
     </footer>
 
-    <script type="module" src="assets/app.js"></script>
+    <script>
+      const s = document.createElement('script');
+      s.type = 'module';
+      s.src = 'assets/app.js?' + Date.now();
+      document.body.appendChild(s);
+    </script>
   </body>
 </html>

@@ -675,6 +675,53 @@ video {
   margin-top: 1rem;
 }
 
+.model-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+.model-detail-card {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+  padding: 1.25rem;
+  background: var(--panel);
+  border: 1px solid var(--line);
+}
+
+.model-detail-info h3 {
+  margin: 0.35rem 0 0;
+  font-size: 1.4rem;
+}
+
+.model-detail-info p {
+  margin: 0.6rem 0 0;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.model-arch-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  background: var(--panel-strong);
+  border: 1px dashed var(--line-strong);
+}
+
+.model-arch-placeholder img {
+  width: 100%;
+  height: auto;
+}
+
+.arch-placeholder-text {
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.85rem;
+}
+
+
 .repo-item code {
   font-family: var(--mono);
   font-size: 0.86rem;

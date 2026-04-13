@@ -155,72 +155,35 @@ export const siteData = {
         "ACT, Diffusion Policy, Pi0.5, and SmolVLA each expose their own tactile flags and dimensions, but all are wired to the same tactile observation naming scheme.",
     },
   ],
-  repoMap: [
-    {
-      path: "src/lerobot/sensors/tactile_sensor.py",
-      note: "USB serial tactile driver, calibration logic, and visualization.",
-    },
-    {
-      path: "src/lerobot/sensors/configuration_tactile_sensor.py",
-      note: "Port, baud rate, shape, and visualization configuration.",
-    },
-    {
-      path: "src/lerobot/robots/so100_tactile_follower/",
-      note: "Tactile-capable SO100 follower config and implementation.",
-    },
-    {
-      path: "src/lerobot/policies/tactile/encoder.py",
-      note: "Shared tactile CNN and token encoder implementations.",
-    },
-    {
-      path: "src/lerobot/policies/act/",
-      note: "ACT tactile config and token insertion path.",
-    },
-    {
-      path: "src/lerobot/policies/diffusion/",
-      note: "Diffusion tactile conditioning path.",
-    },
-    {
-      path: "src/lerobot/policies/pi05/",
-      note: "Pi0.5 tactile token projection path and fine-tuning flags.",
-    },
-    {
-      path: "src/lerobot/policies/smolvla/",
-      note: "SmolVLA tactile prefix token integration.",
-    },
-    {
-      path: "src/lerobot/processor/tactile_processor.py",
-      note: "Validation and temporal filtering utilities.",
-    },
-    {
-      path: "tactile_cmd.txt",
-      note: "Task collection, training, and evaluation command log.",
-    },
-  ],
+  repoMap: [],
   modelHooks: [
     {
       model: "ACT",
       hook: "`n_tactile_tokens`",
       summary:
         "Tactile maps are encoded into transformer tokens and appended to the encoder-side token set.",
+      archImage: "",
     },
     {
       model: "Diffusion Policy",
       hook: "`n_tactile_chunks`",
       summary:
         "Tactile maps become chunked feature vectors flattened into the global conditioning vector used by the U-Net.",
+      archImage: "",
     },
     {
       model: "Pi0.5",
-      hook: "`n_tactile_tokens`, `train_expert_only`",
+      hook: "`n_tactile_tokens`",
       summary:
-        "Tactile tokens are projected into the VLM path, with optional memory-saving fine-tuning modes.",
+        "Tactile tokens are projected into the VLM path.",
+      archImage: "",
     },
     {
       model: "SmolVLA",
       hook: "`n_tactile_tokens`",
       summary:
         "Tactile tokens are added to the VLM-backed policy while preserving language-conditioned action generation.",
+      archImage: "",
     },
   ],
   commands: {
