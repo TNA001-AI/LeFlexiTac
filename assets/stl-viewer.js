@@ -16,6 +16,7 @@ document.querySelectorAll(".stl-viewer").forEach((canvas) => {
   controls.enableDamping = true;
   controls.autoRotate = true;
   controls.autoRotateSpeed = 2;
+  controls.enableZoom = false;
 
   scene.add(new THREE.AmbientLight(0xffffff, 0.6));
   const dirLight = new THREE.DirectionalLight(0xffffff, 1);

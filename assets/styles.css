@@ -155,7 +155,7 @@ video {
 
 .section-heading h2,
 .docs-section h2 {
-  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-size: clamp(1.6rem, 3.5vw, 2.2rem);
 }
 
 .masthead-summary,
@@ -554,6 +554,49 @@ video {
   line-height: 1.7;
 }
 
+.docs-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 2rem;
+  background: var(--panel);
+  text-decoration: none;
+  border: 2px solid var(--accent);
+  transition: background 0.15s;
+}
+
+.docs-banner:hover {
+  background: var(--panel-strong);
+}
+
+.docs-banner-label {
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  margin-bottom: 0.4rem;
+}
+
+.docs-banner-content strong {
+  display: block;
+  font-size: 1.25rem;
+}
+
+.docs-banner-content p {
+  margin: 0.5rem 0 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.docs-banner-arrow {
+  font-size: 1.8rem;
+  flex-shrink: 0;
+  margin-left: 2rem;
+  color: var(--accent);
+}
+
 .link-list {
   list-style: none;
   padding: 0;
@@ -571,6 +614,39 @@ video {
 .link-list a {
   text-decoration: none;
   font-weight: 600;
+}
+
+.reference-cards {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 1rem;
+}
+
+.reference-cards li {
+  padding: 1.25rem;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  transition: border-color 0.15s;
+}
+
+.reference-cards li:hover {
+  border-color: var(--accent);
+}
+
+.reference-cards a {
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--accent);
+}
+
+.reference-cards span {
+  display: block;
+  margin-top: 0.35rem;
+  color: var(--muted);
+  line-height: 1.6;
 }
 
 .site-footer {
@@ -805,6 +881,15 @@ video {
   margin: 0;
   color: var(--muted);
   line-height: 1.7;
+}
+
+.inline-code {
+  padding: 0.15em 0.4em;
+  background: var(--panel-strong);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  font-family: var(--mono);
+  font-size: 0.85em;
 }
 
 .repo-item code {
