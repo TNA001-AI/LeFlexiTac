@@ -1,0 +1,12 @@
+# Claude Code
+.claude/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Video backups
+*_backup.mp4
+
+# Node
+node_modules/
