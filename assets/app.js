@@ -110,7 +110,7 @@ function renderDocs() {
   if (!modelGrid) return;
 
   const reproSteps = document.getElementById("repro-steps");
-  const assetChecklist = document.getElementById("asset-checklist");
+  const tipsGrid = document.getElementById("tips-grid");
   const referenceList = document.getElementById("docs-reference-list");
 
   siteData.modelHooks.forEach((entry) => {
@@ -125,12 +125,65 @@ function renderDocs() {
 
   siteData.reproductionSteps.forEach((step, index) => {
     const card = create("article", "step-card");
-    card.innerHTML = `<span class="step-index">0${index + 1}</span><h3>${step.title}</h3><p>${step.body}</p>`;
+    let html = `<span class="step-index">0${index + 1}</span><h3>${step.title}</h3><p>${step.body}</p>`;
+
+    if (step.link) {
+      html += `<a class="inline-link" href="${step.link.url}" target="_blank" rel="noreferrer">${step.link.label}</a>`;
+    }
+
+    if (step.command) {
+      const cmdId = `step-cmd-${index}`;
+      html += `<div class="step-command"><div class="card-header"><span>Command</span><button class="copy-button" type="button" data-copy-target="${cmdId}">Copy</button></div><pre class="code-block"><code id="${cmdId}"></code></pre></div>`;
+    }
+
+    if (step.models) {
+      const gid = `model-tabs-${index}`;
+      html += `<div class="model-tab-group" id="${gid}"><div class="model-tabs">`;
+      step.models.forEach((m, mi) => {
+        html += `<button class="model-tab${mi === 0 ? " active" : ""}" data-tab-index="${mi}">${m.name}</button>`;
+      });
+      html += `</div>`;
+      step.models.forEach((m, mi) => {
+        const tId = `${gid}-t-${mi}`;
+        const bId = `${gid}-b-${mi}`;
+        html += `<div class="model-tab-panel${mi === 0 ? " active" : ""}" data-panel-index="${mi}"><div class="command-columns">`;
+        html += `<div class="command-col"><h4>With Tactile</h4><div class="card-header"><button class="copy-button" type="button" data-copy-target="${tId}">Copy</button></div><pre class="code-block"><code id="${tId}"></code></pre></div>`;
+        html += `<div class="command-col"><h4>Baseline</h4><div class="card-header"><button class="copy-button" type="button" data-copy-target="${bId}">Copy</button></div><pre class="code-block"><code id="${bId}"></code></pre></div>`;
+        html += `</div></div>`;
+      });
+      html += `</div>`;
+    }
+
+    card.innerHTML = html;
     reproSteps.append(card);
+
+    if (step.command) {
+      setText(`step-cmd-${index}`, step.command);
+    }
+    if (step.models) {
+      step.models.forEach((m, mi) => {
+        setText(`model-tabs-${index}-t-${mi}`, m.tactile);
+        setText(`model-tabs-${index}-b-${mi}`, m.baseline);
+      });
+    }
   });
 
-  siteData.assetChecklist.forEach((item) => {
-    assetChecklist.append(create("li", "", item));
+  document.querySelectorAll(".model-tab-group").forEach((group) => {
+    group.querySelectorAll(".model-tab").forEach((tab) => {
+      tab.addEventListener("click", () => {
+        const idx = tab.dataset.tabIndex;
+        group.querySelectorAll(".model-tab").forEach((t) => t.classList.remove("active"));
+        group.querySelectorAll(".model-tab-panel").forEach((p) => p.classList.remove("active"));
+        tab.classList.add("active");
+        group.querySelector(`.model-tab-panel[data-panel-index="${idx}"]`).classList.add("active");
+      });
+    });
+  });
+
+  siteData.tips.forEach((tip) => {
+    const card = create("article", "tip-card");
+    card.innerHTML = `<h3>${tip.title}</h3><p>${tip.body}</p>`;
+    tipsGrid.append(card);
   });
 
   siteData.references.forEach((reference) => {
@@ -138,11 +191,6 @@ function renderDocs() {
     li.innerHTML = `<a href="${reference.url}" target="_blank" rel="noreferrer">${reference.label}</a><span>${reference.note}</span>`;
     referenceList.append(li);
   });
-
-  setText("bringup-command", siteData.commands.bringup);
-  setText("record-command", siteData.commands.record);
-  setText("train-command", siteData.commands.train);
-  setText("eval-command", siteData.commands.eval);
 }
 
 function wireCopyButtons() {

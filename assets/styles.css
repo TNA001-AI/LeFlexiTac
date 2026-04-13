@@ -661,7 +661,7 @@ video {
 .docs-grid,
 .model-grid,
 .steps {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: 1fr;
 }
 
 .command-grid {
@@ -721,6 +721,91 @@ video {
   font-size: 0.85rem;
 }
 
+/* Step-embedded commands */
+.step-command {
+  margin-top: 1rem;
+  border-top: 1px solid var(--line);
+  padding-top: 1rem;
+}
+
+/* Model tabs */
+.model-tab-group {
+  margin-top: 1.25rem;
+}
+
+.model-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.model-tab {
+  padding: 0.5rem 1rem;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  color: var(--muted);
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.model-tab:hover {
+  color: var(--fg);
+}
+
+.model-tab.active {
+  color: var(--fg);
+  border-bottom-color: var(--fg);
+}
+
+.model-tab-panel {
+  display: none;
+  padding-top: 1rem;
+}
+
+.model-tab-panel.active {
+  display: block;
+}
+
+.command-columns {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+.command-col h4 {
+  margin: 0 0 0.5rem;
+  font-size: 0.85rem;
+  font-family: var(--mono);
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.tips-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.tip-card {
+  padding: 1.25rem;
+  background: var(--panel);
+  border: 1px solid var(--line);
+}
+
+.tip-card h3 {
+  margin: 0 0 0.4rem;
+  font-size: 1.05rem;
+}
+
+.tip-card p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.7;
+}
 
 .repo-item code {
   font-family: var(--mono);

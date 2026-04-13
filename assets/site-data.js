@@ -186,95 +186,350 @@ export const siteData = {
       archImage: "",
     },
   ],
-  commands: {
-    bringup: String.raw`lerobot-calibrate \
-  --robot.type=so100_tactile_follower \
-  --robot.port=/dev/ttyACM0 \
-  --robot.id=follower_arm
+  reproductionSteps: [
+    {
+      title: "Build the robot",
+      body:
+        'Assemble an SO-100 or SO-101 low-cost robotic arm following the official guide. Replace the stock gripper with our <a href="#hardware">custom tactile gripper</a> (Moving Jaw + Wrist Roll).',
+      link: { label: "SO-ARM100 build guide", url: "https://github.com/TheRobotStudio/SO-ARM100" },
+    },
+    {
+      title: "Reproduce the tactile sensor",
+      body:
+        "Fabricate or obtain a FlexiTac tactile sensor following the official documentation. After assembly, run a no-contact calibration pass to establish the zero-load baseline before mounting.",
+      link: { label: "FlexiTac guide", url: "https://flexitac.github.io/" },
+    },
+    {
+      title: "Mount the sensor",
+      body:
+        "Secure the FlexiTac sensor pad onto the 'Wrist Roll' of the custom gripper. Route the USB cable along the arm and verify the sensor appears as <code>/dev/ttyUSB0</code>.",
+    },
+    {
+      title: "Test the tactile sensor",
+      body:
+        "Grant serial access and run the driver test script to confirm the sensor streams valid tactile frames at 2 000 000 baud.",
+      link: { label: "test_tactile_driver.py", url: "https://github.com/TNA001-AI/lerobot_tactile/blob/new-sync/test_tactile_driver.py" },
+      command: String.raw`sudo chmod 777 /dev/ttyUSB0
 
-lerobot-calibrate \
-  --teleop.type=so100_leader \
-  --teleop.port=/dev/ttyACM1 \
-  --teleop.id=leader_arm`,
-    record: String.raw`lerobot-record \
+python test_tactile_driver.py`,
+    },
+    {
+      title: "Collect data",
+      body:
+        "Record teleoperated demonstrations with the top camera and tactile sensor enabled. The tactile stream is registered as <code>observation.tactile.primary</code>.",
+      command: String.raw`lerobot-record \
   --robot.type=so100_tactile_follower \
   --robot.port=/dev/ttyACM0 \
   --robot.id=follower_arm \
-  --robot.cameras='{top: {"type": "intelrealsense", "serial_number_or_name":"239222300740", "width":640, "height":480, "target_width":224, "target_height":224, "fps":30}}' \
+  --robot.cameras="{ top: {type: opencv, index_or_path: 0, width: 640, height: 480, fps: 30}}" \
   --robot.tactile_sensors='{primary: {"port": "/dev/ttyUSB0", "baud_rate": 2000000}}' \
   --teleop.type=so100_leader \
   --teleop.port=/dev/ttyACM1 \
   --teleop.id=leader_arm \
-  --dataset.repo_id=Tna001/tactile_tube_new \
-  --dataset.single_task="Tube"`,
-    train: String.raw`lerobot-train \
-  --dataset.repo_id=Tna001/tactile_tube_new \
+  --dataset.repo_id=${"${HF_USER}"}/tactile_tube \
+  --dataset.num_episodes=100 \
+  --dataset.episode_time_s=50 \
+  --dataset.reset_time_s=5 \
+  --dataset.single_task="Insert the test tube into the tube rack" \
+  --dataset.fps=10`,
+    },
+    {
+      title: "Train models",
+      body:
+        "Train each policy with and without tactile input. Select a model below to see both variants.",
+      models: [
+        {
+          name: "ACT",
+          tactile: String.raw`lerobot-train \
+  --dataset.repo_id=${"${HF_USER}"}/tactile_tube \
   --policy.type=act \
   --policy.use_tactile=true \
   --policy.tactile_features='["observation.tactile.primary"]' \
-  --policy.n_tactile_tokens=4
-
-lerobot-train \
-  --dataset.repo_id=Tna001/tactile_tube_100 \
+  --policy.n_tactile_tokens=4 \
+  --batch_size=32 \
+  --num_workers=8 \
+  --policy.device=cuda:0 \
+  --wandb.enable=true \
+  --policy.repo_id=${"${HF_USER}"}/act_tactile_tube`,
+          baseline: String.raw`lerobot-train \
+  --dataset.repo_id=${"${HF_USER}"}/tactile_tube \
+  --policy.type=act \
+  --policy.use_tactile=false \
+  --batch_size=32 \
+  --num_workers=8 \
+  --policy.device=cuda:0 \
+  --wandb.enable=true
+  --policy.repo_id=${"${HF_USER}"}/act_tube`,
+        },
+        {
+          name: "Diffusion",
+          tactile: String.raw`lerobot-train \
+  --dataset.repo_id=${"${HF_USER}"}/tactile_tube \
   --policy.type=diffusion \
   --policy.use_tactile=true \
+  --policy.tactile_features='["observation.tactile.primary"]' \
   --policy.n_tactile_chunks=1 \
-  --policy.tactile_feature_dim=64
-
-lerobot-train \
-  --dataset.repo_id=Tna001/tactile_tube_new \
+  --policy.tactile_feature_dim=64 \
+  --policy.crop_is_random=true \
+  --policy.resize_shape='[144,192]' \
+  --policy.use_amp=true \
+  --policy.repo_id=${"${HF_USER}"}/dp_tactile_tube \
+  --batch_size=16 \
+  --num_workers=8 \
+  --steps=200000 \
+  --save_freq=40000 \
+  --wandb.enable=true`,
+          baseline: String.raw`lerobot-train \
+  --dataset.repo_id=${"${HF_USER}"}/tactile_tube \
+  --policy.type=diffusion \
+  --policy.use_tactile=false \
+  --policy.crop_is_random=true \
+  --policy.resize_shape='[144,192]' \
+  --policy.use_amp=true \
+  --policy.repo_id=${"${HF_USER}"}/dp_tube \
+  --batch_size=16 \
+  --num_workers=8 \
+  --steps=200000 \
+  --save_freq=40000 \
+  --wandb.enable=true`,
+        },
+        {
+          name: "Pi0.5",
+          tactile: String.raw`lerobot-train \
+  --dataset.repo_id=${"${HF_USER}"}/tactile_tube_new \
+  --policy.pretrained_path=lerobot/pi05_base \
   --policy.type=pi05 \
   --policy.use_tactile=true \
+  --policy.tactile_features='["observation.tactile.primary"]' \
   --policy.n_tactile_tokens=4 \
-  --policy.train_expert_only=true
-
-lerobot-train \
+  --policy.tactile_feature_dim=256 \
+  --policy.dtype=bfloat16 \
+  --policy.freeze_vision_encoder=false \
+  --policy.gradient_checkpointing=true \
+  --policy.train_expert_only=true \
+  --steps=50000 \
+  --batch_size=16 \
+  --num_workers=16 \
+  --policy.device=cuda \
+  --wandb.enable=true`,
+          baseline: String.raw`lerobot-train \
+  --dataset.repo_id=${"${HF_USER}"}/tactile_tube \
+  --policy.pretrained_path=lerobot/pi05_base \
+  --policy.type=pi05 \
+  --policy.use_tactile=false \
+  --policy.gradient_checkpointing=true \
+  --policy.dtype=bfloat16 \
+  --policy.freeze_vision_encoder=false \
+  --policy.train_expert_only=true \
+  --steps=50000 \
+  --batch_size=16 \
+  --num_workers=16 \
+  --policy.device=cuda \
+  --wandb.enable=true`,
+        },
+        {
+          name: "SmolVLA",
+          tactile: String.raw`lerobot-train \
   --policy.path=lerobot/smolvla_base \
-  --dataset.repo_id=Tna001/tactile_tube_new \
+  --dataset.repo_id=${"${HF_USER}"}/so101_tactile_peg \
+  --rename_map='{"observation.images.top": "observation.images.camera1"}' \
+  --policy.empty_cameras=2 \
   --policy.use_tactile=true \
-  --policy.n_tactile_tokens=4`,
-    eval: String.raw`lerobot-record \
+  --policy.tactile_features='["observation.tactile.primary"]' \
+  --policy.n_tactile_tokens=4 \
+  --policy.tactile_feature_dim=256 \
+  --policy.frame_stride=3 \
+  --batch_size=64 \
+  --steps=40000 \
+  --policy.device=cuda \
+  --wandb.enable=true`,
+          baseline: String.raw`lerobot-train \
+  --policy.path=lerobot/smolvla_base \
+  --dataset.repo_id=${"${HF_USER}"}/so101_tactile_peg \
+  --rename_map='{"observation.images.top": "observation.images.camera1"}' \
+  --policy.empty_cameras=2 \
+  --policy.use_tactile=false \
+  --policy.frame_stride=3 \
+  --batch_size=64 \
+  --steps=40000 \
+  --policy.device=cuda \
+  --wandb.enable=true`,
+        },
+      ],
+    },
+    {
+      title: "Evaluate",
+      body:
+        "Run policy evaluation on the real robot. Select a model to see the tactile and baseline evaluation commands.",
+      models: [
+        {
+          name: "ACT",
+          tactile: String.raw`lerobot-record \
   --robot.type=so100_tactile_follower \
   --robot.port=/dev/ttyACM0 \
   --robot.id=follower_arm \
-  --robot.cameras='{top: {"type": "intelrealsense", "serial_number_or_name":"239222300740", "width":640, "height":480, "target_width":224, "target_height":224, "fps":30}}' \
+  --robot.cameras="{ top: {type: opencv, index_or_path: 0, width: 640, height: 480, fps: 30}}" \
   --robot.tactile_sensors='{primary: {"port": "/dev/ttyUSB0", "baud_rate": 2000000}}' \
-  --dataset.repo_id=Tna001/eval_tactile_pi05_expertonly \
+  --teleop.type=so100_leader \
+  --teleop.port=/dev/ttyACM1 \
+  --teleop.id=leader_arm \
+  --dataset.repo_id=${"${HF_USER}"}/eval_tactile_act_tok4 \
+  --dataset.num_episodes=50 \
+  --dataset.episode_time_s=30 \
   --dataset.single_task="Insert the test tube into the tube rack" \
-  --policy.path=/data/tao/train/pi05_tactile_expertonly/checkpoints/last/pretrained_model`,
-  },
-  reproductionSteps: [
-    {
-      title: "Bring the hardware online",
-      body:
-        "Connect follower arm, leader arm, tactile sensor, and top camera. Confirm serial devices, then calibrate follower and leader before recording.",
-    },
-    {
-      title: "Record synchronized demos",
-      body:
-        "Use `lerobot-record` with the top camera and the named tactile stream `observation.tactile.primary` so the dataset schema stays consistent across models.",
-    },
-    {
-      title: "Train tactile and baseline variants",
-      body:
-        "Run tactile-enabled and no-tactile baselines per model family and keep the public page aligned with the exact settings you actually use.",
-    },
-    {
-      title: "Package evaluation media",
-      body:
-        "Export short, consistent clips per task: a sped-up long rollout with tactile, a 1x short clip with tactile, and a typical no-tactile failure.",
-    },
-    {
-      title: "Update the static site",
-      body:
-        "Drop media into `assets/media/<task>/`, update copy in `assets/site-data.js`, and publish directly without a separate build step.",
+  --dataset.fps=10 \
+  --dataset.reset_time_s=10 \
+  --policy.path=<act_tactile_checkpoint>`,
+          baseline: String.raw`lerobot-record \
+  --robot.type=so100_tactile_follower \
+  --robot.port=/dev/ttyACM0 \
+  --robot.id=follower_arm \
+  --robot.cameras="{ top: {type: opencv, index_or_path: 0, width: 640, height: 480, fps: 30}}" \
+  --teleop.type=so100_leader \
+  --teleop.port=/dev/ttyACM1 \
+  --teleop.id=leader_arm \
+  --dataset.repo_id=${"${HF_USER}"}/eval_act_baseline \
+  --dataset.num_episodes=50 \
+  --dataset.episode_time_s=30 \
+  --dataset.single_task="Insert the test tube into the tube rack" \
+  --dataset.fps=10 \
+  --dataset.reset_time_s=10 \
+  --policy.path=<act_baseline_checkpoint>`,
+        },
+        {
+          name: "Diffusion",
+          tactile: String.raw`lerobot-record \
+  --robot.type=so100_tactile_follower \
+  --robot.port=/dev/ttyACM0 \
+  --robot.id=follower_arm \
+  --robot.cameras="{ top: {type: opencv, index_or_path: 0, width: 640, height: 480, fps: 30}}" \
+  --robot.tactile_sensors='{primary: {"port": "/dev/ttyUSB0", "baud_rate": 2000000}}' \
+  --teleop.type=so100_leader \
+  --teleop.port=/dev/ttyACM1 \
+  --teleop.id=leader_arm \
+  --dataset.reset_time_s=5 \
+  --dataset.repo_id=${"${HF_USER}"}/eval_dp_vision_tactile_10hz \
+  --dataset.fps=10 \
+  --dataset.num_episodes=51 \
+  --dataset.episode_time_s=30 \
+  --dataset.single_task="Tube" \
+  --policy.path=<diffusion_tactile_checkpoint> \
+  --policy.noise_scheduler_type=DDIM \
+  --policy.num_inference_steps=16`,
+          baseline: String.raw`lerobot-record \
+  --robot.type=so100_tactile_follower \
+  --robot.port=/dev/ttyACM0 \
+  --robot.id=follower_arm \
+  --robot.cameras="{ top: {type: opencv, index_or_path: 0, width: 640, height: 480, fps: 30}}" \
+  --teleop.type=so100_leader \
+  --teleop.port=/dev/ttyACM1 \
+  --teleop.id=leader_arm \
+  --dataset.reset_time_s=5 \
+  --dataset.repo_id=${"${HF_USER}"}/eval_dp_vision_only_10hz \
+  --dataset.fps=10 \
+  --dataset.num_episodes=51 \
+  --dataset.episode_time_s=30 \
+  --dataset.single_task="Tube" \
+  --policy.path=<diffusion_baseline_checkpoint> \
+  --policy.noise_scheduler_type=DDIM \
+  --policy.num_inference_steps=16`,
+        },
+        {
+          name: "Pi0.5",
+          tactile: String.raw`lerobot-record \
+  --robot.type=so100_tactile_follower \
+  --robot.port=/dev/ttyACM0 \
+  --robot.id=follower_arm \
+  --robot.cameras="{ top: {type: opencv, index_or_path: 0, width: 640, height: 480, fps: 30}}" \
+  --robot.tactile_sensors='{primary: {"port": "/dev/ttyUSB0", "baud_rate": 2000000}}' \
+  --teleop.type=so100_leader \
+  --teleop.port=/dev/ttyACM1 \
+  --teleop.id=leader_arm \
+  --dataset.repo_id=${"${HF_USER}"}/eval_pi05_tactile_expertonly_tube \
+  --dataset.num_episodes=500 \
+  --dataset.episode_time_s=30 \
+  --dataset.single_task="Insert the test tube into the tube rack" \
+  --dataset.fps=10 \
+  --dataset.reset_time_s=3 \
+  --policy.path=<pi05_tactile_checkpoint> \
+  --policy.device=cuda`,
+          baseline: String.raw`lerobot-record \
+  --robot.type=so100_tactile_follower \
+  --robot.port=/dev/ttyACM0 \
+  --robot.id=follower_arm \
+  --robot.cameras="{ top: {type: opencv, index_or_path: 0, width: 640, height: 480, fps: 30}}" \
+  --teleop.type=so100_leader \
+  --teleop.port=/dev/ttyACM1 \
+  --teleop.id=leader_arm \
+  --dataset.repo_id=${"${HF_USER}"}/eval_pi05_expertonly \
+  --dataset.num_episodes=500 \
+  --dataset.episode_time_s=30 \
+  --dataset.single_task="Insert the test tube into the tube rack" \
+  --dataset.fps=10 \
+  --dataset.reset_time_s=10 \
+  --policy.path=<pi05_baseline_checkpoint> \
+  --policy.device=cuda`,
+        },
+        {
+          name: "SmolVLA",
+          tactile: String.raw`lerobot-record \
+  --robot.type=so100_tactile_follower \
+  --robot.port=/dev/ttyACM0 \
+  --robot.id=follower_arm \
+  --robot.cameras="{ top: {type: opencv, index_or_path: 0, width: 640, height: 480, fps: 30}}" \
+  --robot.tactile_sensors='{primary: {"port": "/dev/ttyUSB0", "baud_rate": 2000000}}' \
+  --teleop.type=so100_leader \
+  --teleop.port=/dev/ttyACM1 \
+  --teleop.id=leader_arm \
+  --dataset.repo_id=${"${HF_USER}"}/eval_smolvla_tactile \
+  --dataset.num_episodes=50 \
+  --dataset.episode_time_s=30 \
+  --dataset.single_task="Insert the test tube into the tube rack" \
+  --dataset.fps=10 \
+  --dataset.reset_time_s=10 \
+  --policy.path=<smolvla_tactile_checkpoint> \
+  --policy.device=cuda`,
+          baseline: String.raw`lerobot-record \
+  --robot.type=so100_tactile_follower \
+  --robot.port=/dev/ttyACM0 \
+  --robot.id=follower_arm \
+  --robot.cameras="{ top: {type: opencv, index_or_path: 0, width: 640, height: 480, fps: 30}}" \
+  --teleop.type=so100_leader \
+  --teleop.port=/dev/ttyACM1 \
+  --teleop.id=leader_arm \
+  --dataset.repo_id=${"${HF_USER}"}/eval_smolvla_baseline \
+  --dataset.num_episodes=50 \
+  --dataset.episode_time_s=30 \
+  --dataset.single_task="Insert the test tube into the tube rack" \
+  --dataset.fps=10 \
+  --dataset.reset_time_s=10 \
+  --policy.path=<smolvla_baseline_checkpoint> \
+  --policy.device=cuda`,
+        },
+      ],
     },
   ],
-  assetChecklist: [
-    "Replace `x%`, `y%`, and `+z pts` with real success rates for each task.",
-    "Populate per-task clips under `assets/media/tube/`, `assets/media/peg/`, and `assets/media/pen/` (tactile long, tactile 1x, baseline failure).",
-    "Replace the custom gripper placeholder with final hardware details.",
-    "Add public code, paper, and dataset links once you know what should be exposed.",
+  tips: [
+    {
+      title: "Sensor calibration",
+      body: "Always run a no-contact baseline read before recording. The tactile map drifts with temperature — recalibrate if the sensor has been powered on for more than 30 minutes.",
+    },
+    {
+      title: "Demo collection quality",
+      body: "Keep each demonstration under 20 seconds. Discard episodes where the gripper slips or the object is not fully grasped — noisy demos hurt policy convergence more than a smaller dataset.",
+    },
+    {
+      title: "Training hyperparameters",
+      body: "Start with the default learning rate and batch size. For tactile-enabled runs, 4 tactile tokens is a good default; increasing to 8 rarely helps and doubles memory usage.",
+    },
+    {
+      title: "Camera placement",
+      body: "Mount the top camera at a consistent height and angle across sessions. Even small shifts between recording and evaluation can degrade policy performance.",
+    },
+    {
+      title: "USB device ordering",
+      body: "Linux may reassign /dev/ttyACM* and /dev/ttyUSB* on reboot. Use udev rules or check `dmesg` to verify device identity before each session.",
+    },
   ],
   references: [
     {
