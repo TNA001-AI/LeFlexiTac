@@ -22,7 +22,7 @@ export const siteData = {
         tactileLong: {
           src: "assets/media/tube/task1x10.mp4",
           hint: "assets/media/tube/task1x10.mp4",
-          title: "Tactile, long rollout (sped up)",
+          title: "Tactile, 10x rollout",
           note: "",
         },
         tactileShort: {
@@ -50,20 +50,20 @@ export const siteData = {
         ],
         note: "",
         tactileLong: {
-          src: "",
-          hint: "assets/media/peg/tactile_long_spedup.mp4",
-          title: "Tactile, long rollout (sped up)",
+          src: "assets/media/peg/task2x10.mp4",
+          hint: "assets/media/peg/task2x10.mp4",
+          title: "Tactile, 10x rollout",
           note: "",
         },
         tactileShort: {
-          src: "",
-          hint: "assets/media/peg/tactile_short_1x.mp4",
+          src: "assets/media/peg/task2_short_x1.mp4",
+          hint: "assets/media/peg/task2_short_x1.mp4",
           title: "Tactile, 1x clip",
           note: "",
         },
         baselineFailure: {
-          src: "",
-          hint: "assets/media/peg/baseline_failure.mp4",
+          src: "assets/media/peg/task2_fail_x2.mp4",
+          hint: "assets/media/peg/task2_fail_x2.mp4",
           title: "No tactile, typical failure",
           note: "",
         },
@@ -83,7 +83,7 @@ export const siteData = {
         tactileLong: {
           src: "",
           hint: "assets/media/pen/tactile_long_spedup.mp4",
-          title: "Tactile, long rollout (sped up)",
+          title: "Tactile, 10x rollout",
           note: "",
         },
         tactileShort: {
@@ -162,7 +162,7 @@ export const siteData = {
       hook: "`n_tactile_tokens`",
       summary:
         "Tactile maps are encoded into transformer tokens and appended to the encoder-side token set.",
-      archImage: "",
+      archImage: "assets/architectures/ACT.png",
     },
     {
       model: "Diffusion Policy",
@@ -176,7 +176,7 @@ export const siteData = {
       hook: "`n_tactile_tokens`",
       summary:
         "Tactile tokens are projected into the VLM path.",
-      archImage: "",
+      archImage: "assets/architectures/pi05.png",
     },
     {
       model: "SmolVLA",

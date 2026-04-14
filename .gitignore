@@ -5,6 +5,16 @@
 .DS_Store
 Thumbs.db
 
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+logs/
+
 # Video backups
 *_backup.mp4
 

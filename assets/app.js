@@ -147,8 +147,8 @@ function renderDocs() {
         const tId = `${gid}-t-${mi}`;
         const bId = `${gid}-b-${mi}`;
         html += `<div class="model-tab-panel${mi === 0 ? " active" : ""}" data-panel-index="${mi}"><div class="command-columns">`;
-        html += `<div class="command-col"><h4>With Tactile</h4><div class="card-header"><button class="copy-button" type="button" data-copy-target="${tId}">Copy</button></div><pre class="code-block"><code id="${tId}"></code></pre></div>`;
-        html += `<div class="command-col"><h4>Baseline</h4><div class="card-header"><button class="copy-button" type="button" data-copy-target="${bId}">Copy</button></div><pre class="code-block"><code id="${bId}"></code></pre></div>`;
+        html += `<div class="command-col"><div class="card-header"><h4>With Tactile</h4><button class="copy-button" type="button" data-copy-target="${tId}">Copy</button></div><pre class="code-block"><code id="${tId}"></code></pre></div>`;
+        html += `<div class="command-col"><div class="card-header"><h4>Baseline</h4><button class="copy-button" type="button" data-copy-target="${bId}">Copy</button></div><pre class="code-block"><code id="${bId}"></code></pre></div>`;
         html += `</div></div>`;
       });
       html += `</div>`;

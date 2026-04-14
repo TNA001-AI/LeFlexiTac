@@ -224,8 +224,9 @@ video {
 }
 
 .button-primary {
-  background: var(--ink);
-  color: var(--bg);
+  background: var(--panel);
+  color: var(--ink);
+  border: 2px solid var(--accent);
 }
 
 .button-primary:hover {
@@ -934,6 +935,7 @@ video {
 }
 
 .copy-button {
+  margin-left: auto;
   appearance: none;
   border: 1px solid var(--ink);
   background: transparent;
