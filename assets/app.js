@@ -26,10 +26,8 @@ function renderMediaSlot(slot, label) {
     video.muted = true;
     video.playsInline = true;
     video.loop = true;
-    video.autoplay = true;
-    const source = document.createElement("source");
-    source.src = slot.src;
-    video.append(source);
+    video.preload = "metadata";
+    video.dataset.lazySrc = slot.src;
     wrapper.append(video);
   } else {
     wrapper.append(create("strong", "slot-title", slot.title || "Media slot"));
@@ -103,25 +101,77 @@ function renderLanding() {
     panel.append(copy, triple);
     taskList.append(panel);
   });
+
+  setupLazyVideos();
+}
+
+function setupLazyVideos() {
+  const videos = document.querySelectorAll("video[data-lazy-src]");
+  if (!videos.length) return;
+
+  const loadVideo = (video) => {
+    if (video.dataset.loaded) return;
+    const source = document.createElement("source");
+    source.src = video.dataset.lazySrc;
+    video.append(source);
+    video.load();
+    video.dataset.loaded = "true";
+  };
+
+  const unloadVideo = (video) => {
+    if (!video.dataset.loaded) return;
+    video.pause();
+    video.removeAttribute("src");
+    const source = video.querySelector("source");
+    if (source) source.remove();
+    video.load();
+    delete video.dataset.loaded;
+  };
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        const video = entry.target;
+        if (entry.isIntersecting) {
+          loadVideo(video);
+          video.play().catch(() => {});
+        } else if (video.dataset.loaded) {
+          video.pause();
+        }
+      });
+    },
+    { threshold: 0.25 }
+  );
+
+  videos.forEach((v) => observer.observe(v));
+
+  const abortAll = () => videos.forEach(unloadVideo);
+  window.addEventListener("pagehide", abortAll);
+  document.addEventListener("click", (e) => {
+    const link = e.target.closest("a[href]");
+    if (!link) return;
+    const href = link.getAttribute("href");
+    if (!href || href.startsWith("#")) return;
+    if (link.target === "_blank") return;
+    abortAll();
+  }, true);
 }
 
 function renderDocs() {
-  const modelGrid = document.getElementById("model-grid");
-  if (!modelGrid) return;
-
   const reproSteps = document.getElementById("repro-steps");
+  if (!reproSteps) return;
+
   const tipsGrid = document.getElementById("tips-grid");
   const referenceList = document.getElementById("docs-reference-list");
 
-  siteData.modelHooks.forEach((entry) => {
-    const card = create("article", "model-detail-card");
-    const info = create("div", "model-detail-info");
-    info.innerHTML = `<span class="model-hook">${entry.hook}</span><h3>${entry.model}</h3><p>${entry.summary}</p>`;
-    const imgSlot = create("div", "model-arch-placeholder");
-    imgSlot.innerHTML = `<img src="${entry.archImage || ''}" alt="${entry.model} architecture" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span class="arch-placeholder-text" style="display:${entry.archImage ? 'none' : 'block'}">Architecture diagram</span>`;
-    card.append(info, imgSlot);
-    modelGrid.append(card);
+  const hookByName = {};
+  siteData.modelHooks.forEach((h) => {
+    hookByName[h.model] = h;
   });
+  const normalizeName = (name) => {
+    if (name === "Diffusion") return "Diffusion Policy";
+    return name;
+  };
 
   siteData.reproductionSteps.forEach((step, index) => {
     const card = create("article", "step-card");
@@ -146,7 +196,17 @@ function renderDocs() {
       step.models.forEach((m, mi) => {
         const tId = `${gid}-t-${mi}`;
         const bId = `${gid}-b-${mi}`;
-        html += `<div class="model-tab-panel${mi === 0 ? " active" : ""}" data-panel-index="${mi}"><div class="command-columns">`;
+        html += `<div class="model-tab-panel${mi === 0 ? " active" : ""}" data-panel-index="${mi}">`;
+
+        if (step.showModelInfo) {
+          const hookEntry = hookByName[normalizeName(m.name)];
+          if (hookEntry) {
+            html += `<div class="model-detail-card"><div class="model-detail-info"><span class="model-hook">${hookEntry.hook}</span><h3>${hookEntry.model}</h3><p>${hookEntry.summary}</p></div>`;
+            html += `<div class="model-arch-placeholder"><img src="${hookEntry.archImage || ''}" alt="${hookEntry.model} architecture" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span class="arch-placeholder-text" style="display:${hookEntry.archImage ? 'none' : 'block'}">Architecture diagram</span></div></div>`;
+          }
+        }
+
+        html += `<div class="command-columns">`;
         html += `<div class="command-col"><div class="card-header"><h4>With Tactile</h4><button class="copy-button" type="button" data-copy-target="${tId}">Copy</button></div><pre class="code-block"><code id="${tId}"></code></pre></div>`;
         html += `<div class="command-col"><div class="card-header"><h4>Baseline</h4><button class="copy-button" type="button" data-copy-target="${bId}">Copy</button></div><pre class="code-block"><code id="${bId}"></code></pre></div>`;
         html += `</div></div>`;

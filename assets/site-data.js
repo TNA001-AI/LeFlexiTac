@@ -237,7 +237,8 @@ python test_tactile_driver.py`,
     {
       title: "Train models",
       body:
-        "Train each policy with and without tactile input. Select a model below to see both variants.",
+        "Train each policy with and without tactile input. Select a model below to see its architecture and both command variants.",
+      showModelInfo: true,
       models: [
         {
           name: "ACT",

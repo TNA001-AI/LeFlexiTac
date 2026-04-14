@@ -1,4 +1,4 @@
-# Tactile LeRobot Site
+# LeRobot x FlexiTac Site
 
 Static repo for a split site:
 
@@ -7,13 +7,17 @@ Static repo for a split site:
 
 ## Local preview
 
-From this directory:
+From this directory, run:
 
 ```bash
-python3 -m http.server 8000
+npx serve -l 8080
 ```
 
-Then open `http://localhost:8000`.
+Then open `http://localhost:8080`.
+
+The first run prompts to install the `serve` package — accept with `y`. A `serve.json` in this repo sets `Cache-Control: no-cache` so file edits show up immediately on refresh.
+
+> Avoid `python3 -m http.server` — it throws noisy `BrokenPipeError` tracebacks whenever the browser aborts an in-flight video download (and this repo has a few hundred MB of task videos).
 
 ## Publishing
 
