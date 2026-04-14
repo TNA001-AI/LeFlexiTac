@@ -207,11 +207,30 @@ video {
   text-decoration: none;
   font-size: 0.95rem;
   background: transparent;
+  color: var(--ink);
+  transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.button:hover {
+  background: var(--ink);
+  color: var(--bg);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.button:active {
+  transform: translateY(0);
+  box-shadow: none;
 }
 
 .button-primary {
   background: var(--ink);
   color: var(--bg);
+}
+
+.button-primary:hover {
+  background: transparent;
+  color: var(--ink);
 }
 
 .metric-grid {

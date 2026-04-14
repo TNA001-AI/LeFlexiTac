@@ -529,14 +529,39 @@ python test_tactile_driver.py`,
   ],
   references: [
     {
+      label: "LeRobot",
+      url: "https://github.com/huggingface/lerobot",
+      note: "Hugging Face's robotics framework. Our training and inference code extends LeRobot's policy and dataset interfaces.",
+    },
+    {
+      label: "SO-ARM100 / SO-101",
+      url: "https://github.com/TheRobotStudio/SO-ARM100",
+      note: "Open-source low-cost robotic arm platform we build on, with a custom tactile gripper replacing the stock jaw.",
+    },
+    {
       label: "FlexiTac",
       url: "https://flexitac.github.io/",
       note: "The tactile sensor used in this project. See their site for fabrication instructions and hardware specs.",
     },
     {
+      label: "ACT (Action Chunking Transformer)",
+      url: "https://tonyzhaozh.github.io/aloha/",
+      note: "Transformer policy from ALOHA. We add tactile tokens via the `n_tactile_tokens` hook on the encoder side.",
+    },
+    {
+      label: "Diffusion Policy",
+      url: "https://diffusion-policy.cs.columbia.edu/",
+      note: "Diffusion-based visuomotor policy. We fold tactile features into the global conditioning vector via `n_tactile_chunks`.",
+    },
+    {
       label: "Physical Intelligence — Pi0.5",
       url: "https://www.pi.website/blog/pi05",
-      note: "Foundation model behind our Pi0.5 tactile fine-tuning experiments.",
+      note: "VLA foundation model behind our Pi0.5 tactile fine-tuning experiments; tactile tokens are projected into the VLM path.",
+    },
+    {
+      label: "SmolVLA",
+      url: "https://huggingface.co/blog/smolvla",
+      note: "Compact VLA model from Hugging Face. Tactile tokens are added while preserving language-conditioned action generation.",
     },
     {
       label: "VT-Refine",
