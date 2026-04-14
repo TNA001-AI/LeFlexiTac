@@ -47,6 +47,7 @@ export const siteData = {
         results: [
           { policy: "ACT", tactile: "30/38 = 0.79", baseline: "16/39 = 0.41" },
           { policy: "Diffusion Policy", tactile: "25/30 = 0.83", baseline: "17/30 = 0.57" },
+          { policy: "SmolVLA", tactile: "25/30 = 0.83", baseline: "14/30 = 0.47" },
         ],
         note: "",
         tactileLong: {
