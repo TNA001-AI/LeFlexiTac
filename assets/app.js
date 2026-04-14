@@ -198,16 +198,35 @@ function wireCopyButtons() {
     button.addEventListener("click", async () => {
       const target = document.getElementById(button.dataset.copyTarget);
       if (!target) return;
-      try {
-        await navigator.clipboard.writeText(target.textContent ?? "");
-        const previous = button.textContent;
-        button.textContent = "Copied";
+      const text = target.textContent ?? "";
+      const previous = button.textContent;
+      const flash = (msg) => {
+        button.textContent = msg;
         window.setTimeout(() => {
           button.textContent = previous;
         }, 1400);
-      } catch {
-        button.textContent = "Failed";
-      }
+      };
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+          flash("Copied");
+          return;
+        }
+      } catch {}
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.setAttribute("readonly", "");
+      ta.style.position = "fixed";
+      ta.style.top = "-1000px";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.select();
+      let ok = false;
+      try {
+        ok = document.execCommand("copy");
+      } catch {}
+      document.body.removeChild(ta);
+      flash(ok ? "Copied" : "Failed");
     });
   });
 }
