@@ -903,6 +903,21 @@ video {
   line-height: 1.7;
 }
 
+.tip-card ul {
+  margin: 0;
+  padding-left: 1.2rem;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.tip-card li {
+  margin-bottom: 0.35rem;
+}
+
+.tip-card li:last-child {
+  margin-bottom: 0;
+}
+
 .inline-code {
   padding: 0.15em 0.4em;
   background: var(--panel-strong);

@@ -512,23 +512,37 @@ python test_tactile_driver.py`,
   ],
   tips: [
     {
-      title: "Sensor calibration",
-      body: "Always run a no-contact baseline read before recording. The tactile map drifts with temperature — recalibrate if the sensor has been powered on for more than 30 minutes.",
+      title: "USB setup",
+      body: "Linux may reassign /dev/ttyACM* and /dev/ttyUSB* on reboot. For the robot arms, follow the LeRobot tutorial to set up persistent udev rules. For the tactile sensor, run <code class=\"inline-code\">sudo chmod 777 /dev/ttyUSB0</code> before each session.",
     },
     {
-      title: "Training hyperparameters",
-      body: "Start with the default learning rate and batch size. For tactile-enabled runs, 4 tactile tokens is a good default — too few tokens lose spatial detail, while too many add noise without improving performance.",
+      title: "Sensor calibration",
+      body: "Always run a no-contact baseline read before recording. The tactile map drifts with temperature — recalibrate if the sensor has been powered on for more than 30 minutes.",
     },
     {
       title: "Camera placement",
       body: "Mount the top camera at a consistent height and angle across sessions. Even small shifts between recording and evaluation can degrade policy performance.",
     },
     {
-      title: "USB device ordering",
-      body: "Linux may reassign /dev/ttyACM* and /dev/ttyUSB* on reboot. For the robot arms, follow the LeRobot tutorial to set up persistent udev rules. For the tactile sensor, run <code class=\"inline-code\">sudo chmod 777 /dev/ttyUSB0</code> before each session.",
+      title: "Training hyperparameters",
+      body: "Start with the default learning rate and batch size. For tactile-enabled runs, 4 tactile tokens is a good default — too few tokens lose spatial detail, while too many add noise without improving performance.",
+    },
+    {
+      title: "Training Pi0.5",
+      body: "<ul><li>A dataset of 100 episodes is sufficient for a single task.</li><li>Only full fine-tuning works reliably — action-expert-only and LoRA yield low success rates.</li><li>Less than 80 GB VRAM is insufficient for full fine-tuning.</li><li>FSDP (Fully Sharded Data Parallel) is not well supported in LeRobot (issues with dtype and model saving).</li><li>Only a smaller learning rate works: <code class=\"inline-code\">2.5e-5</code> succeeds, but <code class=\"inline-code\">5e-5</code> does not.</li></ul>",
     },
   ],
   references: [
+    {
+      label: "FlexiTac",
+      url: "https://flexitac.github.io/",
+      note: "The tactile sensor used in this project. See their site for fabrication instructions and hardware specs.",
+    },
+    {
+      label: "VT-Refine",
+      url: "https://binghao-huang.github.io/vt_refine/",
+      note: "Related work on vision-tactile policy refinement for dexterous manipulation.",
+    },
     {
       label: "LeRobot",
       url: "https://github.com/huggingface/lerobot",
@@ -538,11 +552,6 @@ python test_tactile_driver.py`,
       label: "SO-ARM100 / SO-101",
       url: "https://github.com/TheRobotStudio/SO-ARM100",
       note: "Open-source low-cost robotic arm platform we build on, with a custom tactile gripper replacing the stock jaw.",
-    },
-    {
-      label: "FlexiTac",
-      url: "https://flexitac.github.io/",
-      note: "The tactile sensor used in this project. See their site for fabrication instructions and hardware specs.",
     },
     {
       label: "ACT (Action Chunking Transformer)",
@@ -563,11 +572,6 @@ python test_tactile_driver.py`,
       label: "SmolVLA",
       url: "https://huggingface.co/blog/smolvla",
       note: "Compact VLA model from Hugging Face. Tactile tokens are added while preserving language-conditioned action generation.",
-    },
-    {
-      label: "VT-Refine",
-      url: "https://binghao-huang.github.io/vt_refine/",
-      note: "Related work on vision-tactile policy refinement for dexterous manipulation.",
     },
   ],
 };
