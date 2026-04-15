@@ -269,7 +269,6 @@ video {
 }
 
 .prose {
-  max-width: 720px;
   display: flex;
   flex-direction: column;
   gap: 1.1rem;
@@ -309,6 +308,31 @@ video {
   border: 1px solid var(--line);
   color: var(--muted);
   line-height: 1.7;
+}
+
+.citation-text {
+  padding: 1rem 1.1rem;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  line-height: 1.7;
+  font-size: 0.98rem;
+}
+
+.citation-block {
+  background: var(--panel);
+  border: 1px solid var(--line);
+}
+
+.citation-block .card-header {
+  padding: 0.6rem 0.9rem;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 0;
+}
+
+.citation-block pre.code-block {
+  margin: 0;
+  border: none;
 }
 
 .docs-section .section-label {
