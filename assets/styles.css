@@ -22,6 +22,11 @@ html {
   scroll-behavior: smooth;
 }
 
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
 body {
   margin: 0;
   background: var(--bg);
@@ -1126,6 +1131,12 @@ video {
   font-size: 0.84rem;
   line-height: 1.7;
   max-width: 100%;
+}
+
+.code-block code {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
 }
 
 .docs-card {
