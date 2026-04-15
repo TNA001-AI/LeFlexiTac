@@ -268,6 +268,49 @@ video {
   border-top: 1px solid var(--line);
 }
 
+.prose {
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.prose p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.75;
+  font-size: 1.02rem;
+}
+
+.prose p strong,
+.prose li strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.prose a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid var(--accent);
+}
+
+.takeaway-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.takeaway-list li {
+  padding: 1rem 1.1rem;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  color: var(--muted);
+  line-height: 1.7;
+}
+
 .docs-section .section-label {
   margin-bottom: 0.5rem;
 }

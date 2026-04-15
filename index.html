@@ -34,11 +34,13 @@
     <main class="page">
       <section class="masthead">
         <div class="masthead-copy">
-          <h1>LeRobot x FlexiTac.</h1>
+          <h1>Giving LeRobot a sense of touch.</h1>
           <p class="masthead-summary">
-            We extend <a href="https://github.com/huggingface/lerobot" target="_blank" rel="noreferrer">LeRobot</a> with
-            <a href="https://flexitac.github.io/" target="_blank" rel="noreferrer">FlexiTac</a> tactile sensing and
-            evaluate tactile-conditioned policies across contact-rich manipulation tasks.
+            <a href="https://github.com/huggingface/lerobot" target="_blank" rel="noreferrer">LeRobot</a> has made
+            low-cost robot learning widely accessible &mdash; but its policies are still blind to contact. We
+            add <a href="https://flexitac.github.io/" target="_blank" rel="noreferrer">FlexiTac</a> tactile
+            sensing to the SO-100/SO-101 platform and find that a modest amount of touch meaningfully lifts success
+            rates on contact-rich manipulation across four policy families.
           </p>
           <p class="masthead-authors">
             A AAA<sup>*</sup>, B BBB<sup>*</sup>, C CCC<sup>*</sup>
@@ -52,23 +54,110 @@
         </div>
       </section>
 
+      <section class="landing-section prose-section" id="motivation">
+        <div class="section-heading">
+          <div class="section-label">Motivation</div>
+          <h2>The missing modality.</h2>
+        </div>
+        <div class="prose">
+          <p>
+            In recent years, open-source robot learning has exploded in popularity. <a href="https://github.com/huggingface/lerobot" target="_blank" rel="noreferrer">LeRobot</a>
+            now packages datasets, imitation-learning baselines, and low-cost hardware like the
+            <a href="https://github.com/TheRobotStudio/SO-ARM100" target="_blank" rel="noreferrer">SO-ARM100/101</a>
+            that allows anybody with a laptop and a few hundred dollars worth of parts to access the cutting-edge of manipulation research. The latest vision-language-action models such as
+            <a href="https://www.pi.website/blog/pi05" target="_blank" rel="noreferrer">Pi0.5</a> and
+            <a href="https://huggingface.co/blog/smolvla" target="_blank" rel="noreferrer">SmolVLA</a>
+            plug directly into this stack.
+          </p>
+          <p>
+            Yet almost all of this progress is driven by cameras. The robot sees the scene but does not feel
+            it. For tasks where vision is limited or where touch is essential to the task &mdash; inserting a tube into a rack,
+            aligning a peg, finding a pen in a cluttered bag &mdash; the policy is crippled, unable to view key aspects of the interaction itself. When the grasp slips or the object
+            hides behind the gripper, the camera-only policy has nothing left to reason over.
+          </p>
+          <p>
+            To us, this is a glaring gap in the field. We believe it to be obvious that touch is the missing piece, and we wanted to know how much it actually matters
+            once you add it to the standard LeRobot pipeline.
+          </p>
+        </div>
+      </section>
+
+      <section class="landing-section prose-section" id="approach">
+        <div class="section-heading">
+          <div class="section-label">Approach</div>
+          <h2>A drop-in tactile path.</h2>
+        </div>
+        <div class="prose">
+          <p>
+            Our setup makes minimal changes to the existing LeRobot pipeline. We replace the SO-100 (or SO-101) stock jaw with a tactile gripper
+            built around the <a href="https://flexitac.github.io/" target="_blank" rel="noreferrer">FlexiTac</a>
+            sensor, and we extend LeRobot's dataset and policy interfaces with a single
+            <code class="inline-code">observation.tactile.*</code> stream that all four policies consume
+            through the same schema.
+          </p>
+          <p>
+            On the policy side, we add one small hook per architecture. <strong>ACT</strong>, <strong>Pi0.5</strong>, and <strong>SmolVLA</strong> receive
+            tactile maps as a handful of extra transformer tokens; <strong>Diffusion Policy</strong>
+            folds them into its global conditioning vector. Everything else stays the same and is plug and play.
+          </p>
+          <p>
+            For each task we collect paired datasets with and without tactile input, train matched
+            policies from the same checkpoints, and evaluate on held-out trials. The
+            <a href="docs.html">documentation</a> has the full command list and hardware guide.
+          </p>
+        </div>
+      </section>
+
       <section class="landing-section" id="results">
         <div class="section-heading">
           <div class="section-label">Task results</div>
-          <h2>Task results.</h2>
+          <h2>What touch unlocks.</h2>
           <p>
-            For each task, compare tactile and no-tactile accuracy, then inspect a sped-up long rollout, a
-            short 1x clip, and a typical no-tactile failure.
+            We evaluate over three different tasks, with four types of policies each. For every task, we report tactile vs. no-tactile
+            success rates, a sped-up long rollout, a short 1x clip, and a typical no-tactile failure.
           </p>
         </div>
 
         <div class="task-list" id="task-list"></div>
       </section>
 
+      <section class="landing-section prose-section" id="takeaways">
+        <div class="section-heading">
+          <div class="section-label">What we learned</div>
+          <h2>Takeaways.</h2>
+        </div>
+        <div class="prose">
+          <p>
+            Across the three tasks and four policy families, a few things stood out to us:
+          </p>
+          <ul class="takeaway-list">
+            <li>
+              <strong>Tactile helps most when vision runs out.</strong> The largest gains show up on
+              partial-observability tasks &mdash; pen retrieval inside a bag, peg alignment at the moment
+              of contact &mdash; where the camera simply cannot see the relevant geometry.
+            </li>
+            <li>
+              <strong>The signal generalizes across architectures.</strong> ACT, Diffusion Policy, Pi0.5,
+              and SmolVLA all improve with the same tactile stream, suggesting the bottleneck was the
+              modality, not any one policy's capacity.
+            </li>
+            <li>
+              <strong>A little tactile goes a long way.</strong> Four tactile tokens is usually enough.
+              Pushing the count higher adds noise without improving success.
+            </li>
+            <li>
+              <strong>Pi0.5 needs full fine-tuning.</strong> Action-expert-only and LoRA fine-tunes
+              collapse on tactile tasks; only full fine-tuning at a small learning rate (<code class="inline-code">2.5e-5</code>)
+              converges reliably.
+            </li>
+          </ul>
+        </div>
+      </section>
+
       <section class="landing-section">
         <div class="section-heading">
           <div class="section-label">More</div>
-          <h2>Implementation details.</h2>
+          <h2>Reproduce it.</h2>
         </div>
         <a class="docs-banner" href="docs.html">
           <div class="docs-banner-content">
