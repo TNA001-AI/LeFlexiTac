@@ -114,6 +114,31 @@ video {
 .site-nav a {
   text-decoration: none;
   font-size: 0.95rem;
+  position: relative;
+  padding: 0.3rem 0;
+  color: var(--muted);
+  transition: color 0.15s ease;
+}
+
+.site-nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.2s ease;
+}
+
+.site-nav a:hover {
+  color: var(--accent);
+}
+
+.site-nav a:hover::after {
+  transform: scaleX(1);
 }
 
 .page {
