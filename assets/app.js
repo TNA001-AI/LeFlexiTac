@@ -295,6 +295,52 @@ renderLanding();
 renderDocs();
 wireCopyButtons();
 setReadTime();
+setupDocsScrollSpy();
+
+function setupDocsScrollSpy() {
+  const nav = document.querySelector(".docs-nav");
+  if (!nav) return;
+  const links = Array.from(nav.querySelectorAll("a[href^='#']"));
+  if (!links.length) return;
+
+  const sectionsById = new Map();
+  links.forEach((link) => {
+    const id = link.getAttribute("href").slice(1);
+    const el = document.getElementById(id);
+    if (el) sectionsById.set(id, el);
+  });
+
+  const visible = new Set();
+  const setActive = () => {
+    let topId = null;
+    let topY = Infinity;
+    visible.forEach((id) => {
+      const rect = sectionsById.get(id).getBoundingClientRect();
+      if (rect.top < topY) {
+        topY = rect.top;
+        topId = id;
+      }
+    });
+    links.forEach((link) => {
+      const id = link.getAttribute("href").slice(1);
+      link.classList.toggle("is-active", id === topId);
+    });
+  };
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        const id = entry.target.id;
+        if (entry.isIntersecting) visible.add(id);
+        else visible.delete(id);
+      });
+      setActive();
+    },
+    { rootMargin: "-20% 0px -60% 0px", threshold: 0 }
+  );
+
+  sectionsById.forEach((el) => observer.observe(el));
+}
 
 function setReadTime() {
   const target = document.getElementById("read-time");

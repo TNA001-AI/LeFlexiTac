@@ -885,6 +885,19 @@ video {
   text-decoration: none;
   color: var(--muted);
   font-size: 0.95rem;
+  padding-left: 0.7rem;
+  border-left: 2px solid transparent;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.docs-nav a:hover {
+  color: var(--ink);
+}
+
+.docs-nav a.is-active {
+  color: var(--accent);
+  border-left-color: var(--accent);
+  font-weight: 600;
 }
 
 .docs-grid,
