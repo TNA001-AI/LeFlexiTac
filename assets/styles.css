@@ -795,7 +795,6 @@ video {
   grid-template-columns: 160px minmax(0, 1fr);
   gap: 2rem;
   padding: 2.5rem 0 5rem;
-  overflow: hidden;
 }
 
 .docs-content {
