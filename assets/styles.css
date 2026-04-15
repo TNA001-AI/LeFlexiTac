@@ -645,7 +645,6 @@ video {
 }
 
 .reference-cards li {
-  padding: 1.25rem;
   background: var(--panel);
   border: 1px solid var(--line);
   transition: border-color 0.15s;
@@ -656,13 +655,20 @@ video {
 }
 
 .reference-cards a {
+  display: block;
+  padding: 1.25rem;
   text-decoration: none;
+  color: inherit;
+}
+
+.reference-cards a strong {
+  display: block;
   font-weight: 600;
   font-size: 1.05rem;
   color: var(--accent);
 }
 
-.reference-cards span {
+.reference-cards a span {
   display: block;
   margin-top: 0.35rem;
   color: var(--muted);

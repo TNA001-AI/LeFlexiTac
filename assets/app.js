@@ -248,7 +248,7 @@ function renderDocs() {
 
   siteData.references.forEach((reference) => {
     const li = create("li");
-    li.innerHTML = `<a href="${reference.url}" target="_blank" rel="noreferrer">${reference.label}</a><span>${reference.note}</span>`;
+    li.innerHTML = `<a href="${reference.url}" target="_blank" rel="noreferrer"><strong>${reference.label}</strong><span>${reference.note}</span></a>`;
     referenceList.append(li);
   });
 }
