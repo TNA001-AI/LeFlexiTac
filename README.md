@@ -1,40 +1,63 @@
-# LeRobot x FlexiTac Site
+# LeFlexiTac Site
 
-Static repo for a split site:
+Static project page for the LeFlexiTac project: adding FlexiTac tactile sensing to the LeRobot stack and evaluating tactile-conditioned policies across contact-rich manipulation tasks.
 
-- `index.html` is the project landing page with per-task tactile/no-tactile videos
-- `docs.html` is the traditional documentation page
+Two pages:
+
+- `index.html` — landing page with motivation, per-task results, and tactile/no-tactile videos
+- `docs.html` — step-by-step reproduction guide (hardware, sensor, data collection, training, evaluation)
 
 ## Local preview
 
-From this directory, run:
+From this directory:
 
 ```bash
 npx serve -l 8080
 ```
 
-Then open `http://localhost:8080`.
+Then open <http://localhost:8080>.
 
-The first run prompts to install the `serve` package — accept with `y`. A `serve.json` in this repo sets `Cache-Control: no-cache` so file edits show up immediately on refresh.
+The first run prompts to install the `serve` package — accept with `y`. `serve.json` sets `Cache-Control: no-cache` so file edits show up immediately on refresh.
 
-> Avoid `python3 -m http.server` — it throws noisy `BrokenPipeError` tracebacks whenever the browser aborts an in-flight video download (and this repo has a few hundred MB of task videos).
+> Avoid `python3 -m http.server`. It throws noisy `BrokenPipeError` tracebacks whenever the browser aborts an in-flight video request, which happens every time you navigate away from the landing page.
 
 ## Publishing
 
-This repo is zero-build. Enable GitHub Pages to deploy from the root of the default branch.
+Zero-build static site. Deployed via GitHub Pages from the `master` branch root.
 
-`.nojekyll` is included so the site can be served as plain static files without Jekyll processing.
+- Live URL: <https://tna001-ai.github.io/tactile-lerobot-website/>
+- `.nojekyll` is included so underscore-prefixed files are served as-is.
+- All asset paths are relative, so the site also works under a subdirectory.
 
 ## Updating content
 
-Most updates should only touch:
+Most edits touch only:
 
-- `assets/site-data.js` for task copy, references, status notes, command examples, and coverage cells
-- `assets/media/` for experiment videos
-- `index.html` or `docs.html` if the structure itself needs to change
+- **`assets/site-data.js`** — task results, video labels, tip cards, reference cards, reproduction step commands
+- **`assets/media/tube/`, `assets/media/peg/`, `assets/media/pen/`** — per-task videos
+- **`assets/architectures/`** — policy architecture diagrams (PNG)
+- **`index.html`, `docs.html`** — only when the page structure itself changes
+- **`assets/styles.css`, `assets/app.js`** — styling and rendering logic
+
+## Media encoding
+
+Task videos are committed directly to the repo (no Git LFS). To keep files small and GitHub Pages happy, re-encode new captures with:
+
+```bash
+ffmpeg -i input.mp4 \
+  -c:v libx264 -crf 26 -preset veryslow -tune film \
+  -an -movflags +faststart \
+  output.mp4
+```
+
+- `-crf 26` — visually near-lossless for 1080p demo clips
+- `-an` — strip audio (videos play muted on the site)
+- `-movflags +faststart` — put moov atom at the start so videos can play while downloading
+- `-preset veryslow` — best compression ratio; encode once, serve forever
+
+Current total media footprint is ~90 MB for six 1080p clips.
 
 ## Known placeholders
 
-- The custom gripper section still needs final mechanical details, photos, CAD links, and a BOM.
-- The qualitative media slots are intentionally empty until final experiment clips are available.
-- The custom gripper documentation still needs final public-facing hardware details.
+- The custom gripper section in `docs.html` still needs final mechanical details, photos, CAD links, and a BOM.
+- The pen task has no videos yet — the slot renders as empty when `src` is blank in `site-data.js`.
