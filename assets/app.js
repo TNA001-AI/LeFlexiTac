@@ -294,3 +294,20 @@ function wireCopyButtons() {
 renderLanding();
 renderDocs();
 wireCopyButtons();
+setReadTime();
+
+function setReadTime() {
+  const target = document.getElementById("read-time");
+  if (!target) return;
+
+  const sections = document.querySelectorAll(".landing-page main .prose, .landing-page main .masthead-summary, .landing-page main .section-heading p");
+  let words = 0;
+  sections.forEach((el) => {
+    words += (el.textContent || "").trim().split(/\s+/).filter(Boolean).length;
+  });
+
+  const videoCount = document.querySelectorAll(".landing-page main video").length;
+  const totalSeconds = (words / 220) * 60 + videoCount * 30;
+  const minutes = Math.max(1, Math.round(totalSeconds / 60));
+  target.textContent = `${minutes} min read`;
+}
