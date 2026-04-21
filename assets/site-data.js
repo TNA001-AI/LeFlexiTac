@@ -164,14 +164,14 @@ export const siteData = {
       hook: "`n_tactile_tokens`",
       summary:
         "Tactile maps are encoded into transformer tokens and appended to the encoder-side token set.",
-      archImage: "assets/architectures/ACT.png",
+      archImage: "assets/architectures/act.png",
     },
     {
       model: "Diffusion Policy",
       hook: "`n_tactile_chunks`",
       summary:
         "Tactile maps become chunked feature vectors flattened into the global conditioning vector used by the U-Net.",
-      archImage: "",
+      archImage: "assets/architectures/dp.png",
     },
     {
       model: "Pi0.5",
@@ -185,7 +185,7 @@ export const siteData = {
       hook: "`n_tactile_tokens`",
       summary:
         "Tactile tokens are added to the VLM-backed policy while preserving language-conditioned action generation.",
-      archImage: "",
+      archImage: "assets/architectures/smolvla.png",
     },
   ],
   reproductionSteps: [

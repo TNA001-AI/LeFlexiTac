@@ -962,13 +962,18 @@ video {
   align-items: center;
   justify-content: center;
   min-height: 200px;
+  padding: 1.5rem;
   background: var(--panel-strong);
   border: 1px dashed var(--line-strong);
 }
 
 .model-arch-placeholder img {
-  width: 100%;
+  display: block;
+  max-width: 100%;
+  max-height: 500px;
+  width: auto;
   height: auto;
+  object-fit: contain;
 }
 
 .arch-placeholder-text {
