@@ -184,6 +184,10 @@ function renderDocs() {
       html += `<div class="step-command"><div class="card-header"><span>Command</span><button class="copy-button" type="button" data-copy-target="${cmdId}">Copy</button></div><pre class="code-block"><code id="${cmdId}"></code></pre></div>`;
     }
 
+    if (step.media?.src) {
+      html += `<div class="step-media"><div class="card-header"><span>${step.media.title || "Video"}</span></div><video class="step-video" controls muted playsinline loop preload="metadata" data-lazy-src="${step.media.src}"></video></div>`;
+    }
+
     if (step.models) {
       const gid = `model-tabs-${index}`;
       html += `<div class="model-tab-group" id="${gid}"><div class="model-tabs">`;
@@ -254,6 +258,8 @@ function renderDocs() {
     li.innerHTML = `<a href="${reference.url}" target="_blank" rel="noreferrer"><strong>${reference.label}</strong><span>${reference.note}</span></a>`;
     referenceList.append(li);
   });
+
+  setupLazyVideos();
 }
 
 function wireCopyButtons() {

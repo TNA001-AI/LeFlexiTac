@@ -989,24 +989,19 @@ video {
   padding-top: 1rem;
 }
 
-.step-video {
-  margin-top: 1.25rem;
-  padding-top: 1.25rem;
+.step-media {
+  margin-top: 1rem;
   border-top: 1px solid var(--line);
+  padding-top: 1rem;
 }
 
-.step-video video {
+.step-video {
   width: 100%;
-  max-width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border: 1px solid var(--line);
   background: var(--panel-strong);
 }
-
-.step-video-caption {
-  margin: 0.6rem 0 0;
-  color: var(--muted);
-  font-size: 0.9rem;
-}
-
 /* Model tabs */
 .model-tab-group {
   margin-top: 1.25rem;

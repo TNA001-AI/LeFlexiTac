@@ -205,6 +205,10 @@ export const siteData = {
       title: "Mount the sensor",
       body:
         "Secure the FlexiTac sensor pad onto the 'Wrist Roll' of the custom gripper. Route the USB cable along the arm and verify the sensor appears as <code>/dev/ttyUSB0</code>.",
+      media: {
+        src: "assets/media/leflexitac_assembly_light.mp4",
+        title: "Sensor attachment walkthrough",
+      },
     },
     {
       title: "Test the tactile sensor",
