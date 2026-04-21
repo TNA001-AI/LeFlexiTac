@@ -176,8 +176,8 @@ video {
   align-items: center;
   justify-content: space-between;
   gap: 1.5rem;
+  margin-top: 1rem;
   padding: 0;
-  border-top: 1px solid var(--line);
 }
 
 .masthead-meta-left {
@@ -246,15 +246,26 @@ video {
   color: var(--muted);
 }
 
+.masthead-equal-contrib {
+  margin: 0.4rem 0 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.masthead-equal-contrib sup {
+  color: var(--muted);
+}
+
 .masthead-logo {
-  display: inline-block;
-  height: 52px;
+  display: block;
+  height: 140px;
   width: auto;
+  margin: 0.35rem 0 -1rem -18px;
 }
 
 @media (max-width: 720px) {
   .masthead-logo {
-    height: 40px;
+    height: 100px;
   }
 }
 
@@ -989,18 +1000,24 @@ video {
   padding-top: 1rem;
 }
 
-.step-media {
-  margin-top: 1rem;
+.step-video {
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
   border-top: 1px solid var(--line);
-  padding-top: 1rem;
 }
 
-.step-video {
+.step-video-el {
+  display: block;
   width: 100%;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
-  border: 1px solid var(--line);
+  max-width: 100%;
   background: var(--panel-strong);
+  border: 1px solid var(--line);
+}
+
+.step-video-caption {
+  margin: 0.6rem 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
 }
 /* Model tabs */
 .model-tab-group {
@@ -1047,6 +1064,7 @@ video {
   display: grid;
   grid-template-columns: 1fr;
   gap: 1.25rem;
+  margin-top: 1.5rem;
 }
 
 .command-col h4 {

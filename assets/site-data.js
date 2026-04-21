@@ -22,19 +22,19 @@ export const siteData = {
         tactileLong: {
           src: "assets/media/tube/task1x10.mp4",
           hint: "assets/media/tube/task1x10.mp4",
-          title: "Tactile, 10x rollout",
+          title: "Tactile rollout, 10× speed",
           note: "",
         },
         tactileShort: {
           src: "assets/media/tube/task1_short_x1.mp4",
           hint: "assets/media/tube/task1_short_x1.mp4",
-          title: "Tactile, 1x clip",
+          title: "Tactile clip, 1× speed",
           note: "",
         },
         baselineFailure: {
           src: "assets/media/tube/task1_fail_x2.mp4",
           hint: "assets/media/tube/task1_fail_x2.mp4",
-          title: "No tactile failure, 2x",
+          title: "No tactile failure, 2× speed",
           note: "",
         },
       },
@@ -54,19 +54,19 @@ export const siteData = {
         tactileLong: {
           src: "assets/media/peg/task2x10.mp4",
           hint: "assets/media/peg/task2x10.mp4",
-          title: "Tactile, 10x rollout",
+          title: "Tactile rollout, 10× speed",
           note: "",
         },
         tactileShort: {
           src: "assets/media/peg/task2_short_x1.mp4",
           hint: "assets/media/peg/task2_short_x1.mp4",
-          title: "Tactile, 1x clip",
+          title: "Tactile clip, 1× speed",
           note: "",
         },
         baselineFailure: {
           src: "assets/media/peg/task2_fail_x2.mp4",
           hint: "assets/media/peg/task2_fail_x2.mp4",
-          title: "No tactile failure, 2x",
+          title: "No tactile failure, 2× speed",
           note: "",
         },
       },
@@ -83,21 +83,21 @@ export const siteData = {
         ],
         note: "",
         tactileLong: {
-          src: "assets/media/pen/task3x10.mp4",
-          hint: "assets/media/pen/task3x10.mp4",
-          title: "Tactile, 10x rollout",
+          src: "assets/media/pen/task3_short_x1.mp4",
+          hint: "assets/media/pen/task3_short_x1.mp4",
+          title: "Tactile clip, 1× speed",
           note: "",
         },
         tactileShort: {
-          src: "assets/media/pen/task3_short_x1.mp4",
-          hint: "assets/media/pen/task3_short_x1.mp4",
-          title: "Tactile, 1x clip",
+          src: "assets/media/pen/task3x10.mp4",
+          hint: "assets/media/pen/task3x10.mp4",
+          title: "Tactile rollout, 10× speed",
           note: "",
         },
         baselineFailure: {
           src: "assets/media/pen/task3_fail_x2.mp4",
           hint: "assets/media/pen/task3_fail_x2.mp4",
-          title: "No tactile failure, 2x",
+          title: "No tactile failure, 2× speed",
           note: "",
         },
       },
@@ -205,7 +205,7 @@ export const siteData = {
       title: "Mount the sensor",
       body:
         "Secure the FlexiTac sensor pad onto the 'Wrist Roll' of the custom gripper. Route the USB cable along the arm and verify the sensor appears as <code>/dev/ttyUSB0</code>.",
-      media: {
+      video: {
         src: "assets/media/leflexitac_assembly_light.mp4",
         title: "Sensor attachment walkthrough",
       },
@@ -246,7 +246,7 @@ python test_tactile_driver.py`,
     {
       title: "Train models",
       body:
-        "Train each policy with and without tactile input. Select a model below to see its architecture and both command variants.",
+        "Train each policy with and without tactile input. Select a model below to see its architecture and tactile / vision-only training commands.",
       showModelInfo: true,
       models: [
         {
@@ -369,9 +369,9 @@ python test_tactile_driver.py`,
       ],
     },
     {
-      title: "Evaluate",
+      title: "Evaluate models",
       body:
-        "Run policy evaluation on the real robot. Select a model to see the tactile and baseline evaluation commands.",
+        "Run each policy on the real robot and log the rollouts. Select a model to see its tactile and vision-only evaluation commands.",
       video: {
         src: "assets/media/pen/task3_short_x1.mp4",
         caption: "Example success rollout (in-bag pen retrieval, 1x).",
@@ -531,7 +531,7 @@ python test_tactile_driver.py`,
     },
     {
       title: "Sensor calibration",
-      body: "Always run a no-contact baseline read before recording. The tactile map drifts with temperature — recalibrate if the sensor has been powered on for more than 30 minutes.",
+      body: "Always run a no-contact baseline read before recording. The tactile map drifts with temperature, so recalibrate if the sensor has been powered on for more than 30 minutes.",
     },
     {
       title: "Camera placement",
@@ -539,11 +539,11 @@ python test_tactile_driver.py`,
     },
     {
       title: "Training hyperparameters",
-      body: "Start with the default learning rate and batch size. For tactile-enabled runs, 4 tactile tokens is a good default — too few tokens lose spatial detail, while too many add noise without improving performance.",
+      body: "Start with the default learning rate and batch size. For tactile-enabled runs, 4 tactile tokens is a good default. Too few tokens lose spatial detail, and too many add noise without improving performance.",
     },
     {
       title: "Training Pi0.5",
-      body: "<ul><li>A dataset of 100 episodes is sufficient for a single task.</li><li>Only full fine-tuning works reliably — action-expert-only and LoRA yield low success rates.</li><li>Less than 80 GB VRAM is insufficient for full fine-tuning.</li><li>FSDP (Fully Sharded Data Parallel) is not well supported in LeRobot (issues with dtype and model saving).</li><li>Only a smaller learning rate works: <code class=\"inline-code\">2.5e-5</code> succeeds, but <code class=\"inline-code\">5e-5</code> does not.</li></ul>",
+      body: "<ul><li>A dataset of 100 episodes is sufficient for a single task.</li><li>Only full fine-tuning works reliably; action-expert-only and LoRA both yield low success rates.</li><li>Less than 80 GB VRAM is insufficient for full fine-tuning.</li><li>FSDP (Fully Sharded Data Parallel) is not well supported in LeRobot (issues with dtype and model saving).</li><li>Only a smaller learning rate works: <code class=\"inline-code\">2.5e-5</code> succeeds, but <code class=\"inline-code\">5e-5</code> does not.</li></ul>",
     },
   ],
   references: [
@@ -578,7 +578,7 @@ python test_tactile_driver.py`,
       note: "Diffusion-based visuomotor policy. We fold tactile features into the global conditioning vector via `n_tactile_chunks`.",
     },
     {
-      label: "Physical Intelligence — Pi0.5",
+      label: "Physical Intelligence: Pi0.5",
       url: "https://www.pi.website/blog/pi05",
       note: "VLA foundation model behind our Pi0.5 tactile fine-tuning experiments; tactile tokens are projected into the VLM path.",
     },
