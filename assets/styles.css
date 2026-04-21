@@ -989,6 +989,24 @@ video {
   padding-top: 1rem;
 }
 
+.step-video {
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--line);
+}
+
+.step-video video {
+  width: 100%;
+  max-width: 100%;
+  background: var(--panel-strong);
+}
+
+.step-video-caption {
+  margin: 0.6rem 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
 /* Model tabs */
 .model-tab-group {
   margin-top: 1.25rem;

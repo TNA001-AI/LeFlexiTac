@@ -219,6 +219,10 @@ python test_tactile_driver.py`,
       title: "Collect data",
       body:
         "Record teleoperated demonstrations with the top camera and tactile sensor enabled. The tactile stream is registered as <code>observation.tactile.primary</code>.",
+      video: {
+        src: "assets/media/teleop/tele_demo.mp4",
+        caption: "Leader-follower teleoperation during data collection.",
+      },
       command: String.raw`lerobot-record \
   --robot.type=so100_tactile_follower \
   --robot.port=/dev/ttyACM0 \
@@ -364,6 +368,10 @@ python test_tactile_driver.py`,
       title: "Evaluate",
       body:
         "Run policy evaluation on the real robot. Select a model to see the tactile and baseline evaluation commands.",
+      video: {
+        src: "assets/media/pen/task3_short_x1.mp4",
+        caption: "Example success rollout (in-bag pen retrieval, 1x).",
+      },
       models: [
         {
           name: "ACT",

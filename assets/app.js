@@ -101,8 +101,6 @@ function renderLanding() {
     panel.append(copy, triple);
     taskList.append(panel);
   });
-
-  setupLazyVideos();
 }
 
 function setupLazyVideos() {
@@ -214,6 +212,11 @@ function renderDocs() {
       html += `</div>`;
     }
 
+    if (step.video) {
+      const caption = step.video.caption ? `<p class="step-video-caption">${step.video.caption}</p>` : "";
+      html += `<div class="step-video"><video class="slot-video" controls muted playsinline loop preload="metadata" data-lazy-src="${step.video.src}"></video>${caption}</div>`;
+    }
+
     card.innerHTML = html;
     reproSteps.append(card);
 
@@ -296,6 +299,7 @@ renderDocs();
 wireCopyButtons();
 setReadTime();
 setupDocsScrollSpy();
+setupLazyVideos();
 
 function setupDocsScrollSpy() {
   const nav = document.querySelector(".docs-nav");
