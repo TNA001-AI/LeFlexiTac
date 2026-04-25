@@ -12,6 +12,29 @@ function setText(id, value) {
   if (node) node.textContent = value;
 }
 
+const commandCache = new Map();
+async function loadCommandInto(id, path) {
+  if (!path) return;
+  setText(id, "Loading…");
+  try {
+    let text;
+    if (commandCache.has(path)) {
+      text = await commandCache.get(path);
+    } else {
+      const promise = fetch(path).then((r) => {
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        return r.text();
+      });
+      commandCache.set(path, promise);
+      text = await promise;
+    }
+    setText(id, text.replace(/\n+$/, ""));
+  } catch (e) {
+    setText(id, `# Failed to load ${path}: ${e.message}`);
+    console.error(`Failed to load command ${path}:`, e);
+  }
+}
+
 function clear(node) {
   if (node) node.innerHTML = "";
 }
@@ -226,12 +249,12 @@ function renderDocs() {
     reproSteps.append(card);
 
     if (step.command) {
-      setText(`step-cmd-${index}`, step.command);
+      loadCommandInto(`step-cmd-${index}`, step.command);
     }
     if (step.models) {
       step.models.forEach((m, mi) => {
-        setText(`model-tabs-${index}-t-${mi}`, m.tactile);
-        setText(`model-tabs-${index}-b-${mi}`, m.baseline);
+        loadCommandInto(`model-tabs-${index}-t-${mi}`, m.tactile);
+        loadCommandInto(`model-tabs-${index}-b-${mi}`, m.baseline);
       });
     }
   });

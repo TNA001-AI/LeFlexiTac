@@ -1,0 +1,11 @@
+lerobot-train \
+  --dataset.repo_id=${HF_USER}/tactile_pen_bag \
+  --policy.type=act \
+  --policy.use_tactile=true \
+  --policy.tactile_features='["observation.tactile.primary"]' \
+  --policy.n_tactile_tokens=4 \
+  --policy.repo_id=${HF_USER}/act_tactile_pen_bag \
+  --batch_size=32 \
+  --num_workers=8 \
+  --policy.device=cuda:0 \
+  --wandb.enable=true

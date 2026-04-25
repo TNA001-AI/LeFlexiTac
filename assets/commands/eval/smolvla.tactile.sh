@@ -1,0 +1,16 @@
+lerobot-record \
+  --robot.type=so100_tactile_follower \
+  --robot.port=/dev/ttyACM0 \
+  --robot.id=follower_arm \
+  --robot.cameras="{ top: {type: opencv, index_or_path: 0, width: 640, height: 480, fps: 30}}" \
+  --robot.tactile_sensors='{primary: {"port": "/dev/ttyUSB0", "baud_rate": 2000000}}' \
+  --teleop.type=so100_leader \
+  --teleop.port=/dev/ttyACM1 \
+  --teleop.id=leader_arm \
+  --dataset.repo_id=${HF_USER}/eval_smolvla_tactile_pen_bag \
+  --dataset.fps=10 \
+  --dataset.num_episodes=50 \
+  --dataset.episode_time_s=30 \
+  --dataset.reset_time_s=10 \
+  --dataset.single_task="Grab the pen from the bag and place it in the basket next to it" \
+  --policy.path=YOUR_CHECKPOINT_PATH

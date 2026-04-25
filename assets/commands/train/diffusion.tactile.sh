@@ -1,0 +1,16 @@
+lerobot-train \
+  --dataset.repo_id=${HF_USER}/tactile_pen_bag \
+  --policy.type=diffusion \
+  --policy.use_tactile=true \
+  --policy.tactile_features='["observation.tactile.primary"]' \
+  --policy.n_tactile_chunks=1 \
+  --policy.tactile_feature_dim=64 \
+  --policy.crop_is_random=true \
+  --policy.resize_shape='[144,192]' \
+  --policy.use_amp=true \
+  --policy.repo_id=${HF_USER}/dp_tactile_pen_bag \
+  --batch_size=16 \
+  --num_workers=8 \
+  --steps=200000 \
+  --save_freq=40000 \
+  --wandb.enable=true
