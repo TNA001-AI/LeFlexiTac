@@ -64,26 +64,69 @@ function renderMediaSlot(slot, label) {
   return wrapper;
 }
 
-function renderResultsTable(results) {
-  const table = create("table", "results-table");
-  const thead = create("thead");
-  const headRow = create("tr");
-  headRow.append(create("th", "", "Policy"));
-  headRow.append(create("th", "", "With tactile"));
-  headRow.append(create("th", "", "Without tactile"));
-  thead.append(headRow);
-  table.append(thead);
+function parseRate(s) {
+  if (!s) return { pct: 0, fraction: "—" };
+  const m = String(s).match(/(\d+\s*\/\s*\d+)\s*=\s*([\d.]+)/);
+  if (!m) return { pct: 0, fraction: String(s) };
+  return { pct: parseFloat(m[2]), fraction: m[1].replace(/\s+/g, "") };
+}
 
-  const tbody = create("tbody");
+function renderResultsChart(results) {
+  const chart = create("div", "results-chart");
+
+  const header = create("div", "results-chart-header");
+  header.innerHTML = `
+    <span class="chart-axis-label">Success rate</span>
+    <div class="chart-legend">
+      <span class="chart-legend-item"><span class="legend-swatch tactile"></span>Tactile + Vision</span>
+      <span class="chart-legend-item"><span class="legend-swatch baseline"></span>Vision only</span>
+    </div>`;
+  chart.append(header);
+
   results.forEach((row) => {
-    const tr = create("tr");
-    tr.append(create("th", "results-policy", row.policy));
-    tr.append(create("td", "results-tactile", row.tactile || "—"));
-    tr.append(create("td", "results-baseline", row.baseline || "—"));
-    tbody.append(tr);
+    const t = parseRate(row.tactile);
+    const b = parseRate(row.baseline);
+    const policyRow = create("div", "results-chart-row");
+    policyRow.innerHTML = `
+      <div class="chart-policy-name">${row.policy}</div>
+      <div class="chart-bars">
+        <div class="chart-bar-line">
+          <div class="chart-bar-track"><div class="chart-bar-fill tactile" data-target="${t.pct}" style="width:0%"></div></div>
+          <div class="chart-bar-value"><span class="chart-bar-pct">${(t.pct * 100).toFixed(0)}%</span><span class="chart-bar-fraction">(${t.fraction})</span></div>
+        </div>
+        <div class="chart-bar-line">
+          <div class="chart-bar-track"><div class="chart-bar-fill baseline" data-target="${b.pct}" style="width:0%"></div></div>
+          <div class="chart-bar-value"><span class="chart-bar-pct">${(b.pct * 100).toFixed(0)}%</span><span class="chart-bar-fraction">(${b.fraction})</span></div>
+        </div>
+      </div>`;
+    chart.append(policyRow);
   });
-  table.append(tbody);
-  return table;
+
+  return chart;
+}
+
+function setupChartAnimation() {
+  const fills = document.querySelectorAll(".chart-bar-fill[data-target]");
+  if (!fills.length) return;
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const target = parseFloat(entry.target.dataset.target);
+        const fillPct = (target * 100).toFixed(1);
+        // Stagger slightly across siblings for a nicer cascade
+        const idx = Number(entry.target.dataset.idx || 0);
+        entry.target.style.transitionDelay = `${idx * 80}ms`;
+        entry.target.style.width = `${fillPct}%`;
+        observer.unobserve(entry.target);
+      });
+    },
+    { threshold: 0.2 }
+  );
+  fills.forEach((f, i) => {
+    f.dataset.idx = i;
+    observer.observe(f);
+  });
 }
 
 function renderLanding() {
@@ -101,7 +144,7 @@ function renderLanding() {
     copy.append(create("p", "featured-summary", task.summary));
 
     if (task.results && task.results.length) {
-      copy.append(renderResultsTable(task.results));
+      copy.append(renderResultsChart(task.results));
     }
 
     if (task.note) {
@@ -328,6 +371,7 @@ wireCopyButtons();
 setReadTime();
 setupDocsScrollSpy();
 setupLazyVideos();
+setupChartAnimation();
 
 function setupDocsScrollSpy() {
   const nav = document.querySelector(".docs-nav");

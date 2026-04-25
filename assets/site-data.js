@@ -13,8 +13,8 @@ export const siteData = {
         summary:
           "Insertion task centered on contact confirmation and fine alignment near the tube rack.",
         results: [
-          { policy: "ACT", tactile: "50/59 = 0.85", baseline: "21/32 = 0.66" },
-          { policy: "Diffusion Policy", tactile: "36/44 = 0.82", baseline: "22/40 = 0.55" },
+          { policy: "ACT", tactile: "26/30 = 0.86", baseline: "20/30 = 0.67" },
+          { policy: "Diffusion Policy", tactile: "24/30 = 0.80", baseline: "17/30 = 0.57" },
           { policy: "SmolVLA", tactile: "28/30 = 0.93", baseline: "20/30 = 0.67" },
           { policy: "Pi0.5", tactile: "27/30 = 0.90", baseline: "20/30 = 0.67" },
         ],
@@ -45,7 +45,7 @@ export const siteData = {
         summary:
           "Contact-rich alignment and insertion task where tactile feedback resolves ambiguity in the final stage.",
         results: [
-          { policy: "ACT", tactile: "30/38 = 0.79", baseline: "16/39 = 0.41" },
+          { policy: "ACT", tactile: "23/30 = 0.77", baseline: "14/30 = 0.47" },
           { policy: "Diffusion Policy", tactile: "25/30 = 0.83", baseline: "17/30 = 0.57" },
           { policy: "SmolVLA", tactile: "25/30 = 0.83", baseline: "14/30 = 0.47" },
           { policy: "Pi0.5", tactile: "21/30 = 0.70", baseline: "16/30 = 0.53" },
