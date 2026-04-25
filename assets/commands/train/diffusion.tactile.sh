@@ -9,6 +9,7 @@ lerobot-train \
   --policy.resize_shape='[144,192]' \
   --policy.use_amp=true \
   --policy.repo_id=${HF_USER}/dp_tactile_pen_bag \
+  --output_dir=outputs/train/dp_tactile_pen_bag \
   --batch_size=16 \
   --num_workers=8 \
   --steps=200000 \

@@ -33,6 +33,7 @@ lerobot-train \
   --policy.scheduler_decay_steps=30000 \
   --policy.compile_model=false \
   --policy.repo_id=${HF_USER}/pi05_baseline_pen_bag \
+  --output_dir=outputs/train/pi05_baseline_pen_bag \
   --job_name=pi05_baseline_pen_bag \
   --steps=150000 \
   --batch_size=32 \

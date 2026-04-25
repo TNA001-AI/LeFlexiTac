@@ -5,6 +5,7 @@ lerobot-train \
   --policy.empty_cameras=2 \
   --policy.use_tactile=false \
   --policy.repo_id=${HF_USER}/smolvla_baseline_pen_bag \
+  --output_dir=outputs/train/smolvla_baseline_pen_bag \
   --batch_size=64 \
   --steps=40000 \
   --policy.device=cuda \

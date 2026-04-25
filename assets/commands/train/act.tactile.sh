@@ -5,6 +5,7 @@ lerobot-train \
   --policy.tactile_features='["observation.tactile.primary"]' \
   --policy.n_tactile_tokens=4 \
   --policy.repo_id=${HF_USER}/act_tactile_pen_bag \
+  --output_dir=outputs/train/act_tactile_pen_bag \
   --batch_size=32 \
   --num_workers=8 \
   --policy.device=cuda:0 \
