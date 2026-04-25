@@ -76,48 +76,69 @@ function renderResultsChart(results) {
 
   const header = create("div", "results-chart-header");
   header.innerHTML = `
-    <span class="chart-axis-label">Success rate</span>
+    <span class="chart-axis-label">Success rate <span class="chart-axis-meta">&middot; n = 30 trials</span></span>
     <div class="chart-legend">
       <span class="chart-legend-item"><span class="legend-swatch tactile"></span>Tactile + Vision</span>
       <span class="chart-legend-item"><span class="legend-swatch baseline"></span>Vision only</span>
     </div>`;
   chart.append(header);
 
+  const plot = create("div", "chart-plot");
+  const yAxis = create("div", "chart-y-axis");
+  ["100%", "75%", "50%", "25%", "0%"].forEach((v) => {
+    yAxis.append(create("span", "chart-y-tick", v));
+  });
+  plot.append(yAxis);
+
+  const groups = create("div", "chart-groups");
+  const labels = create("div", "chart-x-labels");
   results.forEach((row) => {
     const t = parseRate(row.tactile);
     const b = parseRate(row.baseline);
-    const policyRow = create("div", "results-chart-row");
-    policyRow.innerHTML = `
-      <div class="chart-policy-name">${row.policy}</div>
-      <div class="chart-bars">
-        <div class="chart-bar-line">
-          <div class="chart-bar-track"><div class="chart-bar-fill tactile" data-target="${t.pct}" style="width:0%"></div></div>
-          <div class="chart-bar-value"><span class="chart-bar-pct">${(t.pct * 100).toFixed(0)}%</span><span class="chart-bar-fraction">(${t.fraction})</span></div>
+    const group = create("div", "chart-group");
+    group.innerHTML = `
+      <div class="chart-bars-pair">
+        <div class="chart-bar-col" title="Tactile + Vision: ${t.fraction}">
+          <div class="chart-bar-track-v">
+            <div class="chart-bar-fill-v tactile" data-target="${t.pct}" style="height:0%">
+              <span class="chart-bar-label">${(t.pct * 100).toFixed(0)}%</span>
+            </div>
+          </div>
         </div>
-        <div class="chart-bar-line">
-          <div class="chart-bar-track"><div class="chart-bar-fill baseline" data-target="${b.pct}" style="width:0%"></div></div>
-          <div class="chart-bar-value"><span class="chart-bar-pct">${(b.pct * 100).toFixed(0)}%</span><span class="chart-bar-fraction">(${b.fraction})</span></div>
+        <div class="chart-bar-col" title="Vision only: ${b.fraction}">
+          <div class="chart-bar-track-v">
+            <div class="chart-bar-fill-v baseline" data-target="${b.pct}" style="height:0%">
+              <span class="chart-bar-label">${(b.pct * 100).toFixed(0)}%</span>
+            </div>
+          </div>
         </div>
       </div>`;
-    chart.append(policyRow);
+    groups.append(group);
+    labels.append(create("div", "chart-x-label", row.policy));
   });
 
+  plot.append(groups);
+  plot.append(labels);
+  chart.append(plot);
   return chart;
 }
 
 function setupChartAnimation() {
-  const fills = document.querySelectorAll(".chart-bar-fill[data-target]");
+  const fills = document.querySelectorAll(".chart-bar-fill-v[data-target], .chart-bar-fill[data-target]");
   if (!fills.length) return;
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (!entry.isIntersecting) return;
         const target = parseFloat(entry.target.dataset.target);
-        const fillPct = (target * 100).toFixed(1);
-        // Stagger slightly across siblings for a nicer cascade
+        const pct = (target * 100).toFixed(1);
         const idx = Number(entry.target.dataset.idx || 0);
-        entry.target.style.transitionDelay = `${idx * 80}ms`;
-        entry.target.style.width = `${fillPct}%`;
+        entry.target.style.transitionDelay = `${idx * 70}ms`;
+        if (entry.target.classList.contains("chart-bar-fill-v")) {
+          entry.target.style.height = `${pct}%`;
+        } else {
+          entry.target.style.width = `${pct}%`;
+        }
         observer.unobserve(entry.target);
       });
     },
