@@ -266,6 +266,14 @@ function renderDocs() {
       html += `<a class="inline-link" href="${step.link.url}" target="_blank" rel="noreferrer">${step.link.label}</a>`;
     }
 
+    if (step.image?.src) {
+      const caption = step.image.caption
+        ? `<figcaption class="step-image-caption">${step.image.caption}</figcaption>`
+        : "";
+      const alt = step.image.caption || step.title || "Step image";
+      html += `<figure class="step-image"><img class="step-image-el" src="${step.image.src}" alt="${alt}" loading="lazy">${caption}</figure>`;
+    }
+
     if (step.command) {
       const cmdId = `step-cmd-${index}`;
       html += `<div class="step-command"><div class="card-header"><span>Command</span><button class="copy-button" type="button" data-copy-target="${cmdId}">Copy</button></div><pre class="code-block"><code id="${cmdId}"></code></pre></div>`;
@@ -287,7 +295,10 @@ function renderDocs() {
           const hookEntry = hookByName[normalizeName(m.name)];
           if (hookEntry) {
             html += `<div class="model-detail-card"><div class="model-detail-info"><h3>${hookEntry.model}</h3><p>${hookEntry.summary}</p></div>`;
-            html += `<div class="model-arch-placeholder"><img src="${hookEntry.archImage || ''}" alt="${hookEntry.model} architecture" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span class="arch-placeholder-text" style="display:${hookEntry.archImage ? 'none' : 'block'}">Architecture diagram</span></div></div>`;
+            const figRef = hookEntry.cite && hookEntry.figureCredit
+              ? `<figcaption class="model-arch-caption">Figure adapted from <a href="#${hookEntry.cite}">${hookEntry.figureCredit}</a>.</figcaption>`
+              : "";
+            html += `<figure class="model-arch-figure"><div class="model-arch-placeholder"><img src="${hookEntry.archImage || ''}" alt="${hookEntry.model} architecture" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span class="arch-placeholder-text" style="display:${hookEntry.archImage ? 'none' : 'block'}">Architecture diagram</span></div>${figRef}</figure></div>`;
           }
         }
 
@@ -343,6 +354,7 @@ function renderDocs() {
 
   siteData.references.forEach((reference) => {
     const li = create("li");
+    if (reference.id) li.id = reference.id;
     li.innerHTML = `<a href="${reference.url}" target="_blank" rel="noreferrer"><strong>${reference.label}</strong><span>${reference.note}</span></a>`;
     referenceList.append(li);
   });

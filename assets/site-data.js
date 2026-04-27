@@ -165,6 +165,8 @@ export const siteData = {
       summary:
         "Tactile maps are encoded into transformer tokens and appended to the encoder-side token set.",
       archImage: "assets/architectures/act.png",
+      cite: "ref-act",
+      figureCredit: "Zhao et al., 2023",
     },
     {
       model: "Diffusion Policy",
@@ -172,6 +174,8 @@ export const siteData = {
       summary:
         "Tactile maps become chunked feature vectors flattened into the global conditioning vector used by the U-Net.",
       archImage: "assets/architectures/dp.png",
+      cite: "ref-dp",
+      figureCredit: "Chi et al., 2023",
     },
     {
       model: "Pi0.5",
@@ -179,6 +183,8 @@ export const siteData = {
       summary:
         "Tactile tokens are projected into the VLM path.",
       archImage: "assets/architectures/pi05.png",
+      cite: "ref-pi05",
+      figureCredit: "Physical Intelligence, 2025",
     },
     {
       model: "SmolVLA",
@@ -186,6 +192,8 @@ export const siteData = {
       summary:
         "Tactile tokens are added to the VLM-backed policy while preserving language-conditioned action generation.",
       archImage: "assets/architectures/smolvla.png",
+      cite: "ref-smolvla",
+      figureCredit: "Shukor et al., 2025",
     },
   ],
   reproductionSteps: [
@@ -200,6 +208,10 @@ export const siteData = {
       body:
         "Fabricate or obtain a FlexiTac tactile sensor following the official documentation. After assembly, run a no-contact calibration pass to establish the zero-load baseline before mounting.",
       link: { label: "FlexiTac guide", url: "https://flexitac.github.io/" },
+      image: {
+        src: "assets/media/sensor/sensor.jpg",
+        caption: "Assembled FlexiTac tactile sensor.",
+      },
     },
     {
       title: "Mount the sensor",
@@ -299,21 +311,25 @@ export const siteData = {
       note: "Open-source low-cost robotic arm platform we build on, with a custom tactile gripper replacing the stock jaw.",
     },
     {
+      id: "ref-act",
       label: "ACT (Action Chunking Transformer)",
       url: "https://tonyzhaozh.github.io/aloha/",
       note: "Transformer policy from ALOHA. We add tactile tokens via the `n_tactile_tokens` hook on the encoder side.",
     },
     {
+      id: "ref-dp",
       label: "Diffusion Policy",
       url: "https://diffusion-policy.cs.columbia.edu/",
       note: "Diffusion-based visuomotor policy. We fold tactile features into the global conditioning vector via `n_tactile_chunks`.",
     },
     {
+      id: "ref-pi05",
       label: "Physical Intelligence: Pi0.5",
       url: "https://www.pi.website/blog/pi05",
       note: "VLA foundation model behind our Pi0.5 tactile fine-tuning experiments; tactile tokens are projected into the VLM path.",
     },
     {
+      id: "ref-smolvla",
       label: "SmolVLA",
       url: "https://huggingface.co/blog/smolvla",
       note: "Compact VLA model from Hugging Face. Tactile tokens are added while preserving language-conditioned action generation.",

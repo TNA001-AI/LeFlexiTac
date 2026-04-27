@@ -1156,6 +1156,41 @@ video {
   line-height: 1.7;
 }
 
+.model-arch-figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.model-arch-caption {
+  font-size: 0.82rem;
+  font-style: italic;
+  color: var(--muted);
+  text-align: center;
+  line-height: 1.5;
+}
+
+.model-arch-caption a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px dotted var(--accent);
+}
+
+.model-arch-caption a:hover {
+  border-bottom-style: solid;
+}
+
+.reference-cards li:target {
+  animation: ref-flash 1.6s ease-out;
+}
+
+@keyframes ref-flash {
+  0% { background: var(--accent); }
+  30% { background: var(--accent); }
+  100% { background: var(--panel); }
+}
+
 .model-arch-placeholder {
   display: flex;
   align-items: center;
@@ -1186,6 +1221,31 @@ video {
   margin-top: 1rem;
   border-top: 1px solid var(--line);
   padding-top: 1rem;
+}
+
+.step-image {
+  margin: 1.25rem 0 0;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.step-image-el {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  border: 1px solid var(--line);
+}
+
+.step-image-caption {
+  font-size: 0.85rem;
+  font-style: italic;
+  color: var(--muted);
+  text-align: center;
+  line-height: 1.5;
 }
 
 .step-video {
