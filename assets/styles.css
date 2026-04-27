@@ -63,6 +63,29 @@ video {
   border-bottom: 1px solid var(--line);
 }
 
+.landing-page .site-header {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 10;
+  border-bottom-color: rgba(255, 255, 255, 0.22);
+}
+
+.landing-page .brand-mark {
+  border-color: rgba(255, 255, 255, 0.82);
+  color: #ffffff;
+}
+
+.landing-page .brand-text strong,
+.landing-page .brand-text span,
+.landing-page .site-nav a {
+  color: #ffffff;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.42);
+}
+
+.landing-page .site-nav a::after {
+  background: #ffffff;
+}
+
 .site-brand {
   display: inline-flex;
   align-items: center;
@@ -150,6 +173,10 @@ video {
   padding: 2.2rem 0 5rem;
 }
 
+.landing-page .page {
+  padding-top: 0;
+}
+
 .eyebrow,
 .section-label,
 .slot-label,
@@ -168,7 +195,88 @@ video {
 
 .masthead {
   max-width: none;
-  padding: 1rem 0 1.4rem;
+  padding: 0.4rem 0 1.4rem;
+}
+
+.hero-cover {
+  position: relative;
+  left: 50%;
+  width: 100vw;
+  min-height: clamp(22rem, 82svh, 58rem);
+  margin: 0 0 0 -50vw;
+  overflow: hidden;
+  background: var(--panel-strong);
+  border-bottom: 1px solid var(--line);
+}
+
+.hero-cover::before,
+.hero-cover::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.hero-cover::before {
+  z-index: 1;
+  background:
+    linear-gradient(90deg, rgba(248, 245, 239, 0.86) 0%, rgba(248, 245, 239, 0.62) 31%, rgba(248, 245, 239, 0.12) 58%, rgba(248, 245, 239, 0) 100%),
+    linear-gradient(0deg, rgba(17, 17, 17, 0.24) 0%, rgba(17, 17, 17, 0) 38%);
+}
+
+.hero-cover::after {
+  z-index: 2;
+  background: linear-gradient(180deg, rgba(17, 17, 17, 0.62) 0%, rgba(17, 17, 17, 0.38) 5.5rem, rgba(17, 17, 17, 0) 12rem);
+}
+
+.hero-cover picture,
+.hero-cover img {
+  width: 100%;
+  height: 100%;
+}
+
+.hero-cover picture {
+  position: absolute;
+  inset: 0;
+}
+
+.hero-cover img {
+  object-fit: cover;
+  object-position: 54% 42%;
+}
+
+.hero-title {
+  position: relative;
+  z-index: 3;
+  width: min(calc(100% - 2rem), var(--width));
+  margin-inline: auto;
+  padding: clamp(7.2rem, 16svh, 9rem) 0 clamp(1.8rem, 5svh, 3.4rem);
+}
+
+.hero-title .eyebrow {
+  display: block;
+  margin-bottom: 1rem;
+  color: var(--accent);
+}
+
+.hero-title h1 {
+  max-width: 9ch;
+  text-wrap: balance;
+}
+
+.masthead-copy {
+  max-width: 860px;
+  padding: 1.6rem 0 0;
+}
+
+.masthead-details {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.75rem 1.5rem;
+  align-items: center;
+  margin-top: 1.1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
 }
 
 .masthead-meta-bar {
@@ -176,7 +284,7 @@ video {
   align-items: center;
   justify-content: space-between;
   gap: 1.5rem;
-  margin-top: 1rem;
+  margin-top: 0.9rem;
   padding: 0;
 }
 
@@ -225,7 +333,7 @@ video {
 .media-summary,
 .docs-intro {
   max-width: none;
-  margin: 0.7rem 0 0;
+  margin: 0;
   line-height: 1.7;
   font-size: 1.02rem;
 }
@@ -237,7 +345,7 @@ video {
 }
 
 .masthead-authors {
-  margin: 1.2rem 0 0;
+  margin: 0;
   font-size: 1.05rem;
   font-weight: 500;
 }
@@ -258,9 +366,11 @@ video {
 
 .masthead-logo {
   display: block;
-  height: 140px;
+  grid-column: 2;
+  grid-row: 1 / span 3;
+  height: 72px;
   width: auto;
-  margin: 0.35rem 0 -1rem -18px;
+  margin: -0.15rem 0 -0.25rem;
 }
 
 @media (max-width: 720px) {
@@ -280,7 +390,7 @@ video {
   display: flex;
   flex-wrap: wrap;
   gap: 0.8rem;
-  margin-top: 1.4rem;
+  margin-top: 0.9rem;
 }
 
 .button {
@@ -1437,7 +1547,7 @@ video {
 }
 
 @media (max-width: 960px) {
-  .masthead,
+  .masthead-copy,
   .featured-panel,
   .media-overview,
   .docs-shell,
@@ -1471,6 +1581,17 @@ video {
     min-width: 0;
   }
 
+  .masthead-summary,
+  .masthead-meta-bar,
+  .masthead-actions,
+  .masthead-details {
+    grid-column: 1;
+  }
+
+  .masthead-details {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
 }
 
 @media (max-width: 720px) {
@@ -1484,7 +1605,25 @@ video {
   }
 
   .page {
-    padding-top: 1.5rem;
+    padding-top: 0;
+  }
+
+  .hero-cover {
+    min-height: clamp(24rem, 82svh, 46rem);
+  }
+
+  .hero-cover::before {
+    background:
+      linear-gradient(180deg, rgba(248, 245, 239, 0.88) 0%, rgba(248, 245, 239, 0.62) 34%, rgba(248, 245, 239, 0.1) 70%, rgba(17, 17, 17, 0.18) 100%);
+  }
+
+  .hero-cover img {
+    object-position: 57% 42%;
+  }
+
+  .hero-title {
+    width: min(calc(100% - 2rem), var(--width));
+    padding: 9.2rem 0 1.6rem;
   }
 
   .masthead h1,
@@ -1495,8 +1634,14 @@ video {
     font-size: clamp(1.95rem, 10vw, 3rem);
   }
 
-  .masthead-actions {
-    flex-direction: column;
-    align-items: flex-start;
+  .masthead-details {
+    grid-template-columns: 1fr;
+  }
+
+  .masthead-logo {
+    grid-column: 1;
+    grid-row: auto;
+    height: 58px;
+    margin: 0.1rem 0 -0.25rem -8px;
   }
 }

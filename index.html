@@ -34,8 +34,18 @@
 
     <main class="page">
       <section class="masthead">
+        <figure class="hero-cover">
+          <picture>
+            <source media="(max-width: 720px)" srcset="assets/media/hero/leflexitac-cover-1200.jpg">
+            <img src="assets/media/hero/leflexitac-cover.jpg" alt="LeFlexiTac tactile robot gripper holding a test tube in front of a Columbia University display">
+          </picture>
+          <figcaption class="hero-title">
+            <span class="eyebrow">LeFlexiTac</span>
+            <h1>Giving robots a sense of touch.</h1>
+          </figcaption>
+        </figure>
+
         <div class="masthead-copy">
-          <h1>Giving robots a sense of touch.</h1>
           <p class="masthead-summary">
             <a href="https://github.com/huggingface/lerobot" target="_blank" rel="noreferrer">LeRobot</a> has made
             low-cost robot learning widely accessible, but its policies are still blind to contact. We
@@ -43,12 +53,14 @@
             sensing to the SO-100/SO-101 platform and find that a modest amount of touch meaningfully lifts success
             rates on contact-rich manipulation across four policy families.
           </p>
-          <p class="masthead-authors">
-            Naian Tao, Yifan He<sup>*</sup>, Wesley Maa<sup>*</sup>, Binghao Huang, Yunzhu Li
-          </p>
-          <p class="masthead-equal-contrib"><sup>*</sup> Equal contribution</p>
-          <p class="masthead-affiliation">Columbia University</p>
-          <img class="masthead-logo" src="assets/columbia-engineering.svg" alt="Columbia Engineering" />
+          <div class="masthead-details">
+            <p class="masthead-authors">
+              Naian Tao, Yifan He<sup>*</sup>, Wesley Maa<sup>*</sup>, Binghao Huang, Yunzhu Li
+            </p>
+            <p class="masthead-equal-contrib"><sup>*</sup> Equal contribution</p>
+            <p class="masthead-affiliation">Columbia University</p>
+            <img class="masthead-logo" src="assets/columbia-engineering.svg" alt="Columbia Engineering" />
+          </div>
           <div class="masthead-meta-bar">
             <div class="masthead-meta-left">
               <span class="masthead-meta-date">April 2026</span>
