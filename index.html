@@ -151,28 +151,25 @@
           <h2>Takeaways.</h2>
         </div>
         <div class="prose">
-          <p>
-            Across the three tasks and four policy families, a few things stood out to us:
-          </p>
           <ul class="takeaway-list">
             <li>
-              <strong>Tactile helps most when vision runs out.</strong> The largest gains show up on
-              partial-observability tasks like pen retrieval inside a bag or peg alignment at the moment
-              of contact, where the camera simply cannot see the relevant geometry.
+              The biggest gains came on the in-bag pen retrieval task, where the camera is completely unable to see what the gripper
+              is reaching for. For illustration, vision-only ACT got 7 out of 30 but scored 23 out of 30 with tactile information. The peg and tube tasks
+              showed smaller but consistent gains across every policy we ran on them.
             </li>
             <li>
-              <strong>The signal generalizes across architectures.</strong> ACT, Diffusion Policy, Pi0.5,
-              and SmolVLA all improve with the same tactile stream, suggesting the bottleneck was the
-              modality, not any one policy's capacity.
+              The same <code class="inline-code">observation.tactile.primary</code> stream improved every policy we
+              tested it on, across architectures from ACT (a small encoder-decoder transformer) up through Pi0.5 (a
+              large VLA). This suggests that tactile information is valuable across a wide range of policies.
             </li>
             <li>
-              <strong>A little tactile goes a long way.</strong> Four tactile tokens is usually enough.
-              Pushing the count higher adds noise without improving success.
+              Small tactile token counts are generally enough to improve performance. ACT and SmolVLA use 4 tokens while Diffusion Policy uses a single
+              64-dim chunk, and Pi0.5 uses 32 tokens. Generally, increasing past the per-model default did not improve success.
             </li>
             <li>
-              <strong>Pi0.5 needs full fine-tuning.</strong> Action-expert-only and LoRA fine-tunes
-              collapse on tactile tasks; only full fine-tuning at a small learning rate (<code class="inline-code">2.5e-5</code>)
-              converges reliably.
+              Pi0.5 was the only model that needed a full fine-tune. Action-expert-only and LoRA both produced low
+              success rates. The recipe that converged is a full fine-tune at <code class="inline-code">2.5e-5</code>.
+              However, the same recipe at <code class="inline-code">5e-5</code> failed to converge.
             </li>
           </ul>
         </div>
