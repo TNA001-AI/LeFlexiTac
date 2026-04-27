@@ -265,15 +265,15 @@ video {
 }
 
 .masthead-copy {
-  max-width: 860px;
+  max-width: none;
   padding: 1.6rem 0 0;
 }
 
 .masthead-details {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 0.75rem 1.5rem;
-  align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.45rem;
   margin-top: 1.1rem;
   padding-top: 1rem;
   border-top: 1px solid var(--line);
@@ -338,6 +338,10 @@ video {
   font-size: 1.02rem;
 }
 
+.masthead-summary {
+  max-width: 860px;
+}
+
 .masthead-summary a {
   color: var(--accent);
   text-decoration: none;
@@ -366,16 +370,14 @@ video {
 
 .masthead-logo {
   display: block;
-  grid-column: 2;
-  grid-row: 1 / span 3;
-  height: 72px;
+  height: 58px;
   width: auto;
-  margin: -0.15rem 0 -0.25rem;
+  margin: 0.05rem 0 -0.25rem -10px;
 }
 
 @media (max-width: 720px) {
   .masthead-logo {
-    height: 100px;
+    height: 50px;
   }
 }
 
@@ -1588,10 +1590,6 @@ video {
     grid-column: 1;
   }
 
-  .masthead-details {
-    grid-template-columns: minmax(0, 1fr) auto;
-  }
-
 }
 
 @media (max-width: 720px) {
@@ -1604,12 +1602,33 @@ video {
     flex-wrap: wrap;
   }
 
+  .landing-page .site-header {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .landing-page .site-brand {
+    gap: 0.6rem;
+  }
+
+  .landing-page .brand-mark {
+    width: 2rem;
+    height: 2rem;
+    font-size: 0.78rem;
+  }
+
+  .landing-page .site-nav {
+    gap: 0.8rem;
+    margin-left: auto;
+  }
+
   .page {
     padding-top: 0;
   }
 
   .hero-cover {
-    min-height: clamp(24rem, 82svh, 46rem);
+    min-height: clamp(26rem, 68svh, 34rem);
   }
 
   .hero-cover::before {
@@ -1623,7 +1642,7 @@ video {
 
   .hero-title {
     width: min(calc(100% - 2rem), var(--width));
-    padding: 9.2rem 0 1.6rem;
+    padding: 7.4rem 0 1.6rem;
   }
 
   .masthead h1,
@@ -1634,14 +1653,8 @@ video {
     font-size: clamp(1.95rem, 10vw, 3rem);
   }
 
-  .masthead-details {
-    grid-template-columns: 1fr;
-  }
-
   .masthead-logo {
-    grid-column: 1;
-    grid-row: auto;
-    height: 58px;
+    height: 48px;
     margin: 0.1rem 0 -0.25rem -8px;
   }
 }
