@@ -219,14 +219,14 @@ export const siteData = {
         "Secure the FlexiTac sensor pad onto the 'Wrist Roll' of the custom gripper. Route the USB cable along the arm and verify the sensor appears as <code>/dev/ttyUSB0</code>.",
       video: {
         src: "assets/media/leflexitac_assembly_light.mp4",
-        title: "Sensor attachment walkthrough",
+        caption: "Sensor attachment walkthrough.",
       },
     },
     {
       title: "Test the tactile sensor",
       body:
         "Grant serial access and run the driver test script to confirm the sensor streams valid tactile frames at 2 000 000 baud.",
-      link: { label: "test_tactile_driver.py", url: "https://github.com/TNA001-AI/lerobot_tactile/blob/new-sync/test_tactile_driver.py" },
+      link: { label: "test_tactile_driver.py", url: "https://github.com/TNA001-AI/lerobot_tactile/blob/main/test_tactile_driver.py" },
       command: "assets/commands/test.sh",
     },
     {

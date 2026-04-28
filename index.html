@@ -73,7 +73,7 @@
           <div class="masthead-actions">
             <a class="button button-primary" href="#results">Task results</a>
             <a class="button button-secondary" href="docs.html">Documentation</a>
-            <a class="button button-secondary" href="https://github.com/TNA001-AI/lerobot_tactile/tree/new-sync" target="_blank" rel="noreferrer">Code</a>
+            <a class="button button-secondary" href="https://github.com/TNA001-AI/lerobot_tactile/tree/main" target="_blank" rel="noreferrer">Code</a>
           </div>
         </div>
       </section>
@@ -164,10 +164,10 @@
             </li>
             <li>
               Small tactile token counts are generally enough to improve performance. ACT and SmolVLA use 4 tokens while Diffusion Policy uses a single
-              64-dim chunk, and Pi0.5 uses 32 tokens. Generally, increasing past the per-model default did not improve success.
+              64-dim chunk, and Pi0.5 uses 32 tokens. Generally, increasing past the per-model default did not improve success, but for tasks that rely heavily on tactile feedback, raising the number of tactile tokens (or DP chunks) can help.
             </li>
             <li>
-              Pi0.5 was the only model that needed a full fine-tune. Action-expert-only and LoRA both produced low
+              Pi0.5 needs a full fine-tune. Action-expert-only and LoRA both produced low
               success rates. The recipe that converged is a full fine-tune at <code class="inline-code">2.5e-5</code>.
               However, the same recipe at <code class="inline-code">5e-5</code> failed to converge.
             </li>
