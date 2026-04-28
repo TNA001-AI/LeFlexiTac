@@ -29,29 +29,31 @@
       <nav class="site-nav" aria-label="Primary">
         <a href="index.html">Home</a>
         <a href="docs.html">Docs</a>
+        <a href="https://github.com/TNA001-AI/lerobot_tactile/tree/main" target="_blank" rel="noreferrer">Code</a>
       </nav>
     </header>
 
     <main class="page">
       <section class="masthead">
-        <figure class="hero-cover">
-          <picture>
-            <source media="(max-width: 720px)" srcset="assets/media/hero/leflexitac-cover-1200.jpg">
-            <img src="assets/media/hero/leflexitac-cover.jpg" alt="LeFlexiTac tactile robot gripper holding a test tube in front of a Columbia University display">
-          </picture>
-          <figcaption class="hero-title">
-            <span class="eyebrow">LeFlexiTac</span>
-            <h1>Giving robots a sense of touch.</h1>
-          </figcaption>
-        </figure>
-
         <div class="masthead-copy">
+          <span class="eyebrow">LeFlexiTac</span>
+          <h1>Giving robots a sense of touch.</h1>
+          <figure class="hero-cover">
+            <picture>
+              <source media="(max-width: 720px)" srcset="assets/media/hero/leflexitac-cover-1200.jpg">
+              <img src="assets/media/hero/leflexitac-cover.jpg" alt="LeFlexiTac tactile robot gripper holding a test tube in front of a Columbia University display">
+            </picture>
+          </figure>
           <p class="masthead-summary">
             <a href="https://github.com/huggingface/lerobot" target="_blank" rel="noreferrer">LeRobot</a> has made
-            low-cost robot learning widely accessible, but its policies are still blind to contact. We
-            add <a href="https://flexitac.github.io/" target="_blank" rel="noreferrer">FlexiTac</a> tactile
-            sensing to the SO-100/SO-101 platform and find that a modest amount of touch meaningfully lifts success
-            rates on contact-rich manipulation across four policy families.
+            low-cost robot learning widely accessible, but its policies are still blind to contact. We add
+            <a href="https://flexitac.github.io/" target="_blank" rel="noreferrer">FlexiTac</a> tactile sensing to the
+            SO-100/SO-101 platform and find that a modest amount of touch meaningfully lifts success rates on
+            contact-rich manipulation across four policy families:
+            <a href="https://tonyzhaozh.github.io/aloha/" target="_blank" rel="noreferrer">ACT</a>,
+            <a href="https://diffusion-policy.cs.columbia.edu/" target="_blank" rel="noreferrer">Diffusion Policy</a>,
+            <a href="https://www.pi.website/blog/pi05" target="_blank" rel="noreferrer">Pi0.5</a>, and
+            <a href="https://huggingface.co/blog/smolvla" target="_blank" rel="noreferrer">SmolVLA</a>.
           </p>
           <div class="masthead-details">
             <p class="masthead-authors">
@@ -95,8 +97,10 @@
           </p>
           <p>
             Yet almost all of this progress is driven by cameras. The robot sees the scene but does not feel
-            it. For tasks where vision is limited or where touch is essential, such as inserting a tube into a rack,
-            aligning a peg, or finding pens in a cluttered bag, the policy is crippled and cannot view key aspects of the interaction itself. When the grasp slips or the object
+            it. For tasks where vision is limited or where touch is essential, such as
+            <a href="#task-tube">inserting a tube into a rack</a>,
+            <a href="#task-peg">aligning a peg</a>, or
+            <a href="#task-pen">finding pens in a cluttered bag</a>, the policy is crippled and cannot view key aspects of the interaction itself. When the grasp slips or the object
             hides behind the gripper, the camera-only policy has nothing left to reason over.
           </p>
           <p>
@@ -148,14 +152,14 @@
       <section class="landing-section prose-section" id="takeaways">
         <div class="section-heading">
           <div class="section-label">What we learned</div>
-          <h2>Takeaways.</h2>
+          <h2>Detailed technical observations.</h2>
         </div>
         <div class="prose">
           <ul class="takeaway-list">
             <li>
               The biggest gains came on the in-bag pen retrieval task, where the camera is completely unable to see what the gripper
               is reaching for. For illustration, vision-only ACT got 7 out of 30 but scored 23 out of 30 with tactile information. The peg and tube tasks
-              showed smaller but consistent gains across every policy we ran on them.
+              also showed consistent improvements across every policy we ran on them.
             </li>
             <li>
               The same <code class="inline-code">observation.tactile.primary</code> stream improved every policy we

@@ -63,29 +63,6 @@ video {
   border-bottom: 1px solid var(--line);
 }
 
-.landing-page .site-header {
-  position: absolute;
-  inset: 0 0 auto;
-  z-index: 10;
-  border-bottom-color: rgba(255, 255, 255, 0.22);
-}
-
-.landing-page .brand-mark {
-  border-color: rgba(255, 255, 255, 0.82);
-  color: #ffffff;
-}
-
-.landing-page .brand-text strong,
-.landing-page .brand-text span,
-.landing-page .site-nav a {
-  color: #ffffff;
-  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.42);
-}
-
-.landing-page .site-nav a::after {
-  background: #ffffff;
-}
-
 .site-brand {
   display: inline-flex;
   align-items: center;
@@ -173,10 +150,6 @@ video {
   padding: 2.2rem 0 5rem;
 }
 
-.landing-page .page {
-  padding-top: 0;
-}
-
 .eyebrow,
 .section-label,
 .slot-label,
@@ -195,78 +168,49 @@ video {
 
 .masthead {
   max-width: none;
-  padding: 0.4rem 0 1.4rem;
+  padding: 0.3rem 0 2.4rem;
+}
+
+.masthead-copy > .eyebrow {
+  display: block;
+  margin-bottom: 0.6rem;
+  font-size: 0.68rem;
+}
+
+.masthead .masthead-copy > h1 {
+  margin: 0 0 2rem;
+  text-wrap: balance;
 }
 
 .hero-cover {
-  position: relative;
-  left: 50%;
-  width: 100vw;
-  min-height: clamp(22rem, 82svh, 58rem);
-  margin: 0 0 0 -50vw;
+  max-width: 700px;
+  margin: 0 auto 2rem;
   overflow: hidden;
   background: var(--panel-strong);
-  border-bottom: 1px solid var(--line);
-}
-
-.hero-cover::before,
-.hero-cover::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-
-.hero-cover::before {
-  z-index: 1;
-  background:
-    linear-gradient(90deg, rgba(248, 245, 239, 0.86) 0%, rgba(248, 245, 239, 0.62) 31%, rgba(248, 245, 239, 0.12) 58%, rgba(248, 245, 239, 0) 100%),
-    linear-gradient(0deg, rgba(17, 17, 17, 0.24) 0%, rgba(17, 17, 17, 0) 38%);
-}
-
-.hero-cover::after {
-  z-index: 2;
-  background: linear-gradient(180deg, rgba(17, 17, 17, 0.62) 0%, rgba(17, 17, 17, 0.38) 5.5rem, rgba(17, 17, 17, 0) 12rem);
+  border-radius: 12px;
+  box-shadow:
+    0 1px 2px rgba(17, 17, 17, 0.06),
+    0 10px 26px -12px rgba(17, 17, 17, 0.18);
 }
 
 .hero-cover picture,
 .hero-cover img {
+  display: block;
   width: 100%;
-  height: 100%;
-}
-
-.hero-cover picture {
-  position: absolute;
-  inset: 0;
+  height: auto;
 }
 
 .hero-cover img {
-  object-fit: cover;
-  object-position: 54% 42%;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.hero-title {
-  position: relative;
-  z-index: 3;
-  width: min(calc(100% - 2rem), var(--width));
-  margin-inline: auto;
-  padding: clamp(7.2rem, 16svh, 9rem) 0 clamp(1.8rem, 5svh, 3.4rem);
-}
-
-.hero-title .eyebrow {
-  display: block;
-  margin-bottom: 1rem;
-  color: var(--accent);
-}
-
-.hero-title h1 {
-  max-width: 9ch;
-  text-wrap: balance;
+.hero-cover:hover img {
+  transform: scale(1.015);
 }
 
 .masthead-copy {
   max-width: none;
-  padding: 1.6rem 0 0;
+  padding: 0;
 }
 
 .masthead-details {
@@ -370,14 +314,14 @@ video {
 
 .masthead-logo {
   display: block;
-  height: 58px;
+  height: 110px;
   width: auto;
-  margin: 0.05rem 0 -0.25rem -10px;
+  margin: 0.4rem 0 -0.25rem -16px;
 }
 
 @media (max-width: 720px) {
   .masthead-logo {
-    height: 50px;
+    height: 80px;
   }
 }
 
@@ -1606,47 +1550,8 @@ video {
     flex-wrap: wrap;
   }
 
-  .landing-page .site-header {
-    flex-direction: row;
-    align-items: center;
-    gap: 0.75rem;
-  }
-
-  .landing-page .site-brand {
-    gap: 0.6rem;
-  }
-
-  .landing-page .brand-mark {
-    width: 2rem;
-    height: 2rem;
-    font-size: 0.78rem;
-  }
-
-  .landing-page .site-nav {
-    gap: 0.8rem;
-    margin-left: auto;
-  }
-
-  .page {
-    padding-top: 0;
-  }
-
   .hero-cover {
-    min-height: clamp(26rem, 68svh, 34rem);
-  }
-
-  .hero-cover::before {
-    background:
-      linear-gradient(180deg, rgba(248, 245, 239, 0.88) 0%, rgba(248, 245, 239, 0.62) 34%, rgba(248, 245, 239, 0.1) 70%, rgba(17, 17, 17, 0.18) 100%);
-  }
-
-  .hero-cover img {
-    object-position: 57% 42%;
-  }
-
-  .hero-title {
-    width: min(calc(100% - 2rem), var(--width));
-    padding: 7.4rem 0 1.6rem;
+    max-width: 100%;
   }
 
   .masthead h1,

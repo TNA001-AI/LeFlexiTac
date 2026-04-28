@@ -158,6 +158,7 @@ function renderLanding() {
 
   siteData.featured.tasks.forEach((task, index) => {
     const panel = create("article", "featured-panel task-panel");
+    if (task.id) panel.id = `task-${task.id}`;
 
     const copy = create("div", "featured-copy");
     copy.append(create("p", "featured-label", `Task ${index + 1}`));
