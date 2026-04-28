@@ -277,7 +277,7 @@ video {
 .media-summary,
 .docs-intro {
   max-width: none;
-  margin: 0;
+  margin: 1rem 0 0;
   line-height: 1.7;
   font-size: 1.02rem;
 }
