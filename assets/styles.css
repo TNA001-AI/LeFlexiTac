@@ -401,19 +401,20 @@ video {
   justify-content: center;
   min-height: 2.8rem;
   padding: 0 1rem;
-  border: 1px solid var(--ink);
+  border: 2px solid var(--accent);
   text-decoration: none;
   font-size: 0.95rem;
+  font-weight: 600;
   background: transparent;
-  color: var(--ink);
+  color: var(--accent);
   transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 .button:hover {
-  background: var(--ink);
-  color: var(--bg);
+  background: var(--accent);
+  color: #ffffff;
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 12px rgba(162, 74, 45, 0.28);
 }
 
 .button:active {
@@ -422,14 +423,14 @@ video {
 }
 
 .button-primary {
-  background: var(--panel);
-  color: var(--ink);
-  border: 2px solid var(--accent);
+  background: transparent;
+  color: var(--accent);
+  border-color: var(--accent);
 }
 
 .button-primary:hover {
-  background: transparent;
-  color: var(--ink);
+  background: var(--accent);
+  color: #ffffff;
 }
 
 .metric-grid {
