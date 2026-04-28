@@ -257,7 +257,7 @@ export const siteData = {
         "Run each policy on the real robot and log the rollouts. Select a model to see its tactile and vision-only evaluation commands.",
       video: {
         src: "assets/media/pen/task3_short_x1.mp4",
-        caption: "Example success rollout (in-bag pen retrieval, 1x).",
+        caption: "Example success rollout from SmolVLA on in-bag pen retrieval (1× speed).",
       },
       models: [
         { name: "ACT", tactile: "assets/commands/eval/act.tactile.sh", baseline: "assets/commands/eval/act.baseline.sh" },
