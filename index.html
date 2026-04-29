@@ -48,7 +48,7 @@
             <a href="https://github.com/huggingface/lerobot" target="_blank" rel="noreferrer">LeRobot</a> has made
             low-cost robot learning widely accessible, but its policies are still blind to contact. We add
             <a href="https://flexitac.github.io/" target="_blank" rel="noreferrer">FlexiTac</a> tactile sensing to the
-            SO-100/SO-101 platform and find that a modest amount of touch lifts success rates on
+            SO-100/SO-101 platform and find that even a modest amount of touch meaningfully lifts success rates on
             contact-rich manipulation across four policy families:
             <a href="https://tonyzhaozh.github.io/aloha/" target="_blank" rel="noreferrer">ACT</a>,
             <a href="https://diffusion-policy.cs.columbia.edu/" target="_blank" rel="noreferrer">Diffusion Policy</a>,
@@ -100,7 +100,7 @@
             plug directly into this stack.
           </p>
           <p>
-            Yet almost all of this progress is driven by cameras. The robot sees the scene but does not feel
+            Yet almost all of this progress is driven by cameras. The robot can see the scene but does not feel
             it. For tasks where vision is limited or where touch is essential, such as
             <a href="#task-tube">inserting a tube into a rack</a>,
             <a href="#task-peg">aligning a peg</a>, or
@@ -108,7 +108,7 @@
             hides behind the gripper, the camera-only policy has nothing left to reason over.
           </p>
           <p>
-            To us, this is a glaring gap in the field. We believe it to be obvious that touch is the missing piece, and we wanted to know how much it actually matters
+            To us, this is a glaring gap in the field. We believe that touch is a critically missing piece, and wanted to know how much it actually matters
             once you add it to the standard LeRobot pipeline.
           </p>
         </div>
@@ -176,8 +176,8 @@
             </li>
             <li>
               Pi0.5 needs a full fine-tune. Action-expert-only and LoRA both produced low
-              success rates. The recipe that converged is a full fine-tune at <code class="inline-code">2.5e-5</code>.
-              However, the same recipe at <code class="inline-code">5e-5</code> failed to converge.
+              success rates. The recipe that converged used a learning rate of <code class="inline-code">2.5e-5</code>,
+              while the same setup with learning rate <code class="inline-code">5e-5</code> failed to converge.
             </li>
           </ul>
         </div>
@@ -186,7 +186,7 @@
       <section class="landing-section">
         <div class="section-heading">
           <div class="section-label">More</div>
-          <h2>Reproduce it.</h2>
+          <h2>Build it yourself.</h2>
         </div>
         <a class="docs-banner" href="docs.html">
           <div class="docs-banner-content">

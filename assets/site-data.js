@@ -22,13 +22,13 @@ export const siteData = {
         tactileLong: {
           src: "assets/media/tube/task1x10.mp4",
           hint: "assets/media/tube/task1x10.mp4",
-          title: "Vision + Tactile rollout, 10× speed",
+          title: "Tactile + Vision rollout, 10× speed",
           note: "",
         },
         tactileShort: {
           src: "assets/media/tube/task1_short_x1.mp4",
           hint: "assets/media/tube/task1_short_x1.mp4",
-          title: "Vision + Tactile clip, 1× speed",
+          title: "Tactile + Vision clip, 1× speed",
           note: "",
         },
         baselineFailure: {
@@ -54,13 +54,13 @@ export const siteData = {
         tactileLong: {
           src: "assets/media/peg/task2x10.mp4",
           hint: "assets/media/peg/task2x10.mp4",
-          title: "Vision + Tactile rollout, 10× speed",
+          title: "Tactile + Vision rollout, 10× speed",
           note: "",
         },
         tactileShort: {
           src: "assets/media/peg/task2_short_x1.mp4",
           hint: "assets/media/peg/task2_short_x1.mp4",
-          title: "Vision + Tactile clip, 1× speed",
+          title: "Tactile + Vision clip, 1× speed",
           note: "",
         },
         baselineFailure: {
@@ -85,13 +85,13 @@ export const siteData = {
         tactileLong: {
           src: "assets/media/pen/task3_short_x1.mp4",
           hint: "assets/media/pen/task3_short_x1.mp4",
-          title: "Vision + Tactile clip, 1× speed",
+          title: "Tactile + Vision clip, 1× speed",
           note: "",
         },
         tactileShort: {
           src: "assets/media/pen/task3x10.mp4",
           hint: "assets/media/pen/task3x10.mp4",
-          title: "Vision + Tactile rollout, 10× speed",
+          title: "Tactile + Vision rollout, 10× speed",
           note: "",
         },
         baselineFailure: {
@@ -302,14 +302,14 @@ export const siteData = {
   ],
   references: [
     {
-      label: "PyFlexiTac",
-      url: "https://github.com/WT-MM/PyFlexiTac#flexitac-flash",
-      note: "Reference flashing and sensor-stream workflow (`flexitac-find-port`, `flexitac-flash`, `flexitac-stream`) used in this guide.",
-    },
-    {
       label: "FlexiTac",
       url: "https://flexitac.github.io/",
       note: "The tactile sensor used in this project. See their site for fabrication instructions and hardware specs.",
+    },
+    {
+      label: "PyFlexiTac",
+      url: "https://github.com/WT-MM/PyFlexiTac#flexitac-flash",
+      note: "Reference flashing and sensor-stream workflow (`flexitac-find-port`, `flexitac-flash`, `flexitac-stream`) used in this guide.",
     },
     {
       label: "VT-Refine",
