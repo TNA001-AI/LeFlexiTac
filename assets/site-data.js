@@ -226,7 +226,7 @@ export const siteData = {
       title: "Install PyFlexiTac CLI",
       body:
         "Install PyFlexiTac with the examples extra so the visual heatmap checker is available via CLI entry points.",
-      link: { label: "PyFlexiTac install and CLI docs", url: "https://github.com/WT-MM/PyFlexiTac#flexitac-flash" },
+      link: { label: "PyFlexiTac install and CLI docs", url: "https://github.com/WT-MM/PyFlexiTac" },
       command: "assets/commands/install-flexitac.sh",
     },
     {
