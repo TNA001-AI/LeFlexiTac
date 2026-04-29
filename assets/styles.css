@@ -183,8 +183,7 @@ video {
 }
 
 .hero-cover {
-  max-width: 700px;
-  margin: 0 auto 2rem;
+  margin: 0 0 2rem;
   overflow: hidden;
   background: var(--panel-strong);
   border-radius: 12px;
@@ -197,10 +196,12 @@ video {
 .hero-cover img {
   display: block;
   width: 100%;
-  height: auto;
 }
 
 .hero-cover img {
+  height: clamp(22rem, 56vh, 34rem);
+  object-fit: cover;
+  object-position: 54% 50%;
   transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
