@@ -1,3 +1,3 @@
-sudo chmod 777 /dev/ttyUSB0
-
-python test_tactile_driver.py
+flexitac-find-port
+flexitac-flash --port <discovered-port> --fqbn arduino:avr:uno
+flexitac-heatmap --port <discovered-port>

@@ -311,14 +311,17 @@ function renderDocs() {
       html += `</div>`;
     }
 
-    if (step.video?.src) {
+    if (step.video) {
       const header = step.video.title
         ? `<div class="card-header"><span>${step.video.title}</span></div>`
         : "";
       const caption = step.video.caption
         ? `<p class="step-video-caption">${step.video.caption}</p>`
         : "";
-      html += `<div class="step-video">${header}<video class="step-video-el" controls muted playsinline loop preload="metadata" data-lazy-src="${step.video.src}"></video>${caption}</div>`;
+      const media = step.video.src
+        ? `<video class="step-video-el" controls muted playsinline loop preload="metadata" data-lazy-src="${step.video.src}"></video>`
+        : `<div class="step-video-placeholder">Video placeholder (coming soon)</div>`;
+      html += `<div class="step-video">${header}${media}${caption}</div>`;
     }
 
     card.innerHTML = html;

@@ -1320,6 +1320,17 @@ video {
   border: 1px solid var(--line);
 }
 
+.step-video-placeholder {
+  display: grid;
+  place-items: center;
+  min-height: 180px;
+  width: 100%;
+  border: 1px dashed var(--line);
+  background: var(--panel-strong);
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
 .step-video-caption {
   margin: 0.6rem 0 0;
   color: var(--muted);

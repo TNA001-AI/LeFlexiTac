@@ -216,18 +216,29 @@ export const siteData = {
     {
       title: "Mount the sensor",
       body:
-        "Secure the FlexiTac sensor pad onto the 'Wrist Roll' of the custom gripper. Route the USB cable along the arm and verify the sensor appears as <code>/dev/ttyUSB0</code>.",
+        "Secure the FlexiTac sensor pad onto the 'Wrist Roll' of the custom gripper. Route the USB cable along the arm and verify the sensor (usually appears as <code>/dev/ttyUSB0</code> on Linux)",
       video: {
         src: "assets/media/leflexitac_assembly_light.mp4",
         caption: "Sensor attachment walkthrough.",
       },
     },
     {
+      title: "Install PyFlexiTac CLI",
+      body:
+        "Install PyFlexiTac with the examples extra so the visual heatmap checker is available via CLI entry points.",
+      link: { label: "PyFlexiTac install and CLI docs", url: "https://github.com/WT-MM/PyFlexiTac#flexitac-flash" },
+      command: "assets/commands/install-flexitac.sh",
+    },
+    {
       title: "Test the tactile sensor",
       body:
-        "Grant serial access and run the driver test script to confirm the sensor streams valid tactile frames at 2 000 000 baud.",
-      link: { label: "test_tactile_driver.py", url: "https://github.com/TNA001-AI/lerobot_tactile/blob/main/test_tactile_driver.py" },
+        "Run the PyFlexiTac CLI entry points to identify the sensor port, flash firmware, and visually confirm contact response with the heatmap before data collection.",
+      link: { label: "PyFlexiTac: flexitac-flash guide", url: "https://github.com/WT-MM/PyFlexiTac#flexitac-flash" },
       command: "assets/commands/test.sh",
+      video: {
+        src: "",
+        caption: "Visual tactile test demo will be added here.",
+      },
     },
     {
       title: "Collect data",
@@ -290,6 +301,11 @@ export const siteData = {
     },
   ],
   references: [
+    {
+      label: "PyFlexiTac",
+      url: "https://github.com/WT-MM/PyFlexiTac#flexitac-flash",
+      note: "Reference flashing and sensor-stream workflow (`flexitac-find-port`, `flexitac-flash`, `flexitac-stream`) used in this guide.",
+    },
     {
       label: "FlexiTac",
       url: "https://flexitac.github.io/",
