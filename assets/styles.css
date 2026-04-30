@@ -1412,6 +1412,10 @@ video {
   margin-top: 1.5rem;
 }
 
+.command-col {
+  min-width: 0;
+}
+
 .command-col h4 {
   margin: 0 0 0.5rem;
   font-size: 0.85rem;
@@ -1507,11 +1511,33 @@ video {
   background: var(--panel-strong);
   color: var(--ink);
   border: 1px solid var(--line);
-  overflow-x: auto;
+  overflow-x: scroll;
+  overflow-y: hidden;
   font-family: var(--mono);
   font-size: 0.84rem;
   line-height: 1.7;
   max-width: 100%;
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-strong) var(--panel-strong);
+}
+
+.code-block::-webkit-scrollbar {
+  height: 10px;
+}
+
+.code-block::-webkit-scrollbar-track {
+  background: var(--panel-strong);
+  border-top: 1px solid var(--line);
+}
+
+.code-block::-webkit-scrollbar-thumb {
+  background: var(--line-strong);
+  border-radius: 5px;
+  border: 2px solid var(--panel-strong);
+}
+
+.code-block::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
 }
 
 .code-block code {

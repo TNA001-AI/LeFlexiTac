@@ -2,7 +2,7 @@ lerobot-record \
   --robot.type=so_tactile_follower \
   --robot.port=/dev/ttyACM0 \
   --robot.id=follower_arm \
-  --robot.cameras="{ top: {type: opencv, index_or_path: 0, width: 640, height: 480, fps: 30}}" \
+  --robot.cameras="{top: {"type": "opencv", "index_or_path": 0, "width":640, "height":480, "target_width":224, "target_height":224, "fps":30}}" \
   --robot.tactile_sensors='{primary: {"port": "/dev/ttyUSB0", "baud_rate": 2000000}}' \
   --teleop.type=so100_leader \
   --teleop.port=/dev/ttyACM1 \
