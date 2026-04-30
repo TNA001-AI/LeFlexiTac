@@ -317,6 +317,16 @@ export const siteData = {
       note: "Related work on vision-tactile policy refinement for dexterous manipulation.",
     },
     {
+      label: "3D-ViTac",
+      url: "https://binghao-huang.github.io/3D-ViTac/",
+      note: "Related work on 3D vision-tactile representation learning for contact-rich manipulation.",
+    },
+    {
+      label: "Touch in the Wild",
+      url: "https://binghao-huang.github.io/touch_in_the_wild/",
+      note: "Related work on collecting and learning from tactile data in unstructured real-world settings.",
+    },
+    {
       label: "LeRobot",
       url: "https://github.com/huggingface/lerobot",
       note: "Hugging Face's robotics framework. Our training and inference code extends LeRobot's policy and dataset interfaces.",
