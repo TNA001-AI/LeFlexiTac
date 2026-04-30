@@ -1,5 +1,5 @@
 lerobot-record \
-  --robot.type=so100_tactile_follower \
+  --robot.type=so_tactile_follower \
   --robot.port=/dev/ttyACM0 \
   --robot.id=follower_arm \
   --robot.cameras="{ top: {type: opencv, index_or_path: 0, width: 640, height: 480, fps: 30}}" \

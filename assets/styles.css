@@ -1275,6 +1275,31 @@ video {
 }
 
 /* Step-embedded commands */
+.step-note {
+  margin: 0.9rem 0 0;
+  padding: 0.85rem 1rem 0.85rem 1.1rem;
+  background: rgba(162, 74, 45, 0.06);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 4px 4px 0;
+}
+
+.step-note-label {
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.35rem;
+}
+
+.step-note p {
+  margin: 0;
+  color: var(--ink);
+  line-height: 1.65;
+  font-size: 0.95rem;
+}
+
 .step-command {
   margin-top: 1rem;
   border-top: 1px solid var(--line);

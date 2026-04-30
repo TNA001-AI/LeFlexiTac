@@ -223,6 +223,20 @@ export const siteData = {
       },
     },
     {
+      title: "Install LeRobot (from source)",
+      note: "This codebase is <strong>not</strong> available on PyPI — <code class=\"inline-code\">pip install lerobot</code> will install the upstream version without tactile support. You must install from source.",
+      body:
+        "Follow the official LeRobot installation guide for system prerequisites (ffmpeg, conda, etc.), then install this repo from source.",
+      link: { label: "LeRobot installation guide", url: "https://huggingface.co/docs/lerobot/installation" },
+      command: "assets/commands/install.sh",
+    },
+    {
+      title: "Configure the robot",
+      body:
+        "Follow the LeRobot SO-100 / SO-101 walkthrough to identify serial ports, calibrate the follower and leader arms, set up the camera, and sanity-check teleoperation before adding the tactile sensor to the loop.",
+      link: { label: "LeRobot robot setup walkthrough", url: "https://huggingface.co/docs/lerobot/il_robots" },
+    },
+    {
       title: "Install PyFlexiTac CLI",
       body:
         "Install PyFlexiTac with the examples extra so the visual heatmap checker is available via CLI entry points.",

@@ -261,7 +261,13 @@ function renderDocs() {
 
   siteData.reproductionSteps.forEach((step, index) => {
     const card = create("article", "step-card");
-    let html = `<span class="step-index">0${index + 1}</span><h3>${step.title}</h3><p>${step.body}</p>`;
+    let html = `<span class="step-index">0${index + 1}</span><h3>${step.title}</h3>`;
+
+    if (step.note) {
+      html += `<div class="step-note"><span class="step-note-label">Important</span><p>${step.note}</p></div>`;
+    }
+
+    html += `<p>${step.body}</p>`;
 
     if (step.link) {
       html += `<a class="inline-link" href="${step.link.url}" target="_blank" rel="noreferrer">${step.link.label}</a>`;
