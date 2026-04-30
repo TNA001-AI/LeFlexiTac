@@ -183,7 +183,7 @@ video {
 }
 
 .hero-cover {
-  margin: 0 0 2rem;
+  margin: 1.6rem 0 0;
   overflow: hidden;
   background: var(--panel-strong);
   border-radius: 2px;
