@@ -223,7 +223,7 @@ export const siteData = {
       },
     },
     {
-      title: "Install LeRobot (from source)",
+      title: "Install lerobot_tactile (our LeRobot fork)",
       note: "This codebase is <strong>not</strong> available on PyPI — <code class=\"inline-code\">pip install lerobot</code> will install the upstream version without tactile support. You must install from source.",
       body:
         "Follow the official LeRobot installation guide for system prerequisites (ffmpeg, conda, etc.), then install this repo from source.",
