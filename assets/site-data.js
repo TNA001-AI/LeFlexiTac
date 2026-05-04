@@ -267,7 +267,7 @@ export const siteData = {
     {
       title: "Train models",
       body:
-        "Train each policy with and without tactile input. Select a model below to see its architecture and tactile / vision-only training commands.",
+        "Train each policy with and without tactile input. Select a model below to see its architecture and tactile + vision vs vision only training commands.",
       showModelInfo: true,
       models: [
         { name: "ACT", tactile: "assets/commands/train/act.tactile.sh", baseline: "assets/commands/train/act.baseline.sh" },
@@ -279,7 +279,7 @@ export const siteData = {
     {
       title: "Evaluate models",
       body:
-        "Run each policy on the real robot and log the rollouts. Select a model to see its tactile and vision-only evaluation commands.",
+        "Run each policy on the real robot and log the rollouts. Select a model to see its tactile + vision vs vision only evaluation commands.",
       video: {
         src: "assets/media/pen/task3_short_x1.mp4",
         caption: "Example success rollout from SmolVLA on in-bag pen retrieval (1× speed).",

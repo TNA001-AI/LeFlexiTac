@@ -108,8 +108,8 @@
             hides behind the gripper, the camera-only policy has nothing left to reason over.
           </p>
           <p>
-            To us, this is a glaring gap in the field. We believe that touch is a critically missing piece, and wanted to know how much it actually matters
-            once you add it to the standard LeRobot pipeline.
+            To us, this is a glaring gap in the field. We believe that touch is a critically missing piece, and have found it to be a powerful tool for real-world robotic manipulation. 
+            By adding tactile sensing to the standard LeRobot ecosystem, we hope the wider community will be able to explore and benefit from this missing modality. 
           </p>
         </div>
       </section>
@@ -145,8 +145,8 @@
           <div class="section-label">Task results</div>
           <h2>What touch unlocks.</h2>
           <p>
-            We evaluate over three different tasks, with four types of policies each. For every task, we report tactile vs. no-tactile
-            success rates, a sped-up long rollout (10× speed), a short real-time clip (1× speed), and a typical no-tactile failure (2× speed).
+            We evaluate over three different tasks, with four types of policies each. For every task, we report tactile + vision vs vision only
+            success rates, a sped-up long rollout (10× speed), a short real-time clip (1× speed), and a typical vision only failure (2× speed).
           </p>
         </div>
 
@@ -162,7 +162,7 @@
           <ul class="takeaway-list">
             <li>
               The biggest gains came on the in-bag pen retrieval task, where the camera is completely unable to see what the gripper
-              is reaching for. For illustration, vision-only ACT got 7 out of 30 but scored 23 out of 30 with tactile information. The peg and tube tasks
+              is reaching for. For illustration, vision only ACT got 7 out of 30 but scored 23 out of 30 with tactile information. The peg and tube tasks
               also showed consistent improvements across every policy we ran on them.
             </li>
             <li>
