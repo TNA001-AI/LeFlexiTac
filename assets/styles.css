@@ -283,10 +283,6 @@ video {
   font-size: 1.02rem;
 }
 
-.masthead-summary {
-  max-width: 860px;
-}
-
 .masthead-summary a {
   color: var(--accent);
   text-decoration: none;
