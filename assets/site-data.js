@@ -43,7 +43,7 @@ export const siteData = {
         name: "Peg in Hole",
         label: "Task",
         summary:
-          "Contact-rich alignment and insertion task where tactile feedback resolves ambiguity in the final stage.",
+          "Contact-rich alignment and insertion task where tactile feedback resolves ambiguity in the final stage. Pegs and holes are NVIDIA IndustRealKit parts with ~0.5-0.6 mm diametral clearance.",
         results: [
           { policy: "ACT", tactile: "23/30 = 0.77", baseline: "14/30 = 0.47" },
           { policy: "Diffusion Policy", tactile: "25/30 = 0.83", baseline: "17/30 = 0.57" },
