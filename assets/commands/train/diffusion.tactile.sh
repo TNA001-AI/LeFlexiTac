@@ -8,6 +8,7 @@ lerobot-train \
   --policy.crop_is_random=true \
   --policy.resize_shape='[144,192]' \
   --policy.use_amp=true \
+  --policy.frame_stride=3 \
   --policy.repo_id=${HF_USER}/dp_tactile_pen_bag \
   --output_dir=outputs/train/dp_tactile_pen_bag \
   --batch_size=16 \

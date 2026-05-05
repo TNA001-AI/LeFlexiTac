@@ -12,4 +12,4 @@ lerobot-record \
   --dataset.episode_time_s=50 \
   --dataset.reset_time_s=5 \
   --dataset.single_task="Grab the pen from the bag and place it in the basket next to it" \
-  --dataset.fps=10
+  --dataset.fps=30

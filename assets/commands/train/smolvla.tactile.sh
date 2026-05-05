@@ -7,6 +7,7 @@ lerobot-train \
   --policy.tactile_features='["observation.tactile.primary"]' \
   --policy.n_tactile_tokens=4 \
   --policy.tactile_feature_dim=256 \
+  --policy.frame_stride=3 \
   --policy.repo_id=${HF_USER}/smolvla_tactile_pen_bag \
   --output_dir=outputs/train/smolvla_tactile_pen_bag \
   --batch_size=64 \

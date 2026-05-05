@@ -35,6 +35,7 @@ lerobot-train \
   --policy.scheduler_warmup_steps=1000 \
   --policy.scheduler_decay_steps=30000 \
   --policy.compile_model=false \
+  --policy.frame_stride=3 \
   --policy.repo_id=${HF_USER}/pi05_tactile_pen_bag \
   --output_dir=outputs/train/pi05_tactile_pen_bag \
   --job_name=pi05_tactile_pen_bag \

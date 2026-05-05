@@ -310,6 +310,10 @@ export const siteData = {
       body: "Start with the default learning rate and batch size. For tactile-enabled runs, 4 tactile tokens is a good default. Too few tokens lose spatial detail, and too many add noise without improving performance.",
     },
     {
+      title: "Sampling frequency",
+      body: "On-device inference speed keeps <strong>10 Hz</strong> the comfortable rollout rate for every policy except <strong>ACT</strong>, which is light enough to run rollouts at the native <strong>30 Hz</strong>. Always record data at 30 Hz and downsample at training time with <code class=\"inline-code\">--policy.frame_stride=3</code> for the slower policies — this keeps more raw data on disk while ensuring the training and rollout frame rates match (mismatches degrade performance).",
+    },
+    {
       title: "Training Pi0.5",
       body: "<ul><li>A dataset of 100 episodes is sufficient for a single task.</li><li>Only full fine-tuning works reliably; action-expert-only and LoRA both yield low success rates.</li><li>Less than 80 GB VRAM is insufficient for full fine-tuning.</li><li>FSDP (Fully Sharded Data Parallel) is not well supported in LeRobot (issues with dtype and model saving).</li><li>Only a smaller learning rate works: <code class=\"inline-code\">2.5e-5</code> succeeds, but <code class=\"inline-code\">5e-5</code> does not.</li></ul>",
     },

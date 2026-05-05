@@ -8,7 +8,7 @@ lerobot-record \
   --teleop.port=/dev/ttyACM1 \
   --teleop.id=leader_arm \
   --dataset.repo_id=${HF_USER}/eval_act_tactile_pen_bag \
-  --dataset.fps=10 \
+  --dataset.fps=30 \
   --dataset.num_episodes=50 \
   --dataset.episode_time_s=30 \
   --dataset.reset_time_s=10 \
