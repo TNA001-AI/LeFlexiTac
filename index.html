@@ -42,7 +42,7 @@
             <a href="https://github.com/huggingface/lerobot" target="_blank" rel="noreferrer">LeRobot</a> has made
             low-cost robot learning widely accessible, but its policies are still blind to contact. We add
             <a href="https://flexitac.github.io/" target="_blank" rel="noreferrer">FlexiTac</a> tactile sensing to the
-            SO-100/SO-101 platform and find that even a modest amount of touch meaningfully lifts success rates on
+            SO10X platform and find that even a modest amount of touch meaningfully lifts success rates on
             contact-rich manipulation across four policy families:
             <a href="https://tonyzhaozh.github.io/aloha/" target="_blank" rel="noreferrer">ACT</a>,
             <a href="https://diffusion-policy.cs.columbia.edu/" target="_blank" rel="noreferrer">Diffusion Policy</a>,
@@ -69,7 +69,7 @@
           </div>
           <div class="masthead-meta-bar">
             <div class="masthead-meta-left">
-              <span class="masthead-meta-date">April 2026</span>
+              <span class="masthead-meta-date">May 2026</span>
               <span class="masthead-meta-sep">&middot;</span>
               <a class="masthead-meta-lab" href="https://yunzhuli.github.io/" target="_blank" rel="noreferrer">RoboPIL</a>
               <span class="masthead-meta-sep">&middot;</span>
@@ -93,7 +93,7 @@
           <p>
             In recent years, open-source robot learning has exploded in popularity. <a href="https://github.com/huggingface/lerobot" target="_blank" rel="noreferrer">LeRobot</a>
             now packages datasets, imitation-learning baselines, and low-cost hardware like the
-            <a href="https://github.com/TheRobotStudio/SO-ARM100" target="_blank" rel="noreferrer">SO-ARM100/101</a>
+            <a href="https://github.com/TheRobotStudio/SO-ARM100" target="_blank" rel="noreferrer">SO10X</a>
             that allows anybody with a laptop and a few hundred dollars worth of parts to access the cutting-edge of manipulation research. The latest vision-language-action models such as
             <a href="https://www.pi.website/blog/pi05" target="_blank" rel="noreferrer">Pi0.5</a> and
             <a href="https://huggingface.co/blog/smolvla" target="_blank" rel="noreferrer">SmolVLA</a>
@@ -121,7 +121,7 @@
         </div>
         <div class="prose">
           <p>
-            Our setup makes minimal changes to the existing LeRobot pipeline. We replace the SO-100 (or SO-101) stock jaw with a tactile gripper
+            Our setup makes minimal changes to the existing LeRobot pipeline. We replace the SO10X stock jaw with a tactile gripper
             built around the <a href="https://flexitac.github.io/" target="_blank" rel="noreferrer">FlexiTac</a>
             sensor, and we extend LeRobot's dataset and policy interfaces with a single
             <code class="inline-code">observation.tactile.*</code> stream that all four policies consume
@@ -167,11 +167,11 @@
             </li>
             <li>
               The same <code class="inline-code">observation.tactile.primary</code> stream improved every policy we
-              tested it on, across architectures from ACT (a small encoder-decoder transformer) up through Pi0.5 (a
+              tested it on, across architectures from ACT (a small transformer-based policy) up through Pi0.5 (a
               large VLA). This suggests that tactile information is valuable across a wide range of policies.
             </li>
             <li>
-              Small tactile token counts are generally enough to improve performance. ACT and SmolVLA use 4 tokens while Diffusion Policy uses a single
+              Small tactile token counts are generally enough to improve performance. With image resolutions of <code class="inline-code"></code>224x224px</code>, ACT and SmolVLA work best with 4 tokens while Diffusion Policy uses a single
               64-dim chunk, and Pi0.5 uses 32 tokens. Generally, increasing past the per-model default did not improve success, but for tasks that rely heavily on tactile feedback, raising the number of tactile tokens (or DP chunks) can help.
             </li>
             <li>

@@ -44,7 +44,7 @@
     <text x="76" y="368" font-size="18" fill="#655a50">Serial stream at 2,000,000 baud</text>
 
     <text x="76" y="516" font-size="30" font-weight="700">Robot state</text>
-    <text x="76" y="548" font-size="18" fill="#655a50">SO100 follower + custom gripper</text>
+    <text x="76" y="548" font-size="18" fill="#655a50">SO10X follower + custom gripper</text>
 
     <text x="390" y="154" font-size="18" letter-spacing="3" fill="#8c5c31">TACTILE LEROBOT STACK</text>
     <text x="390" y="208" font-size="38" font-weight="700">Shared observation path</text>

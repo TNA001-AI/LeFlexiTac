@@ -43,7 +43,7 @@ export const siteData = {
         name: "Peg in Hole",
         label: "Task",
         summary:
-          "Contact-rich alignment and insertion task where tactile feedback resolves ambiguity in the final stage. Pegs and holes are NVIDIA IndustRealKit parts with ~0.5-0.6 mm diametral clearance.",
+          "Contact-rich alignment and insertion task where tactile feedback resolves the ambiguity in the final stage. Pegs and holes are NVIDIA IndustRealKit parts with ~0.5-0.6 mm diametral clearance.",
         results: [
           { policy: "ACT", tactile: "23/30 = 0.77", baseline: "14/30 = 0.47" },
           { policy: "Diffusion Policy", tactile: "25/30 = 0.83", baseline: "17/30 = 0.57" },
@@ -107,7 +107,7 @@ export const siteData = {
     {
       title: "Follower robot",
       body:
-        "The tactile integration is built around `so100_tactile_follower`, extending the SO follower path with named tactile sensor streams in the observation dictionary.",
+        "The tactile integration is built around `so_tactile_follower`, extending the SO10X follower path with named tactile sensor streams in the observation dictionary.",
     },
     {
       title: "Leader teleop",
@@ -132,7 +132,7 @@ export const siteData = {
     {
       title: "Custom gripper",
       body:
-        "This remains the biggest missing public-facing hardware detail, since your setup differs from the stock LeRobot SO101 gripper configuration.",
+        "This remains the biggest missing public-facing hardware detail, since your setup differs from the stock LeRobot SO10X gripper configuration.",
     },
   ],
   softwareHighlights: [
@@ -200,8 +200,8 @@ export const siteData = {
     {
       title: "Build the robot",
       body:
-        'Assemble an SO-100 or SO-101 low-cost robotic arm following the official guide. Replace the stock gripper with our <a href="#hardware">custom tactile gripper</a> (Moving Jaw + Wrist Roll).',
-      link: { label: "SO-ARM100 build guide", url: "https://github.com/TheRobotStudio/SO-ARM100" },
+        'Assemble an SO10X low-cost robotic arm following the official guide. Replace the stock gripper with our <a href="#hardware">custom tactile gripper</a> (Moving Jaw + Wrist Roll).',
+      link: { label: "SO10X build guide", url: "https://github.com/TheRobotStudio/SO-ARM100" },
     },
     {
       title: "Reproduce the tactile sensor",
@@ -223,7 +223,7 @@ export const siteData = {
       },
     },
     {
-      title: "Install lerobot_tactile (our LeRobot fork)",
+      title: "Install our LeRobot fork from source",
       note: "This codebase is <strong>not</strong> available on PyPI — <code class=\"inline-code\">pip install lerobot</code> will install the upstream version without tactile support. You must install from source.",
       body:
         "Follow the official LeRobot installation guide for system prerequisites (ffmpeg, conda, etc.), then install this repo from source.",
@@ -233,7 +233,7 @@ export const siteData = {
     {
       title: "Configure the robot",
       body:
-        "Follow the LeRobot SO-100 / SO-101 walkthrough to identify serial ports, calibrate the follower and leader arms, set up the camera, and sanity-check teleoperation before adding the tactile sensor to the loop.",
+        "Follow the LeRobot SO10X walkthrough to identify serial ports, calibrate the follower and leader arms, set up the camera, and sanity-check teleoperation before adding the tactile sensor to the loop.",
       link: { label: "LeRobot robot setup walkthrough", url: "https://huggingface.co/docs/lerobot/il_robots" },
     },
     {
@@ -294,24 +294,20 @@ export const siteData = {
   ],
   tips: [
     {
-      title: "USB setup",
-      body: "Linux may reassign /dev/ttyACM* and /dev/ttyUSB* on reboot. For the robot arms, follow the LeRobot tutorial to set up persistent udev rules. For the tactile sensor, run <code class=\"inline-code\">sudo chmod 777 /dev/ttyUSB0</code> before each session.",
-    },
-    {
       title: "Sensor calibration",
       body: "Always run a no-contact baseline read before recording. The tactile map drifts with temperature, so recalibrate if the sensor has been powered on for more than 30 minutes.",
     },
     {
       title: "Camera placement",
-      body: "Mount the top camera at a consistent height and angle across sessions. Even small shifts between recording and evaluation can degrade policy performance.",
+      body: "Mount the top camera at a consistent height and angle across sessions. Even small shifts between recording and evaluation can degrade policy performance. NOTE: The camera must be able to clearly see the hole, otherwise performance will degrade.",
     },
     {
       title: "Training hyperparameters",
-      body: "Start with the default learning rate and batch size. For tactile-enabled runs, 4 tactile tokens is a good default. Too few tokens lose spatial detail, and too many add noise without improving performance.",
+      body: "Start with the default learning rate and batch size. For tactile-enabled runs using image resolutions of <code class=\"inline-code\">224x224px</code>, the default token counts in the config are generally sufficient. Adding too few tokens will lose spatial detail while adding too many will add noise without improving performance.",
     },
     {
       title: "Sampling frequency",
-      body: "On-device inference speed keeps <strong>10 Hz</strong> the comfortable rollout rate for every policy except <strong>ACT</strong>, which is light enough to run rollouts at the native <strong>30 Hz</strong>. Always record data at 30 Hz and downsample at training time with <code class=\"inline-code\">--policy.frame_stride=3</code> for the slower policies — this keeps more raw data on disk while ensuring the training and rollout frame rates match (mismatches degrade performance).",
+      body: "We find that, for comfortable <strong>on-device inference speed</strong>, we require a sampling frequency of <strong>10 Hz</strong> for every policy except <strong>ACT</strong>, which is light enough to run rollouts at the native <strong>30 Hz</strong>. We suggest always recording data at 30 Hz and downsampling at training time with <code class=\"inline-code\">--policy.frame_stride=3</code> for the slower policies. This preserves downstream flexibility for different policies while ensuring the training and rollout frame rates match (mismatches will degrade performance).",
     },
     {
       title: "Training Pi0.5",
@@ -322,12 +318,12 @@ export const siteData = {
     {
       label: "FlexiTac",
       url: "https://flexitac.github.io/",
-      note: "The tactile sensor used in this project. See their site for fabrication instructions and hardware specs.",
+      note: "The tactile sensor used in this project. See the FlexiTac website for fabrication instructions and hardware specs.",
     },
     {
       label: "PyFlexiTac",
       url: "https://github.com/WT-MM/PyFlexiTac#flexitac-flash",
-      note: "Reference flashing and sensor-stream workflow (`flexitac-find-port`, `flexitac-flash`, `flexitac-stream`) used in this guide.",
+      note: "Flashing and sensor-stream workflow (`flexitac-find-port`, `flexitac-flash`, `flexitac-stream`) used in this guide.",
     },
     {
       label: "VT-Refine",
@@ -350,7 +346,7 @@ export const siteData = {
       note: "Hugging Face's robotics framework. Our training and inference code extends LeRobot's policy and dataset interfaces.",
     },
     {
-      label: "SO-ARM100 / SO-101",
+      label: "SO10X",
       url: "https://github.com/TheRobotStudio/SO-ARM100",
       note: "Open-source low-cost robotic arm platform we build on, with a custom tactile gripper replacing the stock jaw.",
     },
