@@ -1,5 +1,11 @@
 import { siteData } from "./site-data.js";
 
+function trackEvent(eventName, params = {}) {
+  if (typeof window.trackEvent === "function") {
+    window.trackEvent(eventName, params);
+  }
+}
+
 function create(tag, className, text) {
   const node = document.createElement(tag);
   if (className) node.className = className;
@@ -195,6 +201,37 @@ function setupLazyVideos() {
   const videos = document.querySelectorAll("video[data-lazy-src]");
   if (!videos.length) return;
 
+  videos.forEach((video) => {
+    video.addEventListener("play", () => {
+      if (video.dataset.playTracked) return;
+      video.dataset.playTracked = "true";
+      trackEvent("video_start", {
+        page_path: window.location.pathname,
+        video_src: video.dataset.lazySrc || video.currentSrc || "",
+      });
+    });
+
+    const milestones = [25, 50, 75, 100];
+    video.dataset.progressSent = "";
+    video.addEventListener("timeupdate", () => {
+      if (!video.duration || !Number.isFinite(video.duration)) return;
+      const pct = Math.floor((video.currentTime / video.duration) * 100);
+      if (pct <= 0) return;
+
+      const sent = new Set((video.dataset.progressSent || "").split(",").filter(Boolean));
+      milestones.forEach((milestone) => {
+        if (pct < milestone || sent.has(String(milestone))) return;
+        sent.add(String(milestone));
+        video.dataset.progressSent = Array.from(sent).join(",");
+        trackEvent("video_progress", {
+          page_path: window.location.pathname,
+          video_src: video.dataset.lazySrc || video.currentSrc || "",
+          progress_pct: milestone,
+        });
+      });
+    });
+  });
+
   const loadVideo = (video) => {
     if (video.dataset.loaded) return;
     const source = document.createElement("source");
@@ -389,6 +426,11 @@ function wireCopyButtons() {
       try {
         if (navigator.clipboard && window.isSecureContext) {
           await navigator.clipboard.writeText(text);
+          trackEvent("copy_click", {
+            page_path: window.location.pathname,
+            target_id: button.dataset.copyTarget || "",
+            copy_method: "clipboard_api",
+          });
           flash("Copied");
           return;
         }
@@ -406,7 +448,69 @@ function wireCopyButtons() {
         ok = document.execCommand("copy");
       } catch {}
       document.body.removeChild(ta);
+      if (ok) {
+        trackEvent("copy_click", {
+          page_path: window.location.pathname,
+          target_id: button.dataset.copyTarget || "",
+          copy_method: "exec_command",
+        });
+      }
       flash(ok ? "Copied" : "Failed");
+    });
+  });
+}
+
+function wireOutboundLinkTracking() {
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("a[href]");
+    if (!link) return;
+    if (link.target !== "_blank") return;
+
+    const url = link.href || "";
+    if (!url) return;
+
+    trackEvent("outbound_click", {
+      page_path: window.location.pathname,
+      link_url: url,
+      link_text: (link.textContent || "").trim().slice(0, 120),
+    });
+  });
+}
+
+function wireCtaTracking() {
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("a[href]");
+    if (!link) return;
+
+    if (
+      !link.classList.contains("button") &&
+      !link.classList.contains("docs-banner") &&
+      !link.classList.contains("masthead-meta-lab")
+    ) {
+      return;
+    }
+
+    trackEvent("cta_click", {
+      page_path: window.location.pathname,
+      cta_label: (link.textContent || "").trim().replace(/\s+/g, " ").slice(0, 120),
+      cta_location: window.location.pathname.includes("docs") ? "docs" : "landing",
+      target_url: link.href || "",
+    });
+  });
+}
+
+function wireStlDownloadTracking() {
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("a[href][download]");
+    if (!link) return;
+    const href = link.getAttribute("href") || "";
+    if (!href.toLowerCase().endsWith(".stl")) return;
+
+    const fileName = href.split("/").pop() || href;
+    trackEvent("download_stl", {
+      page_path: window.location.pathname,
+      file_name: fileName,
+      file_url: link.href || href,
     });
   });
 }
@@ -418,6 +522,9 @@ setReadTime();
 setupDocsScrollSpy();
 setupLazyVideos();
 setupChartAnimation();
+wireOutboundLinkTracking();
+wireCtaTracking();
+wireStlDownloadTracking();
 
 function setupDocsScrollSpy() {
   const nav = document.querySelector(".docs-nav");
@@ -433,6 +540,7 @@ function setupDocsScrollSpy() {
   });
 
   const visible = new Set();
+  const seenSections = new Set();
   const setActive = () => {
     let topId = null;
     let topY = Infinity;
@@ -447,6 +555,14 @@ function setupDocsScrollSpy() {
       const id = link.getAttribute("href").slice(1);
       link.classList.toggle("is-active", id === topId);
     });
+
+    if (topId && !seenSections.has(topId)) {
+      seenSections.add(topId);
+      trackEvent("docs_section_view", {
+        page_path: window.location.pathname,
+        section_id: topId,
+      });
+    }
   };
 
   const observer = new IntersectionObserver(

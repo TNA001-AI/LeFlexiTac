@@ -16,6 +16,29 @@
       rel="stylesheet"
     >
     <link rel="stylesheet" href="assets/styles.css">
+    <script>
+      (function initAnalytics() {
+        const GA_MEASUREMENT_ID = "G-ZEZE8C2G9Y";
+        if (!GA_MEASUREMENT_ID) return;
+
+        window.dataLayer = window.dataLayer || [];
+        window.gtag = function gtag() {
+          window.dataLayer.push(arguments);
+        };
+        window.gtag("js", new Date());
+        window.gtag("config", GA_MEASUREMENT_ID);
+
+        window.trackEvent = function trackEvent(eventName, params) {
+          if (typeof window.gtag !== "function") return;
+          window.gtag("event", eventName, params || {});
+        };
+
+        const script = document.createElement("script");
+        script.async = true;
+        script.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(GA_MEASUREMENT_ID)}`;
+        document.head.appendChild(script);
+      })();
+    </script>
   </head>
   <body class="docs-page">
     <header class="site-header">
