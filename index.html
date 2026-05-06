@@ -171,7 +171,7 @@
               large VLA). This suggests that tactile information is valuable across a wide range of policies.
             </li>
             <li>
-              Small tactile token counts are generally enough to improve performance. With image resolutions of <code class="inline-code"></code>224x224px</code>, ACT and SmolVLA work best with 4 tokens while Diffusion Policy uses a single
+              Small tactile token counts are generally enough to improve performance. With image resolutions of <code class="inline-code">224x224px</code>, ACT and SmolVLA work best with 4 tokens while Diffusion Policy uses a single
               64-dim chunk, and Pi0.5 uses 32 tokens. Generally, increasing past the per-model default did not improve success, but for tasks that rely heavily on tactile feedback, raising the number of tactile tokens (or DP chunks) can help.
             </li>
             <li>
