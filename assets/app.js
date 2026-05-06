@@ -220,7 +220,9 @@ function setupLazyVideos() {
         const video = entry.target;
         if (entry.isIntersecting) {
           loadVideo(video);
-          video.play().catch(() => {});
+          if (video.muted) {
+            video.play().catch(() => {});
+          }
         } else if (video.dataset.loaded) {
           video.pause();
         }
@@ -324,8 +326,9 @@ function renderDocs() {
       const caption = step.video.caption
         ? `<p class="step-video-caption">${step.video.caption}</p>`
         : "";
+      const docVideoMuted = step.video.unmutedByDefault ? "" : " muted";
       const media = step.video.src
-        ? `<video class="step-video-el" controls muted playsinline loop preload="metadata" data-lazy-src="${step.video.src}"></video>`
+        ? `<video class="step-video-el" controls playsinline loop preload="metadata"${docVideoMuted} data-lazy-src="${step.video.src}"></video>`
         : `<div class="step-video-placeholder">Video placeholder (coming soon)</div>`;
       html += `<div class="step-video">${header}${media}${caption}</div>`;
     }

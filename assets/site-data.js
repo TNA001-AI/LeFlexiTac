@@ -250,8 +250,9 @@ export const siteData = {
       link: { label: "PyFlexiTac: flexitac-flash guide", url: "https://github.com/WT-MM/PyFlexiTac#flexitac-flash" },
       command: "assets/commands/test.sh",
       video: {
-        src: "",
-        caption: "Visual tactile test demo will be added here.",
+        src: "assets/media/sensor/pyflexitac_tutorial_compressed.mp4",
+        caption: "PyFlexiTac CLI tutorial and tactile heatmap verification.",
+        unmutedByDefault: true,
       },
     },
     {
