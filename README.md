@@ -25,7 +25,7 @@ The first run prompts to install the `serve` package — accept with `y`. `serve
 
 Zero-build static site. Deployed via GitHub Pages from the `master` branch root.
 
-- Live URL: <https://tna001-ai.github.io/tactile-lerobot-website/>
+- Live URL: <https://tna001-ai.github.io/LeFlexiTac/>
 - `.nojekyll` is included so underscore-prefixed files are served as-is.
 - All asset paths are relative, so the site also works under a subdirectory.
 
@@ -56,8 +56,3 @@ ffmpeg -i input.mp4 \
 - `-preset veryslow` — best compression ratio; encode once, serve forever
 
 Current total media footprint is ~90 MB for six 1080p clips.
-
-## Known placeholders
-
-- The custom gripper section in `docs.html` still needs final mechanical details, photos, CAD links, and a BOM.
-- The pen task has no videos yet — the slot renders as empty when `src` is blank in `site-data.js`.

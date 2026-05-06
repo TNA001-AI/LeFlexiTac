@@ -1,6 +1,10 @@
 import { siteData } from "./site-data.js";
 
 function trackEvent(eventName, params = {}) {
+  if (typeof window.gtag === "function") {
+    window.gtag("event", eventName, params);
+    return;
+  }
   if (typeof window.trackEvent === "function") {
     window.trackEvent(eventName, params);
   }
@@ -430,6 +434,7 @@ function wireCopyButtons() {
             page_path: window.location.pathname,
             target_id: button.dataset.copyTarget || "",
             copy_method: "clipboard_api",
+            copy_success: true,
           });
           flash("Copied");
           return;
@@ -448,13 +453,12 @@ function wireCopyButtons() {
         ok = document.execCommand("copy");
       } catch {}
       document.body.removeChild(ta);
-      if (ok) {
-        trackEvent("copy_click", {
-          page_path: window.location.pathname,
-          target_id: button.dataset.copyTarget || "",
-          copy_method: "exec_command",
-        });
-      }
+      trackEvent("copy_click", {
+        page_path: window.location.pathname,
+        target_id: button.dataset.copyTarget || "",
+        copy_method: "exec_command",
+        copy_success: Boolean(ok),
+      });
       flash(ok ? "Copied" : "Failed");
     });
   });
